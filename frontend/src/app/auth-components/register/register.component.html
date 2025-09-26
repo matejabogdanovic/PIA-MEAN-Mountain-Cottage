@@ -1,0 +1,45 @@
+<form #f="ngForm" class="" (ngSubmit)="register(f)" id="registerForm">
+  <div>
+    <input class="" type="text" name="username" id="username" placeholder="Username*" [(ngModel)]="user.korisnicko_ime"
+      required>
+    <input class="" type="password" name="password" id="password" placeholder="Password*" [(ngModel)]="user.lozinka"
+      (input)="validatePassword()" required>
+    <input class="" type="password" name="repeat_password" id="repeat_password" placeholder="Repeat password*"
+      [(ngModel)]="ponovljena_lozinka" required>
+    <input type="text" name="first_name" id="first_name" placeholder="First Name*" [(ngModel)]="user.ime" required>
+    <input type="text" name="last_name" id="last_name" placeholder="Last Name*" [(ngModel)]="user.prezime" required>
+
+    <ul class="flex gap-2">
+      <li> <label for="gender_male">Male</label> <input type="radio" name="gender" id="gender_male" value="m"
+          [(ngModel)]="user.pol"></li>
+      <li> <label for="gender_female">Female</label><input type="radio" name="gender" id="gender_female" value="z"
+          [(ngModel)]="user.pol">
+      </li>
+    </ul>
+
+    <input type="text" name="address" id="address" placeholder="Address*" [(ngModel)]="user.adresa" required>
+    <input type="tel" name="phone" id="phone" pattern="^\+?[0-9]{7,15}$" placeholder="123-45-678*"
+      [(ngModel)]="user.kontakt_telefon" required>
+    <input type="email" name="email" id="email" placeholder="user@mail.com*" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+      title="Invalid email address" [(ngModel)]="user.email" required>
+    <input type="text" name="credit_card" id="credit_card" placeholder="Credit card number*"
+      [(ngModel)]="user.kreditna_kartica" (input)="validateCreditCard()" required>
+    @if(cc_type>=0){<img [src]="images[cc_type]" alt="" width="60px">}
+    <input class="cursor-pointer block text-neutral-400" type="file" name="file" accept=".jpg, .png"
+      (change)="onFileSelected($event)">
+
+    <ul class="flex gap-2">
+      <li> <label for="type_owner">Owner</label> <input type="radio" name="type" id="type_owner" value="vlasnik"
+          [(ngModel)]="user.tip"></li>
+      <li> <label for="type_tourist">Tourist</label><input type="radio" name="type" id="type_tourist" value="turista"
+          [(ngModel)]="user.tip">
+      </li>
+    </ul>
+
+    <div class="text-red-500 self-center">
+      {{this.error}}
+    </div>
+    <button type="submit">Register</button>
+  </div>
+  <a routerLink="/login" class="block mx-auto w-fit">Already have an account? Login!</a>
+</form>

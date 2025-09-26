@@ -1,0 +1,21 @@
+<div class="my-container"><button (click)="logout()">Logout</button>
+  @if(this.user.aktivan==true){
+
+  @if(this.user.tip=='admin'){
+
+  <app-admin-home-page></app-admin-home-page>
+  }
+
+  @if(this.user.tip == 'vlasnik'){
+  <app-owner-page></app-owner-page>
+  }
+
+  @if(this.user.tip == 'turista'){
+  <app-tourist-page></app-tourist-page>
+  }
+  }@else{
+  <div>
+    <h1>Profile Pending Approval</h1>
+  </div>
+  }
+</div>

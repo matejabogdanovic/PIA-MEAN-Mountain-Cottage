@@ -1,0 +1,36 @@
+<form #f="ngForm" class="flex flex-col items-start md:flex-row gap-2 md:gap-4" (ngSubmit)="submit(f)" id="updateForm">
+  <img [src]="this.user.profilna_slika" class="block self-center md:self-auto max-w-[150px]" />
+  <div class="w-full">
+
+
+    <input type="text" name="first_name" id="first_name" placeholder="First Name*" [(ngModel)]="user.ime" required
+      [disabled]="!edit">
+    <input type="text" name="last_name" id="last_name" placeholder="Last Name*" [(ngModel)]="user.prezime" required
+      [disabled]="!edit">
+
+
+    <input type="text" name="address" id="address" placeholder="Address*" [(ngModel)]="user.adresa" required
+      [disabled]="!edit">
+    <input type="tel" name="phone" id="phone" pattern="^\+?[0-9]{7,15}$" placeholder="123-45-678*"
+      [(ngModel)]="user.kontakt_telefon" required [disabled]="!edit">
+    <input type="email" name="email" id="email" placeholder="user@mail.com*" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+      title="Invalid email address" [(ngModel)]="user.email" required [disabled]="!edit">
+
+    @if(edit){
+    <input class=" block text-neutral-400" [ngClass]="edit?'cursor-pointer':''" type="file" name="file"
+      accept=".jpg, .png" (change)="onFileSelected($event)" [disabled]="!edit">
+    }
+    <div class="text-red-500 self-center">
+      {{this.error}}
+    </div>
+    <div class="flex gap-2 justify-center md:justify-normal">
+      @if(edit){
+      <button type="submit">Submit</button>
+      }
+
+      <button type="button" (click)="edit = !edit" class="orange"> {{ !edit ? 'Edit' : 'Cancel' }}</button>
+    </div>
+
+  </div>
+
+</form>

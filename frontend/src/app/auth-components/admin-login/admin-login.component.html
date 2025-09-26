@@ -1,0 +1,15 @@
+<div class=" red ">
+  <form (submit)="login()" class="">
+    <input class="" type="text" name="username" id="username" placeholder="Username" [(ngModel)]="korisnicko_ime"
+      required>
+    <input class="" type="password" name="password" id="password" placeholder="Password" [(ngModel)]="lozinka" required>
+    <button type="submit" class="hidden"></button>
+    <div class="text-red-500">
+      {{this.error}}
+    </div>
+    <button type="submit">Login</button>
+  </form>
+
+
+
+</div>

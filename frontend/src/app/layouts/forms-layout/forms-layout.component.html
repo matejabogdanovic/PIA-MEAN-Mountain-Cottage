@@ -1,0 +1,15 @@
+<header></header>
+<main [ngClass]="styles === '2' ? 'bg-red-900' : 'bg-green-900'">
+  <div class=" h-[100dvh] flex">
+    <div class="xl:w-1/2 "></div>
+    <div class=" xl:w-1/2 w-full flex flex-col bg-white">
+      <div class=" m-auto xl:w-1/2 w-full p-4">
+        <h1 [ngClass]=" styles === '2' ? 'text-red-900' : 'text-green-900'" class="font-bold text-4xl mb-4">
+          {{pageTitle}}
+        </h1>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</main>
+<footer></footer>

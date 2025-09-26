@@ -1,0 +1,15 @@
+<div>
+  <form class="" (submit)="login()">
+    <input class="" type="text" name="username" id="username" placeholder="Username" [(ngModel)]="korisnicko_ime"
+      required>
+    <input class="" type="password" name="password" id="password" placeholder="Password" [(ngModel)]="lozinka" required>
+
+    <div class="text-red-500">
+      {{this.error}}
+    </div>
+    <button type="submit">Login</button>
+  </form>
+
+  <a routerLink="/register" class="block mx-auto w-fit">Don't have an account? Register now!</a>
+
+</div>

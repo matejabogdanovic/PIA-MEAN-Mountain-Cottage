@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+.my-container {
+  @apply container !max-w-[1000px] mx-auto;
+}
+
+input {
+  @apply border-[1px] mb-1 border-emerald-800 rounded-bl-sm p-1 block w-full placeholder-neutral-400 border-t-transparent border-r-transparent;
+}
+
+input:disabled {
+  @apply border-transparent;
+}
+
+button {
+  @apply cursor-pointer border-[1px] border-emerald-800 bg-emerald-100 px-3 rounded-md;
+}
+
+button:disabled {
+  @apply cursor-auto opacity-50;
+}
+
+.red input {
+  @apply border-red-800;
+}
+
+
+.red button {
+  @apply border-red-800 bg-red-100;
+}
+
+button.orange {
+  @apply border-orange-800 bg-orange-100;
+}
