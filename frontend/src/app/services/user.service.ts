@@ -116,13 +116,13 @@ export class UserService {
       formData
     );
   }
-  passwordRecovery(
+  passwordChange(
     new_password: string,
     old_password: string,
     korisnicko_ime: string
   ) {
     return this.http.post<{ ok: boolean; reason: string }>(
-      `${this.api}/passwordRecovery/${korisnicko_ime}`,
+      `${this.api}/passwordChange/${korisnicko_ime}`,
       { new_password, old_password }
     );
   }

@@ -65,6 +65,7 @@ export class RegisterComponent {
   }
   register(form: NgForm) {
     console.log(this.user);
+    this.error = '';
     if (
       this.user.korisnicko_ime.trim() == '' ||
       this.user.lozinka.trim() == ''

@@ -41,8 +41,8 @@ korisnikRouter
   .post((req, res) => new UserController().changeUserData(req, res, false));
 
 korisnikRouter
-  .route("/passwordRecovery/:korisnicko_ime")
-  .post((req, res) => new UserController().passwordRecovery(req, res));
+  .route("/passwordChange/:korisnicko_ime")
+  .post((req, res) => new UserController().passwordChange(req, res));
 
 korisnikRouter
   .route("/register")

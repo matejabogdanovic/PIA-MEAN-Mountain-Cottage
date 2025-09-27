@@ -18,17 +18,18 @@ export class PublicLoginComponent {
   error: string = ' ';
 
   private router = inject(Router);
-  showRecoveryField = false;
+
+  showChangePassword = false;
   usernameInput() {
     if (this.korisnicko_ime.trim() != '') {
-      this.showRecoveryField = true;
+      this.showChangePassword = true;
     } else {
-      this.showRecoveryField = false;
+      this.showChangePassword = false;
     }
   }
 
-  recovery() {
-    this.router.navigate([`/password-recovery/${this.korisnicko_ime}`]);
+  changePassword() {
+    this.router.navigate([`/password-change/${this.korisnicko_ime}`]);
   }
   login() {
     if (this.korisnicko_ime.trim() == '' || this.lozinka.trim() == '') {

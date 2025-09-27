@@ -5,13 +5,13 @@ import { __importDefault } from 'tslib';
 import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-password-recovery',
+  selector: 'app-password-change',
   standalone: true,
   imports: [FormsModule, RouterLink],
-  templateUrl: './password-recovery.component.html',
-  styleUrl: './password-recovery.component.css',
+  templateUrl: './password-change.component.html',
+  styleUrl: './password-change.component.css',
 })
-export class PasswordRecoveryComponent implements OnInit {
+export class PasswordChangeComponent implements OnInit {
   private userService = inject(UserService);
 
   korisnicko_ime: string = '';
@@ -44,7 +44,7 @@ export class PasswordRecoveryComponent implements OnInit {
       return;
     }
     this.userService
-      .passwordRecovery(this.lozinka, this.stara_lozinka, this.korisnicko_ime)
+      .passwordChange(this.lozinka, this.stara_lozinka, this.korisnicko_ime)
       .subscribe((d) => {
         if (!d.ok) {
           this.error = d.reason;

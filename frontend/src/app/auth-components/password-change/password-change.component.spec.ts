@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PasswordRecoveryComponent } from './password-recovery.component';
+import { PasswordRecoveryComponent } from './password-change.component';
 
 describe('PasswordRecoveryComponent', () => {
   let component: PasswordRecoveryComponent;
@@ -8,9 +8,8 @@ describe('PasswordRecoveryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PasswordRecoveryComponent]
-    })
-    .compileComponents();
+      imports: [PasswordRecoveryComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PasswordRecoveryComponent);
     component = fixture.componentInstance;

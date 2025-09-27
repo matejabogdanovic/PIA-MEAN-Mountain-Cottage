@@ -4,7 +4,18 @@ import KorM from "../models/korisnik";
 import sharp from "sharp";
 
 import path from "path";
-import { json } from "stream/consumers";
+
+import bcrypt from "bcryptjs";
+
+const saltRounds = 10; // jačina heširanja
+
+async function hashPassword(password: string) {
+  const hash = await bcrypt.hash(password, saltRounds);
+  return hash;
+}
+async function compare(password: string, hash: string) {
+  return await bcrypt.compare(password, hash);
+}
 export class UserController {
   // validators
   validateCreditCard(cc: string): number {
@@ -75,10 +86,21 @@ export class UserController {
     let korisnicko_ime = req.body.korisnicko_ime;
     let lozinka = req.body.lozinka;
 
-    KorM.findOne({ korisnicko_ime, lozinka, blokiran: false })
+    KorM.findOne({ korisnicko_ime, blokiran: false })
       .then((user) => {
-        if (user?.tip == "admin") user = null;
-        res.json(user);
+        if (!user || user?.tip == "admin") {
+          res.json(null);
+          return;
+        }
+
+        compare(lozinka, user.lozinka).then((cmp) => {
+          if (!cmp) {
+            res.json(null);
+            return;
+          }
+          user.lozinka = "";
+          res.json(user);
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +149,8 @@ export class UserController {
     if (korisnik.profilna_slika == "") {
       korisnik.profilna_slika = "profile_photo.png";
     }
-
+    korisnik.lozinka = await hashPassword(korisnik.lozinka);
+    console.log(korisnik.lozinka);
     if (!req.file) {
       new KorM(korisnik)
         .save()
@@ -195,7 +218,7 @@ export class UserController {
     }
   };
 
-  passwordRecovery = (req: any, res: express.Response) => {
+  passwordChange = (req: any, res: express.Response) => {
     let new_password = req.body.new_password;
     let old_password = req.body.old_password;
     let korisnicko_ime = req.params["korisnicko_ime"];
@@ -223,34 +246,40 @@ export class UserController {
           });
           return;
         }
-
-        if (user.lozinka != old_password) {
-          res.json({
-            ok: false,
-            reason: "Incorrect old password.",
-          });
-          return;
-        }
-        if (user.lozinka == new_password) {
-          res.json({
-            ok: false,
-            reason: "New password can't be the same as the old password.",
-          });
-          return;
-        }
-        user.lozinka = new_password;
-        user
-          .save()
-          .then((d) => {
-            res.json({ ok: true, reason: "" });
-          })
-          .catch((err) => {
-            console.log(err);
+        compare(old_password, user.lozinka).then((cmp) => {
+          if (!cmp) {
             res.json({
               ok: false,
-              reason: "Internal error.",
+              reason: "Incorrect old password.",
+            });
+            return;
+          }
+          compare(new_password, user.lozinka).then((cmp2) => {
+            if (cmp2) {
+              res.json({
+                ok: false,
+                reason: "New password can't be the same as the old password.",
+              });
+              return;
+            }
+
+            hashPassword(new_password).then((np) => {
+              user.lozinka = np;
+              user
+                .save()
+                .then((d) => {
+                  res.json({ ok: true, reason: "" });
+                })
+                .catch((err) => {
+                  console.log(err);
+                  res.json({
+                    ok: false,
+                    reason: "Internal error.",
+                  });
+                });
             });
           });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -396,12 +425,23 @@ export class UserController {
 
     KorM.findOne({
       korisnicko_ime,
-      lozinka,
       tip: "admin",
     })
       .then((user) => {
-        if (user?.tip != "admin") user = null;
-        res.json(user);
+        if (user?.tip != "admin") {
+          user = null;
+          res.json(user);
+          return;
+        }
+
+        compare(lozinka, user.lozinka).then((cmp) => {
+          if (!cmp) {
+            res.json(null);
+            return;
+          }
+          user.lozinka = "";
+          res.json(user);
+        });
       })
       .catch((err) => {
         console.log(err);
