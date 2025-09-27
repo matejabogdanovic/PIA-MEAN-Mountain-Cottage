@@ -1,3 +1,6 @@
+@if(!loading){
+
+
 @if(this.user.aktivan==true){
 
 @if(this.user.tip=='admin'){
@@ -6,14 +9,16 @@
 }
 
 @if(this.user.tip == 'vlasnik'){
-<app-owner-page></app-owner-page>
+<app-owner-page [user]="user"></app-owner-page>
 }
 
+
 @if(this.user.tip == 'turista'){
-<app-tourist-page></app-tourist-page>
+<app-tourist-page [user]="user"></app-tourist-page>
 }
 }@else{
 <div>
   <h1>Profile Pending Approval</h1>
 </div>
+}
 }

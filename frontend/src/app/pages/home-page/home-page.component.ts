@@ -23,7 +23,9 @@ export class HomePageComponent implements OnInit {
     this.userService.endSession();
     this.router.navigate(['/login']);
   }
+  loading = true;
   ngOnInit(): void {
+    this.loading = true;
     let x = this.userService.getUser();
 
     if (x == null) {
@@ -35,6 +37,7 @@ export class HomePageComponent implements OnInit {
       if (!d) return;
 
       this.user = d;
+      this.loading = false;
     });
   }
 }

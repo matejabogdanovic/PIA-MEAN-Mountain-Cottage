@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { Router, RouterLink } from '@angular/router';
 import { User } from '../../models/User';
@@ -12,7 +12,7 @@ import { UserService } from '../../services/user.service';
   styleUrl: './owner-page.component.css',
 })
 export class OwnerPageComponent {
-  user: User = new User();
+  @Input() user!: User;
   private userService = inject(UserService);
 
   private router = inject(Router);

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +16,9 @@ export class AdminService {
       korisnicko_ime,
       aktivan,
     });
+  }
+
+  getAllUsers() {
+    return this.http.get<User[]>(`${this.api}/getAllUsers`);
   }
 }

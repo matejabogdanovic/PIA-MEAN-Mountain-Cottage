@@ -28,9 +28,6 @@ korisnikRouter
   .post(upload.single("file"), (req, res) =>
     new UserController().changeProfilePhoto(req, res).then(() => {})
   );
-korisnikRouter
-  .route("/changeActiveStatus")
-  .post((req, res) => new UserController().changeActiveStatus(req, res));
 
 korisnikRouter
   .route("/getOneUser/:korisnicko_ime")
@@ -49,5 +46,12 @@ korisnikRouter
   .post(upload.single("file"), (req, res) =>
     new UserController().register(req, res).then(() => {})
   );
+
+korisnikRouter
+  .route("/changeActiveStatus")
+  .post((req, res) => new UserController().changeActiveStatus(req, res));
+korisnikRouter
+  .route("/getAllUsers")
+  .get((req, res) => new UserController().getAllUsers(req, res));
 
 export default korisnikRouter;

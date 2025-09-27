@@ -1,0 +1,20 @@
+<div class="p-3 border border-green-900 rounded-md shadow-sm grid xl:grid-cols-2">
+  <div>
+    <div>
+      <span class="font-bold text-green-900">Username:</span> {{ user.korisnicko_ime }}
+    </div>
+    @if(showtype){
+    <div>
+      <span class="font-bold text-green-900">Type:</span> {{ user.tip }}
+    </div>
+    }
+
+    <div>
+      <span class="font-bold text-green-900">Email:</span> {{ user.email }}
+    </div>
+  </div>
+
+  <div class="flex items-end xl:justify-end  flex-wrap gap-2 mt-2">
+    <ng-content></ng-content>
+  </div>
+</div>

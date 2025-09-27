@@ -116,6 +116,7 @@ export class UserController {
     }
     korisnik.aktivan = false;
     korisnik.blokiran = false;
+    korisnik.odbijen = false;
 
     let { ok, reason } = this.validatePassword(korisnik.lozinka);
     if (!ok) {
@@ -370,36 +371,36 @@ export class UserController {
 
       return;
     }
-    if (!isAdmin) {
-      KorM.updateOne(
-        {
-          korisnicko_ime: korisnik.korisnicko_ime,
-          aktivan: true,
-          blokiran: false,
+    //if (!isAdmin) {
+    KorM.updateOne(
+      {
+        korisnicko_ime: korisnik.korisnicko_ime,
+        aktivan: true,
+        blokiran: false,
+      },
+      {
+        $set: {
+          ime: korisnik.ime,
+          prezime: korisnik.prezime,
+          adresa: korisnik.adresa,
+          kontakt_telefon: korisnik.kontakt_telefon,
+          email: korisnik.email,
+          kreditna_kartica: korisnik.kreditna_kartica,
         },
-        {
-          $set: {
-            ime: korisnik.ime,
-            prezime: korisnik.prezime,
-            adresa: korisnik.adresa,
-            kontakt_telefon: korisnik.kontakt_telefon,
-            email: korisnik.email,
-            kreditna_kartica: korisnik.kreditna_kartica,
-          },
+      }
+    )
+      .then((d) => {
+        if (d.modifiedCount == 0) {
+          res.json({ ok: false, reason: "User doesn't exits." });
+          return;
         }
-      )
-        .then((d) => {
-          if (d.modifiedCount == 0) {
-            res.json({ ok: false, reason: "User doesn't exits." });
-            return;
-          }
-          res.json({ ok: true, reason: "" });
-        })
-        .catch((e) => {
-          res.json({ ok: false, reason: "Email must be unique." });
-          console.log(e);
-        });
-    }
+        res.json({ ok: true, reason: "" });
+      })
+      .catch((e) => {
+        res.json({ ok: false, reason: "Email must be unique." });
+        console.log(e);
+      });
+    //}
   };
 
   getOneUser = (req: express.Request, res: express.Response) => {
@@ -418,7 +419,13 @@ export class UserController {
       });
   };
   // admin
-
+  getAllUsers = (req: express.Request, res: express.Response) => {
+    KorM.find({
+      $or: [{ tip: "vlasnik" }, { tip: "turista" }],
+    }).then((podaci) => {
+      res.json(podaci);
+    });
+  };
   loginAdmin = (req: express.Request, res: express.Response) => {
     let korisnicko_ime = req.body.korisnicko_ime;
     let lozinka = req.body.lozinka;
@@ -453,7 +460,10 @@ export class UserController {
     let korisnicko_ime = req.body.korisnicko_ime;
     let aktivan = req.body.aktivan;
 
-    KorM.updateOne({ korisnicko_ime }, { $set: { aktivan } })
+    KorM.updateOne(
+      { korisnicko_ime },
+      { $set: { aktivan: aktivan, blokiran: !aktivan } }
+    )
       .then((d) => {
         console.log(d);
         res.json(null);

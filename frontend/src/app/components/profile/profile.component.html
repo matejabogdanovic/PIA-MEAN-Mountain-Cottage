@@ -1,5 +1,7 @@
 <form #f="ngForm" class="flex flex-col items-start md:flex-row gap-2 md:gap-4" (ngSubmit)="submit(f)" id="updateForm">
+  @if(!loading){
   <img [src]="this.user.profilna_slika" class="block self-center md:self-auto max-w-[150px]" />
+  }
   <div class="w-full">
 
     <div class="form-field">
@@ -28,7 +30,7 @@
       <input type="email" name="email" id="email" placeholder="user@mail.com*" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
         title="Invalid email address" [(ngModel)]="user.email" required [disabled]="!edit">
     </div>
-    @if(user.tip=='turista'){
+    @if(user.tip=='turista' || isAdmin){
     <div class="form-field">
       <div>Credit Card: </div>
       <input type="text" name="credit_card" id="credit_card" placeholder="Credit card number*"
@@ -38,7 +40,7 @@
     }
 
 
-    @if(edit){
+    @if(edit ){
     <div class="form-field">
       <div>Profile Photo: </div>
       <div class="flex relative w-full">
@@ -53,12 +55,16 @@
       {{this.error}}
     </div>
     <div class="flex gap-2 justify-center md:justify-normal ">
-      @if(edit){
+      @if(edit ){
       <button type="submit">Submit</button>
 
-      <button type="button" (click)="cancel()" class="red">Cancel</button>
-      }@else{
-      <button type="button" (click)="edit = true" class="orange"> Edit </button>
+
+      <button type="button" (click)="cancel()" class="red">Cancel</button>}
+      @else{
+      @if(!isAdmin){
+      <button type="button" (click)="this.changeEdit(true)" class="orange"> Edit </button>
+      }
+
 
       }
 

@@ -10,5 +10,6 @@ export class User {
   profilna_slika: string = '';
   kreditna_kartica: string = '';
   aktivan: boolean = true;
+  blokiran: boolean = false;
   tip: 'admin' | 'vlasnik' | 'turista' = 'vlasnik';
 }

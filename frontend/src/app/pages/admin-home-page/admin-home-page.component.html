@@ -1,10 +1,79 @@
-<header></header>
+<header>
 
-<main class="red">
-  <button (click)="logout()">Logout</button>
 
-  <button (click)="changeActiveStatus()">Change Active Status</button>
+</header>
+
+<main>
+  <nav>
+    <ul class=" my-container xl:grid-cols-1">
+
+      <li><a class="cursor-pointer " (click)="logout()">Logout</a></li>
+    </ul>
+
+  </nav>
+  <div class="my-container">
+
+
+    <h1 class="font-bold text-4xl my-4 text-green-900">Owners</h1>
+    <div class="flex flex-col gap-4">
+      @for (u of vlasnici; track u.korisnicko_ime) {
+      <div class="flex flex-col gap-4">
+        <app-user-listing [user]="u">
+
+          @if( !edit_opened || editing_user!=u.korisnicko_ime){<button (click)="editingUserStart(u.korisnicko_ime)"
+            class="orange">Edit</button>}
+
+          <button (click)="changeActiveStatus(u.korisnicko_ime, false)" class="red">Deactivate</button>
+          <button (click)="delete(u)" class="red">Delete</button></app-user-listing>
+        @if(edit_opened && editing_user == u.korisnicko_ime){
+        <app-profile [user]="u" [isAdmin]="true" [(edit)]="edit_opened"></app-profile>
+        }
+
+      </div>
+      }
+    </div>
+
+    <h1 class="font-bold text-4xl my-4 text-green-900">Tourists</h1>
+    <div class="flex flex-col gap-4">
+      @for (u of turisti; track u.korisnicko_ime) {
+      <div class="flex flex-col gap-4">
+        <app-user-listing [user]="u">
+
+          @if( !edit_opened || editing_user!=u.korisnicko_ime){<button (click)="editingUserStart(u.korisnicko_ime)"
+            class="orange">Edit</button>}
+
+          <button (click)="changeActiveStatus(u.korisnicko_ime, false)" class="red">Deactivate</button>
+          <button (click)="delete(u)" class="red">Delete</button></app-user-listing>
+        @if(edit_opened && editing_user == u.korisnicko_ime){
+        <app-profile [user]="u" [isAdmin]="true" [(edit)]="edit_opened"></app-profile>
+        }
+
+      </div>
+      }
+    </div>
+
+
+    <h1 class="font-bold text-4xl my-4 text-green-900">Requests</h1>
+    <div class="flex flex-col gap-4">
+      @for (u of zahtevi; track u.korisnicko_ime) {
+      <div>
+        <app-user-listing [user]="u" [showtype]="true"><button
+            (click)="changeActiveStatus(u.korisnicko_ime, true)">Accept</button>
+          <button (click)="changeActiveStatus(u.korisnicko_ime, false)" class="red">Deny</button></app-user-listing>
+
+      </div>
+      }
+    </div>
+
+    <h1 class="font-bold text-4xl my-4 text-green-900">Denied and Deactivated Accounts</h1>
+    <div class="flex flex-col gap-4">
+      @for (u of blokirani; track u.korisnicko_ime) {
+      <div><app-user-listing [user]="u" [showtype]="true"></app-user-listing>
+
+      </div>
+      }
+    </div>
+  </div>
 </main>
-
 
 <footer></footer>

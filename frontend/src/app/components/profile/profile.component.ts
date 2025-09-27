@@ -1,4 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
@@ -13,22 +20,26 @@ import { NgClass } from '@angular/common';
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  user: User = new User();
+  @Input() user!: User;
+  @Input() isAdmin: boolean = false;
   private userService = inject(UserService);
 
   private router = inject(Router);
   slikaApi = 'http://localhost:4000/uploads';
   error: string = ' ';
 
-  edit = false;
-
+  @Input() edit = false;
+  // Event koji šalje promene roditelju
+  @Output() editChange = new EventEmitter<boolean>();
+  loading = true;
   ngOnInit(): void {
+    this.loading = true;
     console.log('refresh');
-    let x = this.userService.getUser();
+    // let x = this.userService.getUser();
 
-    if (x == null) return;
+    // if (x == null) return;
 
-    this.userService.getOneUser(x.korisnicko_ime).subscribe((d) => {
+    this.userService.getOneUser(this.user.korisnicko_ime).subscribe((d) => {
       if (!d) return;
 
       this.user = d;
@@ -36,6 +47,7 @@ export class ProfileComponent implements OnInit {
 
       const timestamp = new Date().getTime();
       this.user.profilna_slika = `${this.slikaApi}/${d.profilna_slika}?t=${timestamp}`;
+      this.loading = false;
     });
   }
   images: string[] = [
@@ -69,6 +81,11 @@ export class ProfileComponent implements OnInit {
       this.selectedFile = file;
     }
   }
+  changeEdit(nedit: boolean) {
+    this.edit = nedit;
+    this.editChange.emit(nedit);
+  }
+
   clearFile(input: HTMLInputElement) {
     input.value = '';
     this.selectedFile = null;
@@ -76,7 +93,8 @@ export class ProfileComponent implements OnInit {
   }
 
   cancel() {
-    this.edit = false;
+    // this.edit = false;
+    this.changeEdit(false);
     this.selectedFile = null;
     this.error = '';
     this.cc_type = -1;
