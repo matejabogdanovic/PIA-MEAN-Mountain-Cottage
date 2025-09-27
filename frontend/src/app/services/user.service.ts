@@ -111,7 +111,20 @@ export class UserService {
       formData.append('file', file);
     }
 
-    return this.http.post<User>(`${this.api}/register`, formData);
+    return this.http.post<User | { ok: boolean; reason: string }>(
+      `${this.api}/register`,
+      formData
+    );
+  }
+  passwordRecovery(
+    new_password: string,
+    old_password: string,
+    korisnicko_ime: string
+  ) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/passwordRecovery/${korisnicko_ime}`,
+      { new_password, old_password }
+    );
   }
 
   changeProfilePhoto(korisnicko_ime: string, file: File) {
@@ -119,6 +132,20 @@ export class UserService {
     formData.append('korisnicko_ime', korisnicko_ime);
     formData.append('file', file);
 
-    return this.http.post<User>(`${this.api}/changeProfilePhoto`, formData);
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/changeProfilePhoto`,
+      formData
+    );
+  }
+  changeUserData(korisnik: User) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/changeUserData`,
+      {
+        user: korisnik,
+      }
+    );
+  }
+  getOneUser(korisnicko_ime: string) {
+    return this.http.get<User>(`${this.api}/getOneUser/${korisnicko_ime}`);
   }
 }

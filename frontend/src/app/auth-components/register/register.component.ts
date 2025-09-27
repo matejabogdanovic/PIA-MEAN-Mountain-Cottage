@@ -57,9 +57,21 @@ export class RegisterComponent {
       this.user.kreditna_kartica
     );
   }
+
+  clearFile(input: HTMLInputElement) {
+    input.value = '';
+    this.selectedFile = null;
+    this.error = '';
+  }
   register(form: NgForm) {
     console.log(this.user);
-
+    if (
+      this.user.korisnicko_ime.trim() == '' ||
+      this.user.lozinka.trim() == ''
+    ) {
+      this.error = 'Please fill out all fields.';
+      return;
+    }
     if (this.ponovljena_lozinka !== this.user.lozinka) {
       this.error = 'Repeated password is not the same.';
       return;
@@ -77,29 +89,23 @@ export class RegisterComponent {
     this.userService
       .register(this.user, this.selectedFile ?? undefined)
       .subscribe((korisnik) => {
-        if (!korisnik) {
-          this.error = `Username and email must be unique. ${
-            this.selectedFile != null
-              ? 'File format must be PNG/JPG and size 100x100 up to 300x300.'
-              : ''
-          }`;
+        if ('reason' in korisnik) {
+          this.error = korisnik.reason;
+
           return;
         }
 
-        if (this.selectedFile) {
-          this.userService
-            .changeProfilePhoto(this.user.korisnicko_ime, this.selectedFile)
-            .subscribe((res) => {
-              korisnik = res;
-
-              this.userService.startSession(korisnik);
-              this.router.navigate(['/home']);
-            });
-        } else {
-          console.log('res', korisnik);
-          this.userService.startSession(korisnik);
-          this.router.navigate(['/home']);
-        }
+        // if (this.selectedFile) {
+        //   this.userService
+        //     .changeProfilePhoto(this.user.korisnicko_ime, this.selectedFile)
+        //     .subscribe((res) => {
+        //       this.userService.startSession(korisnik);
+        //       this.router.navigate(['/home']);
+        //     });
+        // } else {
+        console.log('res', korisnik);
+        this.userService.startSession(korisnik);
+        this.router.navigate(['/home']);
       });
   }
 }

@@ -21,11 +21,20 @@ export class HomePageComponent implements OnInit {
 
   logout() {
     this.userService.endSession();
-    this.router.navigate(['']);
+    this.router.navigate(['/login']);
   }
   ngOnInit(): void {
     let x = this.userService.getUser();
-    if (x == null) return;
-    this.user = x;
+
+    if (x == null) {
+      this.router.navigate(['']);
+      return;
+    }
+
+    this.userService.getOneUser(x.korisnicko_ime).subscribe((d) => {
+      if (!d) return;
+
+      this.user = d;
+    });
   }
 }

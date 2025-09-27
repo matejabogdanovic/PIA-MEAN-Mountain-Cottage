@@ -6,6 +6,7 @@ import { FormsLayoutComponent } from './layouts/forms-layout/forms-layout.compon
 import { RegisterComponent } from './auth-components/register/register.component';
 import { AdminLoginComponent } from './auth-components/admin-login/admin-login.component';
 import { PublicLoginComponent } from './auth-components/public-login/public-login.component';
+import { PasswordRecoveryComponent } from './auth-components/password-recovery/password-recovery.component';
 
 export const routes: Routes = [
   { path: '', component: UnregisteredPageComponent },
@@ -28,6 +29,12 @@ export const routes: Routes = [
     component: FormsLayoutComponent,
     data: { pageTitle: 'Register' },
     children: [{ path: '', component: RegisterComponent }],
+  },
+  {
+    path: 'password-recovery/:korisnicko_ime',
+    component: FormsLayoutComponent,
+    data: { pageTitle: 'Password Recovery' },
+    children: [{ path: '', component: PasswordRecoveryComponent }],
   },
   { path: 'home', component: HomePageComponent },
 ];

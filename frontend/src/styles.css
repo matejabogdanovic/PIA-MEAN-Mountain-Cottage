@@ -22,7 +22,7 @@ button:disabled {
 }
 
 .red input {
-  @apply border-red-800;
+  @apply border-red-800 border-[1px] mb-1 rounded-bl-sm p-1 block w-full placeholder-neutral-400 border-t-transparent border-r-transparent;
 }
 
 
@@ -32,4 +32,33 @@ button:disabled {
 
 button.orange {
   @apply border-orange-800 bg-orange-100;
+}
+
+button.red {
+  @apply border-red-800 bg-red-100;
+}
+
+.form-field {
+  @apply xl:flex;
+
+}
+
+.form-field>:first-child {
+  @apply font-semibold text-green-900 text-nowrap py-1 xl:w-2/12;
+}
+
+.red .form-field>:first-child {
+  @apply font-semibold text-red-900 text-nowrap py-1 xl:w-2/12;
+}
+
+nav {
+  @apply border-b-[1px] mb-10 border-green-900;
+}
+
+nav ul {
+  @apply grid place-items-center gap-2 [&>li]:w-full text-center;
+}
+
+nav ul li a {
+  @apply xl:py-5 py-2 block;
 }

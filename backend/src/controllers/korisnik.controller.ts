@@ -4,7 +4,9 @@ import KorM from "../models/korisnik";
 import sharp from "sharp";
 
 import path from "path";
+import { json } from "stream/consumers";
 export class UserController {
+  // validators
   validateCreditCard(cc: string): number {
     const diners = /^(3(0[0-3][0-9]{12}|6[0-9]{13}|8[0-9]{13}))$/;
     const master = /^(5[1-5][0-9]{14})$/;
@@ -68,11 +70,12 @@ export class UserController {
 
     return { ok: true, reason: "" };
   }
+  //
   login = (req: express.Request, res: express.Response) => {
     let korisnicko_ime = req.body.korisnicko_ime;
     let lozinka = req.body.lozinka;
 
-    KorM.findOne({ korisnicko_ime, lozinka })
+    KorM.findOne({ korisnicko_ime, lozinka, blokiran: false })
       .then((user) => {
         if (user?.tip == "admin") user = null;
         res.json(user);
@@ -82,6 +85,310 @@ export class UserController {
         res.json(null);
       });
   };
+
+  register = async (req: any, res: express.Response) => {
+    let korisnik = JSON.parse(req.body.user);
+    if (!korisnik) {
+      res.json({ ok: false, reason: "Invalid query." });
+      return;
+    }
+    korisnik.aktivan = false;
+    korisnik.blokiran = false;
+
+    let { ok, reason } = this.validatePassword(korisnik.lozinka);
+    if (!ok) {
+      res.json({ ok: false, reason: reason });
+      return;
+    }
+    if (this.validateCreditCard(korisnik.kreditna_kartica) < 0) {
+      res.json({ ok: false, reason: "Invalid credit card number." });
+      return;
+    }
+    const requiredFields = [
+      "korisnicko_ime",
+      "ime",
+      "prezime",
+      "pol",
+      "adresa",
+      "email",
+      "kreditna_kartica",
+      "tip",
+    ];
+
+    for (const field of requiredFields) {
+      if (!korisnik[field] || korisnik[field].trim() === "") {
+        res.json({
+          ok: false,
+          reason: "Please fill out all the required fields.",
+        });
+        return;
+      }
+    }
+    if (korisnik.profilna_slika == "") {
+      korisnik.profilna_slika = "profile_photo.png";
+    }
+
+    if (!req.file) {
+      new KorM(korisnik)
+        .save()
+        .then((user) => {
+          const ret = user.toObject();
+          ret.lozinka = "";
+
+          res.json(ret);
+        })
+        .catch((err) => {
+          console.log(err);
+          res.json({ ok: false, reason: "Username and email must be unique." });
+        });
+      return;
+    }
+
+    try {
+      const metadata = await sharp(req.file.buffer).metadata();
+
+      // Provera dimenzija
+      if (
+        metadata.width < 100 ||
+        metadata.width > 300 ||
+        metadata.height < 100 ||
+        metadata.height > 300
+      ) {
+        res.json({
+          ok: false,
+          reason: "File format must be PNG/JPG and size 100x100 up to 300x300.",
+        });
+        return;
+      }
+
+      // Pripremi novo ime fajla
+      const ext = path.extname(req.file.originalname);
+      const filename = `${korisnik.korisnicko_ime}${ext}`;
+      const filePath = path.join(__dirname, "../../uploads", filename);
+
+      // Upisi ime fajla u bazu
+      korisnik.profilna_slika = filename;
+
+      new KorM(korisnik)
+        .save()
+        .then((user) => {
+          sharp(req.file.buffer)
+            .toFile(filePath)
+            .then((d) => {
+              const ret = user.toObject();
+              ret.lozinka = "";
+
+              res.json(ret); // success
+            })
+            .catch((err) => {
+              console.log(err);
+              res.json(null);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.json({ ok: false, reason: "Internal error." });
+        });
+    } catch (err) {
+      console.error(err);
+      res.json({ ok: false, reason: "Internal error." });
+    }
+  };
+
+  passwordRecovery = (req: any, res: express.Response) => {
+    let new_password = req.body.new_password;
+    let old_password = req.body.old_password;
+    let korisnicko_ime = req.params["korisnicko_ime"];
+
+    let p1 = this.validatePassword(new_password);
+    if (!p1.ok) {
+      res.json({ ok: false, reason: p1.reason });
+      return;
+    }
+    let p2 = this.validatePassword(old_password);
+    if (!p2.ok) {
+      res.json({ ok: false, reason: p2.reason });
+      return;
+    }
+
+    KorM.findOne({
+      korisnicko_ime: korisnicko_ime,
+      blokiran: false,
+    })
+      .then((user) => {
+        if (!user) {
+          res.json({
+            ok: false,
+            reason: "User with that username doesn't exist.",
+          });
+          return;
+        }
+
+        if (user.lozinka != old_password) {
+          res.json({
+            ok: false,
+            reason: "Incorrect old password.",
+          });
+          return;
+        }
+        if (user.lozinka == new_password) {
+          res.json({
+            ok: false,
+            reason: "New password can't be the same as the old password.",
+          });
+          return;
+        }
+        user.lozinka = new_password;
+        user
+          .save()
+          .then((d) => {
+            res.json({ ok: true, reason: "" });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.json({
+              ok: false,
+              reason: "Internal error.",
+            });
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({
+          ok: false,
+          reason: "Internal error.",
+        });
+      });
+  };
+
+  changeProfilePhoto = async (req: any, res: express.Response) => {
+    const korisnicko_ime = req.body.korisnicko_ime;
+
+    const user = await KorM.findOne({
+      korisnicko_ime,
+      aktivan: true,
+      blokiran: false,
+    });
+    if (!user) {
+      res.json({ ok: false, reason: "Invalid query." });
+      return;
+    }
+
+    if (!req.file) {
+      res.json({ ok: false, reason: "Invalid query." });
+      return;
+    }
+
+    try {
+      const metadata = await sharp(req.file.buffer).metadata();
+
+      // Provera dimenzija
+      if (
+        metadata.width < 100 ||
+        metadata.width > 300 ||
+        metadata.height < 100 ||
+        metadata.height > 300
+      ) {
+        return res.json({
+          ok: false,
+          reason: "File format must be PNG/JPG and size 100x100 up to 300x300.",
+        });
+      }
+
+      // Pripremi novo ime fajla
+      const ext = path.extname(req.file.originalname);
+      const filename = `${korisnicko_ime}${ext}`;
+      const filePath = path.join(__dirname, "../../uploads", filename);
+
+      // Ako postoji stari fajl, obriši ga
+      // if (user.profilna_slika) {
+      //   const oldPath = path.join(
+      //     __dirname,
+      //     "../../uploads",
+      //     user.profilna_slika
+      //   );
+      //   if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      // }
+
+      // Sačuvaj fajl na disk
+      await sharp(req.file.buffer).toFile(filePath);
+
+      // Upisi ime fajla u bazu
+      user.profilna_slika = filename;
+      const nuser = await user.save();
+
+      res.json({ ok: true, reason: "" });
+    } catch (err) {
+      console.error(err);
+      res.json({ ok: false, reason: "Internal error." });
+    }
+  };
+
+  changeUserData = (
+    req: express.Request,
+    res: express.Response,
+    isAdmin: boolean
+  ) => {
+    let korisnik = req.body.user;
+    if (!korisnik) {
+      res.json({ ok: false, reason: "Invalid query." });
+      console.log("changeUserData: korisnik null");
+      return;
+    }
+    if (this.validateCreditCard(korisnik.kreditna_kartica) < 0) {
+      res.json({ ok: false, reason: "Invalid credit card number." });
+      console.log("changeUserData: invalid kreditna_kartica");
+
+      return;
+    }
+    if (!isAdmin) {
+      KorM.updateOne(
+        {
+          korisnicko_ime: korisnik.korisnicko_ime,
+          aktivan: true,
+          blokiran: false,
+        },
+        {
+          $set: {
+            ime: korisnik.ime,
+            prezime: korisnik.prezime,
+            adresa: korisnik.adresa,
+            kontakt_telefon: korisnik.kontakt_telefon,
+            email: korisnik.email,
+            kreditna_kartica: korisnik.kreditna_kartica,
+          },
+        }
+      )
+        .then((d) => {
+          if (d.modifiedCount == 0) {
+            res.json({ ok: false, reason: "User doesn't exits." });
+            return;
+          }
+          res.json({ ok: true, reason: "" });
+        })
+        .catch((e) => {
+          res.json({ ok: false, reason: "Email must be unique." });
+          console.log(e);
+        });
+    }
+  };
+
+  getOneUser = (req: express.Request, res: express.Response) => {
+    let korisnicko_ime = req.params["korisnicko_ime"];
+
+    KorM.findOne({ korisnicko_ime })
+      .then((e) => {
+        if (!e) return res.json(null);
+        e.lozinka = "";
+        res.json(e);
+        return;
+      })
+      .catch((e) => {
+        res.json(null);
+        return;
+      });
+  };
+  // admin
 
   loginAdmin = (req: express.Request, res: express.Response) => {
     let korisnicko_ime = req.body.korisnicko_ime;
@@ -117,162 +424,6 @@ export class UserController {
       });
   };
 
-  register = async (req: any, res: express.Response) => {
-    let korisnik = JSON.parse(req.body.user);
-    if (!korisnik) {
-      res.json(null);
-      return;
-    }
-    korisnik.aktivan = false;
-    if (this.validatePassword(korisnik.lozinka).ok == false) {
-      res.json(null);
-      return;
-    }
-    if (this.validateCreditCard(korisnik.kreditna_kartica) < 0) {
-      res.json(null);
-      return;
-    }
-    const requiredFields = [
-      "korisnicko_ime",
-      "ime",
-      "prezime",
-      "pol",
-      "adresa",
-      "email",
-      "kreditna_kartica",
-      "tip",
-    ];
-
-    for (const field of requiredFields) {
-      if (!korisnik[field] || korisnik[field].trim() === "") {
-        res.json(null);
-        return;
-      }
-    }
-    if (korisnik.profilna_slika == "") {
-      korisnik.profilna_slika = "profile_photo.png";
-    }
-
-    if (!req.file) {
-      new KorM(korisnik)
-        .save()
-        .then((user) => {
-          const ret = user.toObject();
-          ret.lozinka = "";
-
-          res.json(ret);
-        })
-        .catch((err) => {
-          console.log(err);
-          res.json(null);
-        });
-      return;
-    }
-
-    try {
-      const metadata = await sharp(req.file.buffer).metadata();
-
-      // Provera dimenzija
-      if (
-        metadata.width < 100 ||
-        metadata.width > 300 ||
-        metadata.height < 100 ||
-        metadata.height > 300
-      ) {
-        res.json(null);
-        return;
-      }
-
-      // Pripremi novo ime fajla
-      const ext = path.extname(req.file.originalname);
-      const filename = `${korisnik.korisnicko_ime}${ext}`;
-      const filePath = path.join(__dirname, "../../uploads", filename);
-
-      // Upisi ime fajla u bazu
-      korisnik.profilna_slika = filename;
-
-      new KorM(korisnik)
-        .save()
-        .then((user) => {
-          sharp(req.file.buffer)
-            .toFile(filePath)
-            .then((d) => {
-              const ret = user.toObject();
-              ret.lozinka = "";
-
-              res.json(ret); // success
-            })
-            .catch((err) => {
-              console.log(err);
-              res.json(null);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.json(null);
-        });
-    } catch (err) {
-      console.error(err);
-      res.json(null);
-    }
-  };
-
-  changeProfilePhoto = async (req: any, res: express.Response) => {
-    const korisnicko_ime = req.body.korisnicko_ime;
-
-    const user = await KorM.findOne({ korisnicko_ime });
-    if (!user) {
-      return res.json(null);
-    }
-
-    if (!req.file) {
-      return res.json(null);
-    }
-
-    try {
-      const metadata = await sharp(req.file.buffer).metadata();
-
-      // Provera dimenzija
-      if (
-        metadata.width < 100 ||
-        metadata.width > 300 ||
-        metadata.height < 100 ||
-        metadata.height > 300
-      ) {
-        return res
-          .status(400)
-          .send("Dimenzije slike moraju biti između 100x100 i 300x300 px");
-      }
-
-      // Pripremi novo ime fajla
-      const ext = path.extname(req.file.originalname);
-      const filename = `${korisnicko_ime}${ext}`;
-      const filePath = path.join(__dirname, "../../uploads", filename);
-
-      // Ako postoji stari fajl, obriši ga
-      // if (user.profilna_slika) {
-      //   const oldPath = path.join(
-      //     __dirname,
-      //     "../../uploads",
-      //     user.profilna_slika
-      //   );
-      //   if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-      // }
-
-      // Sačuvaj fajl na disk
-      await sharp(req.file.buffer).toFile(filePath);
-
-      // Upisi ime fajla u bazu
-      user.profilna_slika = filename;
-      const nuser = await user.save();
-      nuser.lozinka = "";
-
-      res.json(nuser);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send("Greška pri obradi slike");
-    }
-  };
   //   register = (req: express.Request, res: express.Response) => {
   //     let username = req.body.username;
   //     let password = req.body.password;

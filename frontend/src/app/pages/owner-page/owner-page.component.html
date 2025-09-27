@@ -1,1 +1,23 @@
-<app-profile></app-profile>
+<header>
+
+
+</header>
+
+<main>
+  <nav>
+    <ul class=" my-container xl:grid-cols-5 ">
+      <li><a href="/home">My Profile</a></li>
+      <li><a href="/reservations">Reservations</a></li>
+      <li><a href="/my-cottages">My Cottages</a></li>
+      <li><a href="/statistics">Statistics</a></li>
+
+      <li><a class="cursor-pointer " (click)="logout()">Logout</a></li>
+    </ul>
+
+  </nav>
+  <div class="my-container">
+    <app-profile></app-profile>
+  </div>
+</main>
+
+<footer></footer>

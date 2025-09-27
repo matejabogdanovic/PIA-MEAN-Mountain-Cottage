@@ -1,7 +1,7 @@
 <div class=" red ">
   <form (submit)="login()" class="">
     <input class="" type="text" name="username" id="username" placeholder="Username" [(ngModel)]="korisnicko_ime"
-      required>
+      (input)="usernameInput()" required>
     <input class="" type="password" name="password" id="password" placeholder="Password" [(ngModel)]="lozinka" required>
     <button type="submit" class="hidden"></button>
     <div class="text-red-500">
@@ -9,7 +9,9 @@
     </div>
     <button type="submit">Login</button>
   </form>
-
+  @if(showRecoveryField){
+  <a (click)="recovery()" class="cursor-pointer block mx-auto w-fit">Forgot password?</a>
+  }
 
 
 </div>

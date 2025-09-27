@@ -22,12 +22,17 @@
       [(ngModel)]="user.kontakt_telefon" required>
     <input type="email" name="email" id="email" placeholder="user@mail.com*" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
       title="Invalid email address" [(ngModel)]="user.email" required>
+
     <input type="text" name="credit_card" id="credit_card" placeholder="Credit card number*"
       [(ngModel)]="user.kreditna_kartica" (input)="validateCreditCard()" required>
     @if(cc_type>=0){<img [src]="images[cc_type]" alt="" width="60px">}
-    <input class="cursor-pointer block text-neutral-400" type="file" name="file" accept=".jpg, .png"
-      (change)="onFileSelected($event)">
 
+    <div class="flex relative">
+      <input #fileInput class="cursor-pointer block text-neutral-400" type="file" name="file" accept=".jpg, .png"
+        (change)="onFileSelected($event)">
+      <button type="button" (click)="clearFile(fileInput)"
+        class="!bg-transparent !border-transparent !p-0 absolute right-0">Clear</button>
+    </div>
     <ul class="flex gap-2">
       <li> <label for="type_owner">Owner</label> <input type="radio" name="type" id="type_owner" value="vlasnik"
           [(ngModel)]="user.tip"></li>

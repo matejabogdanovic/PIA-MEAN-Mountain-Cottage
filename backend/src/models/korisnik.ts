@@ -39,13 +39,17 @@ const korisnikSchema = new mongoose.Schema(
     },
     profilna_slika: {
       type: String, // binarni podaci slike
-      required: false,
+      required: true,
     },
     kreditna_kartica: {
       type: String, // cuvamo kao string zbog velikih brojeva
       required: true,
     },
     aktivan: {
+      type: Boolean,
+      required: true,
+    },
+    blokiran: {
       type: Boolean,
       required: true,
     },

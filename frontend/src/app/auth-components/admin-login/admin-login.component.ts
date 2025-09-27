@@ -18,6 +18,17 @@ export class AdminLoginComponent {
   error: string = ' ';
 
   private router = inject(Router);
+  showRecoveryField = false;
+  usernameInput() {
+    if (this.korisnicko_ime.trim() != '') {
+      this.showRecoveryField = true;
+    } else {
+      this.showRecoveryField = false;
+    }
+  }
+  recovery() {
+    this.router.navigate([`/password-recovery/${this.korisnicko_ime}`]);
+  }
   login() {
     if (this.korisnicko_ime == '' || this.lozinka == '') {
       this.error = 'Please fill out all fields.';

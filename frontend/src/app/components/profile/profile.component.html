@@ -2,33 +2,66 @@
   <img [src]="this.user.profilna_slika" class="block self-center md:self-auto max-w-[150px]" />
   <div class="w-full">
 
+    <div class="form-field">
+      <div>First Name: </div>
+      <input type="text" name="first_name" id="first_name" placeholder="First Name*" [(ngModel)]="user.ime" required
+        [disabled]="!edit">
+    </div>
+    <div class="form-field">
+      <div>Last Name: </div>
+      <input type="text" name="last_name" id="last_name" placeholder="Last Name*" [(ngModel)]="user.prezime" required
+        [disabled]="!edit">
+    </div>
 
-    <input type="text" name="first_name" id="first_name" placeholder="First Name*" [(ngModel)]="user.ime" required
-      [disabled]="!edit">
-    <input type="text" name="last_name" id="last_name" placeholder="Last Name*" [(ngModel)]="user.prezime" required
-      [disabled]="!edit">
+    <div class="form-field">
+      <div>Address: </div>
+      <input type="text" name="address" id="address" placeholder="Address*" [(ngModel)]="user.adresa" required
+        [disabled]="!edit">
+    </div>
+    <div class="form-field">
+      <div>Phone: </div>
+      <input type="tel" name="phone" id="phone" pattern="^\+?[0-9]{7,15}$" placeholder="123-45-678*"
+        [(ngModel)]="user.kontakt_telefon" required [disabled]="!edit">
+    </div>
+    <div class="form-field">
+      <div>Email: </div>
+      <input type="email" name="email" id="email" placeholder="user@mail.com*" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+        title="Invalid email address" [(ngModel)]="user.email" required [disabled]="!edit">
+    </div>
+    @if(user.tip=='turista'){
+    <div class="form-field">
+      <div>Credit Card: </div>
+      <input type="text" name="credit_card" id="credit_card" placeholder="Credit card number*"
+        [(ngModel)]="user.kreditna_kartica" (input)="validateCreditCard()" [disabled]="!edit" required>
+    </div>
+    @if(cc_type>=0){<img [src]="images[cc_type]" alt="" width="60px">}
+    }
 
-
-    <input type="text" name="address" id="address" placeholder="Address*" [(ngModel)]="user.adresa" required
-      [disabled]="!edit">
-    <input type="tel" name="phone" id="phone" pattern="^\+?[0-9]{7,15}$" placeholder="123-45-678*"
-      [(ngModel)]="user.kontakt_telefon" required [disabled]="!edit">
-    <input type="email" name="email" id="email" placeholder="user@mail.com*" pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
-      title="Invalid email address" [(ngModel)]="user.email" required [disabled]="!edit">
 
     @if(edit){
-    <input class=" block text-neutral-400" [ngClass]="edit?'cursor-pointer':''" type="file" name="file"
-      accept=".jpg, .png" (change)="onFileSelected($event)" [disabled]="!edit">
+    <div class="form-field">
+      <div>Profile Photo: </div>
+      <div class="flex relative w-full">
+        <input class=" block text-neutral-400" [ngClass]="edit?'cursor-pointer':''" #fileInput type="file" name="file"
+          accept=".jpg, .png" (change)="onFileSelected($event)" [disabled]="!edit" />
+        <button type="button" (click)="clearFile(fileInput)"
+          class="!bg-transparent !border-transparent !p-0 absolute right-0">Clear</button>
+      </div>
+    </div>
     }
     <div class="text-red-500 self-center">
       {{this.error}}
     </div>
-    <div class="flex gap-2 justify-center md:justify-normal">
+    <div class="flex gap-2 justify-center md:justify-normal ">
       @if(edit){
       <button type="submit">Submit</button>
+
+      <button type="button" (click)="cancel()" class="red">Cancel</button>
+      }@else{
+      <button type="button" (click)="edit = true" class="orange"> Edit </button>
+
       }
 
-      <button type="button" (click)="edit = !edit" class="orange"> {{ !edit ? 'Edit' : 'Cancel' }}</button>
     </div>
 
   </div>
