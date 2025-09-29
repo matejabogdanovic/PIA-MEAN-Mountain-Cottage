@@ -1,12 +1,19 @@
 import { Routes } from '@angular/router';
 import { UnregisteredPageComponent } from './pages/unregistered-page/unregistered-page.component';
 
-import { HomePageComponent } from './pages/home-page/home-page.component';
 import { FormsLayoutComponent } from './layouts/forms-layout/forms-layout.component';
 import { RegisterComponent } from './auth-components/register/register.component';
 import { AdminLoginComponent } from './auth-components/admin-login/admin-login.component';
 import { PublicLoginComponent } from './auth-components/public-login/public-login.component';
 import { PasswordChangeComponent } from './auth-components/password-change/password-change.component';
+
+import { OwnerLayoutComponent } from './layouts/owner-layout/owner-layout.component';
+import { OwnerHomePageComponent } from './pages/owner-home-page/owner-home-page.component';
+import { TouristLayoutComponent } from './layouts/tourist-layout/tourist-layout.component';
+import { TouristHomePageComponent } from './pages/tourist-home-page/tourist-home-page.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
+import { OwnerMyCottagesPageComponent } from './pages/owner-my-cottages-page/owner-my-cottages-page.component';
 
 export const routes: Routes = [
   { path: '', component: UnregisteredPageComponent },
@@ -36,5 +43,26 @@ export const routes: Routes = [
     data: { pageTitle: 'Password Change' },
     children: [{ path: '', component: PasswordChangeComponent }],
   },
-  { path: 'home', component: HomePageComponent },
+  // { path: 'home', component: HomePageComponent },
+  {
+    path: 'owner',
+    component: OwnerLayoutComponent,
+    children: [
+      { path: 'home', component: OwnerHomePageComponent },
+      {
+        path: 'my-cottages',
+        component: OwnerMyCottagesPageComponent,
+      },
+    ],
+  },
+  {
+    path: 'tourist',
+    component: TouristLayoutComponent,
+    children: [{ path: 'home', component: TouristHomePageComponent }],
+  },
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [{ path: 'home', component: AdminHomePageComponent }],
+  },
 ];

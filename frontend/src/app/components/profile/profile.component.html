@@ -1,6 +1,11 @@
 <form #f="ngForm" class="flex flex-col items-start md:flex-row gap-2 md:gap-4" (ngSubmit)="submit(f)" id="updateForm">
   @if(!loading){
-  <img [src]="this.user.profilna_slika" class="block self-center md:self-auto max-w-[150px]" />
+  <div class="self-center md:self-auto ">
+    <img [src]=" profilna_slika" class="block self-center md:self-auto max-w-[150px]" />
+    @if(isAdmin && edit && this.user.profilna_slika !== 'profile_photo.png'){
+    <button type="button" (click)="deleteProfilePhoto()" class="red mt-3">Delete</button>
+    }
+  </div>
   }
   <div class="w-full">
 
@@ -49,17 +54,19 @@
         <button type="button" (click)="clearFile(fileInput)"
           class="!bg-transparent !border-transparent !p-0 absolute right-0">Clear</button>
       </div>
+
     </div>
     }
     <div class="text-red-500 self-center">
       {{this.error}}
     </div>
-    <div class="flex gap-2 justify-center md:justify-normal ">
+    <div class="flex gap-2 justify-center md:justify-normal mt-3">
       @if(edit ){
+
       <button type="submit">Submit</button>
+      <button type="button" (click)="cancel()" class="red">Cancel</button>
 
-
-      <button type="button" (click)="cancel()" class="red">Cancel</button>}
+      }
       @else{
       @if(!isAdmin){
       <button type="button" (click)="this.changeEdit(true)" class="orange"> Edit </button>

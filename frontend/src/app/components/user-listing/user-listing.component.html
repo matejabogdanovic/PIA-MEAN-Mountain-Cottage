@@ -5,7 +5,7 @@
     </div>
     @if(showtype){
     <div>
-      <span class="font-bold text-green-900">Type:</span> {{ user.tip }}
+      <span class="font-bold text-green-900">Type:</span> {{ user.tip =='vlasnik'?'Owner':'Tourist'}}
     </div>
     }
 

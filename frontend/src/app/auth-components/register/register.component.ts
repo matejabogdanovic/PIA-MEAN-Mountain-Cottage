@@ -105,8 +105,8 @@ export class RegisterComponent {
         //     });
         // } else {
         console.log('res', korisnik);
-        this.userService.startSession(korisnik);
-        this.router.navigate(['/home']);
+
+        this.router.navigate(['/login']);
       });
   }
 }

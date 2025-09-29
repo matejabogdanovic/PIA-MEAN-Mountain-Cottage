@@ -1,0 +1,24 @@
+<header>
+
+
+</header>
+
+<main>
+
+  @if( this.user.tip == 'admin'){
+  <nav>
+    <ul class=" my-container xl:grid-cols-1 ">
+
+      <li><a class="cursor-pointer " (click)="logout()">Logout</a></li>
+    </ul>
+
+  </nav>
+  <div class="my-container">
+
+    <router-outlet></router-outlet>
+
+  </div>
+  }
+</main>
+
+<footer></footer>

@@ -1,0 +1,33 @@
+<header>
+
+
+</header>
+
+<main>
+  @if(!loading){
+  @if(this.user.aktivan==true && this.user.tip == 'turista'){
+  <nav>
+    <ul class=" my-container xl:grid-cols-4 ">
+      <li><a routerLink="/tourist/home">My Profile</a></li>
+      <li><a routerLink="/tourist/cottages">Cottages</a></li>
+      <li><a routerLink="/tourist/my-reservations">My Resetvations</a></li>
+
+
+      <li><a class="cursor-pointer " (click)="logout()">Logout</a></li>
+    </ul>
+
+  </nav>
+  <div class="my-container">
+
+    <router-outlet></router-outlet>
+
+  </div>
+  }@else{
+  <div>
+    <h1>Profile Pending Approval</h1>
+  </div>
+  }
+  }
+</main>
+
+<footer></footer>

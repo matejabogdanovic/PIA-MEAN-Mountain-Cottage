@@ -1,0 +1,29 @@
+<h1 class="page-title">Add Cottage</h1>
+@if(!adding){
+<button (click)="adding=true">+</button>
+}@else{
+<app-cottage-form [user]="this.user" [(adding)]="adding" (addingChange)="added($event)"></app-cottage-form>
+
+}
+
+
+<h1 class="page-title">My Cottages</h1>
+<div class="flex flex-col gap-4">
+  @for(c of this.cottages; track c._id){
+
+
+  <app-cottage-listing [cottage]="c">
+    @if(!editing || editing_cottage._id !== c._id){
+    <button class="orange" (click)="startEditingCottage(c)">Edit</button>
+    }
+    <button class="red " (click)="deleteCottage(c)">Delete</button>
+  </app-cottage-listing>
+
+
+
+  @if(editing && editing_cottage._id === c._id){
+  <app-cottage-form [user]="this.user" [isEditing]="true" (addingChange)="edited($event)"
+    [cottage]="c"></app-cottage-form>
+  }
+  }
+</div>

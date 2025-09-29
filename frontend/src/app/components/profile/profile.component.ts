@@ -11,6 +11,7 @@ import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,15 +24,17 @@ export class ProfileComponent implements OnInit {
   @Input() user!: User;
   @Input() isAdmin: boolean = false;
   private userService = inject(UserService);
+  private adminService = inject(AdminService);
 
   private router = inject(Router);
   slikaApi = 'http://localhost:4000/uploads';
   error: string = ' ';
 
   @Input() edit = false;
-  // Event koji šalje promene roditelju
+  // Event koji salje promene roditelju
   @Output() editChange = new EventEmitter<boolean>();
   loading = true;
+  profilna_slika = '';
   ngOnInit(): void {
     this.loading = true;
     console.log('refresh');
@@ -46,7 +49,7 @@ export class ProfileComponent implements OnInit {
       console.log(this.user);
 
       const timestamp = new Date().getTime();
-      this.user.profilna_slika = `${this.slikaApi}/${d.profilna_slika}?t=${timestamp}`;
+      this.profilna_slika = `${this.slikaApi}/${d.profilna_slika}?t=${timestamp}`;
       this.loading = false;
     });
   }
@@ -92,6 +95,17 @@ export class ProfileComponent implements OnInit {
     this.error = '';
   }
 
+  deleteProfilePhoto() {
+    this.adminService
+      .deleteProfilePhoto(this.user.korisnicko_ime)
+      .subscribe((d) => {
+        if (!d.ok) {
+          this.error = d.reason;
+        } else {
+          this.ngOnInit();
+        }
+      });
+  }
   cancel() {
     // this.edit = false;
     this.changeEdit(false);
@@ -100,32 +114,35 @@ export class ProfileComponent implements OnInit {
     this.cc_type = -1;
     this.ngOnInit();
   }
+
   submit(form: NgForm) {
     console.log(this.user);
-    if (!form.valid) {
+    if (!form.valid && !this.isAdmin) {
       this.error =
         'Fields are not in required format or required fields are empty.';
       return;
     }
 
-    this.userService.changeUserData(this.user).subscribe((d) => {
-      if (d.ok == false) {
-        this.error = d.reason;
-      } else {
-        if (this.selectedFile) {
-          this.userService
-            .changeProfilePhoto(this.user.korisnicko_ime, this.selectedFile)
-            .subscribe((d) => {
-              if (d.ok == false) {
-                this.error = d.reason;
-              } else {
-                this.cancel();
-              }
-            });
+    (this.isAdmin ? this.adminService : this.userService)
+      .changeUserData(this.user)
+      .subscribe((d) => {
+        if (d.ok == false) {
+          this.error = d.reason;
         } else {
-          this.cancel();
+          if (this.selectedFile) {
+            this.userService
+              .changeProfilePhoto(this.user.korisnicko_ime, this.selectedFile)
+              .subscribe((d) => {
+                if (d.ok == false) {
+                  this.error = d.reason;
+                } else {
+                  this.cancel();
+                }
+              });
+          } else {
+            this.cancel();
+          }
         }
-      }
-    });
+      });
   }
 }

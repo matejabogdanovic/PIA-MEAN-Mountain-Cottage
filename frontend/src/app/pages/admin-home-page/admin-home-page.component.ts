@@ -55,8 +55,7 @@ export class AdminHomePageComponent implements OnInit {
     this.editing_user = korisnicko_ime;
     this.edit_opened = true;
   }
-  edit(korisnik: User) {}
-  delete(korisnik: User) {}
+
   changeActiveStatus(korisnicko_ime: string, status: boolean) {
     this.adminService
       .changeActiveStatus(korisnicko_ime, status)

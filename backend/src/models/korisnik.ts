@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const korisnikSchema = new mongoose.Schema(
   {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: () => new mongoose.Types.ObjectId(),
+    },
     korisnicko_ime: {
       type: String,
       required: true,

@@ -45,7 +45,15 @@ export class PublicLoginComponent {
         }
 
         this.userService.startSession(korisnik);
-        this.router.navigate(['/home']);
+        if (korisnik.tip == 'admin') {
+          this.router.navigate(['/admin/home']);
+        } else if (korisnik.tip == 'vlasnik') {
+          this.router.navigate(['/owner/home']);
+        } else if (korisnik.tip == 'turista') {
+          this.router.navigate(['/tourist/home']);
+        } else {
+          this.error = 'Error.';
+        }
       });
   }
 }

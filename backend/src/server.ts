@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import userRouter from "./routers/korisnikRouter.router";
+import cottageRouter from "./routers/vikendicaRouter.router";
 import path from "path";
 
 const app = express();
@@ -17,6 +18,7 @@ conn.once("open", () => {
 const router = express.Router();
 
 router.use("/korisnici", userRouter);
+router.use("/vikendice", cottageRouter);
 app.use("/", router);
 // slike dostupne kao link
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));

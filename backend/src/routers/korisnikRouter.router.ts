@@ -23,12 +23,17 @@ korisnikRouter
 korisnikRouter
   .route("/loginAdmin")
   .post((req, res) => new UserController().loginAdmin(req, res));
+
 korisnikRouter
   .route("/changeProfilePhoto")
   .post(upload.single("file"), (req, res) =>
     new UserController().changeProfilePhoto(req, res).then(() => {})
   );
-
+korisnikRouter
+  .route("/deleteProfilePhoto")
+  .post(upload.single("file"), (req, res) =>
+    new UserController().deleteProfilePhoto(req, res)
+  );
 korisnikRouter
   .route("/getOneUser/:korisnicko_ime")
   .get((req, res) => new UserController().getOneUser(req, res));
@@ -36,6 +41,10 @@ korisnikRouter
 korisnikRouter
   .route("/changeUserData")
   .post((req, res) => new UserController().changeUserData(req, res, false));
+
+korisnikRouter
+  .route("/changeUserDataAdmin")
+  .post((req, res) => new UserController().changeUserData(req, res, true));
 
 korisnikRouter
   .route("/passwordChange/:korisnicko_ime")
@@ -50,6 +59,7 @@ korisnikRouter
 korisnikRouter
   .route("/changeActiveStatus")
   .post((req, res) => new UserController().changeActiveStatus(req, res));
+
 korisnikRouter
   .route("/getAllUsers")
   .get((req, res) => new UserController().getAllUsers(req, res));

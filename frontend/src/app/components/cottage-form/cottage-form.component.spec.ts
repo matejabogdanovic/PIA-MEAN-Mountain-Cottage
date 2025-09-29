@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OwnerPageComponent } from './owner-page.component';
+import { CottageFormComponent } from './cottage-form.component';
 
-describe('OwnerPageComponent', () => {
-  let component: OwnerPageComponent;
-  let fixture: ComponentFixture<OwnerPageComponent>;
+describe('CottageFormComponent', () => {
+  let component: CottageFormComponent;
+  let fixture: ComponentFixture<CottageFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OwnerPageComponent]
+      imports: [CottageFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OwnerPageComponent);
+    fixture = TestBed.createComponent(CottageFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

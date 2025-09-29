@@ -6,7 +6,7 @@ import sharp from "sharp";
 import path from "path";
 
 import bcrypt from "bcryptjs";
-
+import fs from "fs";
 const saltRounds = 10; // jačina heširanja
 
 async function hashPassword(password: string) {
@@ -187,7 +187,9 @@ export class UserController {
 
       // Pripremi novo ime fajla
       const ext = path.extname(req.file.originalname);
-      const filename = `${korisnik.korisnicko_ime}${ext}`;
+      const filename = `${
+        korisnik.korisnicko_ime
+      }${Date.now().toString()}${ext}`;
       const filePath = path.join(__dirname, "../../uploads", filename);
 
       // Upisi ime fajla u bazu
@@ -265,9 +267,7 @@ export class UserController {
             }
 
             hashPassword(new_password).then((np) => {
-              user.lozinka = np;
-              user
-                .save()
+              KorM.updateOne({ korisnicko_ime }, { $set: { lozinka: np } })
                 .then((d) => {
                   res.json({ ok: true, reason: "" });
                 })
@@ -327,18 +327,18 @@ export class UserController {
 
       // Pripremi novo ime fajla
       const ext = path.extname(req.file.originalname);
-      const filename = `${korisnicko_ime}${ext}`;
+      const filename = `${korisnicko_ime}${Date.now().toString()}${ext}`;
       const filePath = path.join(__dirname, "../../uploads", filename);
 
       // Ako postoji stari fajl, obriši ga
-      // if (user.profilna_slika) {
-      //   const oldPath = path.join(
-      //     __dirname,
-      //     "../../uploads",
-      //     user.profilna_slika
-      //   );
-      //   if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
-      // }
+      if (user.profilna_slika && user.profilna_slika != "profile_photo.png") {
+        const oldPath = path.join(
+          __dirname,
+          "../../uploads",
+          user.profilna_slika
+        );
+        if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+      }
 
       // Sačuvaj fajl na disk
       await sharp(req.file.buffer).toFile(filePath);
@@ -365,11 +365,37 @@ export class UserController {
       console.log("changeUserData: korisnik null");
       return;
     }
-    if (this.validateCreditCard(korisnik.kreditna_kartica) < 0) {
-      res.json({ ok: false, reason: "Invalid credit card number." });
-      console.log("changeUserData: invalid kreditna_kartica");
+    if (!isAdmin) {
+      if (this.validateCreditCard(korisnik.kreditna_kartica) < 0) {
+        res.json({ ok: false, reason: "Invalid credit card number." });
+        console.log("changeUserData: invalid kreditna_kartica");
 
-      return;
+        return;
+      }
+
+      const requiredFields = [
+        "korisnicko_ime",
+        "ime",
+        "prezime",
+        "pol",
+        "adresa",
+        "email",
+        "kreditna_kartica",
+        "tip",
+      ];
+
+      for (const field of requiredFields) {
+        if (!korisnik[field] || korisnik[field].trim() === "") {
+          res.json({
+            ok: false,
+            reason: "Please fill out all the required fields.",
+          });
+          return;
+        }
+      }
+      if (korisnik.profilna_slika == "") {
+        korisnik.profilna_slika = "profile_photo.png";
+      }
     }
     //if (!isAdmin) {
     KorM.updateOne(
@@ -390,10 +416,10 @@ export class UserController {
       }
     )
       .then((d) => {
-        if (d.modifiedCount == 0) {
-          res.json({ ok: false, reason: "User doesn't exits." });
-          return;
-        }
+        // if (d.modifiedCount == 0) {
+        //   res.json({ ok: false, reason: "User doesn't exists." });
+        //   return;
+        // }
         res.json({ ok: true, reason: "" });
       })
       .catch((e) => {
@@ -418,6 +444,44 @@ export class UserController {
         return;
       });
   };
+
+  deleteProfilePhoto = (req: express.Request, res: express.Response) => {
+    let filename = "";
+    let korisnicko_ime = req.body.korisnicko_ime;
+    KorM.findOne({ korisnicko_ime }).then((d) => {
+      if (!d) {
+        res.json({ ok: false, reason: "User doesn't exist." });
+        return;
+      }
+      filename = d.profilna_slika;
+
+      if (filename == "profile_photo.png") {
+        res.json({ ok: false, reason: "Profile photo doesn't exist." });
+        return;
+      }
+      KorM.updateOne(
+        { korisnicko_ime },
+        { $set: { profilna_slika: "profile_photo.png" } }
+      ).then((d) => {
+        if (d.modifiedCount > 0) {
+          // putanja do fajla
+          const filePath = path.join("uploads", filename);
+          fs.unlink(filePath, (err) => {
+            if (err) {
+              console.error("Greška pri brisanju:", err);
+              res.json({ ok: false, reason: "Internal error." });
+              return;
+            }
+            res.json({ ok: true, reason: "" });
+          });
+        } else {
+          console.log("error");
+          res.json({ ok: false, reason: "Internal error." });
+          return;
+        }
+      });
+    });
+  };
   // admin
   getAllUsers = (req: express.Request, res: express.Response) => {
     KorM.find({
@@ -426,6 +490,7 @@ export class UserController {
       res.json(podaci);
     });
   };
+
   loginAdmin = (req: express.Request, res: express.Response) => {
     let korisnicko_ime = req.body.korisnicko_ime;
     let lozinka = req.body.lozinka;

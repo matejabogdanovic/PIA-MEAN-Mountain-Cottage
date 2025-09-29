@@ -21,4 +21,21 @@ export class AdminService {
   getAllUsers() {
     return this.http.get<User[]>(`${this.api}/getAllUsers`);
   }
+
+  changeUserData(korisnik: User) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/changeUserDataAdmin`,
+      {
+        user: korisnik,
+      }
+    );
+  }
+  deleteProfilePhoto(korisnicko_ime: string) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/deleteProfilePhoto`,
+      {
+        korisnicko_ime,
+      }
+    );
+  }
 }

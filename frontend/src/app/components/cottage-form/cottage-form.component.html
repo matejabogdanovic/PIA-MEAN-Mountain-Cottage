@@ -1,0 +1,65 @@
+<form #f="ngForm" class="flex flex-col items-start md:flex-row gap-2 md:gap-4" (ngSubmit)="submit(f)"
+  id="addCottageForm">
+
+  <div class="w-full">
+
+    <div class="form-field">
+      <div>Name*:</div>
+      <input type="text" name="name" id="name" [(ngModel)]="cottage.naziv" required>
+    </div>
+    <div class="form-field">
+      <div>Location*:</div>
+      <input type="text" name="location" id="location" [(ngModel)]="cottage.mesto" required>
+    </div>
+    <div class="form-field">
+      <div>Coordinates: </div>
+      <div class="w-full">
+        <div class="form-field">
+          <div>Latitude*: </div>
+          <input type="text" name="lat" id="lat" [(ngModel)]="cottage.koordinate.lat" required>
+
+        </div>
+        <div class="form-field">
+          <div>Longitude*: </div>
+          <input type="text" name="lng" id="lng" [(ngModel)]="cottage.koordinate.lng" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <div>Services:</div>
+      <input type="text" name="services" id="services" [(ngModel)]="cottage.usluge">
+    </div>
+    <div class="form-field">
+      <div>Prices*:</div>
+      <div class="w-full">
+        <div *ngFor="let m of months; let i = index">
+          <div class="form-field">
+            <div>{{ m }}:</div>
+            <input type="number" [(ngModel)]="cottage.cenovnik[i]" [name]="m" required />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <div>Phone*:</div>
+      <input type="tel" name="phone" id="phone" pattern="^\+?[0-9]{7,15}$" [(ngModel)]="cottage.telefon" required>
+    </div>
+    <div class="form-field">
+      <div>Photos:</div>
+      <input type="file" (change)="onFilesSelected($event)" class="cursor-pointer" multiple />
+    </div>
+    <div class="text-red-500 self-center">
+      {{this.error}}
+    </div>
+    <div class="flex gap-2 justify-center md:justify-normal mt-3">
+      @if(adding || isEditing){
+
+      <button type="submit">Submit</button>
+      <button type="button" (click)="cancel()" class="red">Cancel</button>
+
+      }
+    </div>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+<header>
+
+
+</header>
+
+<main>
+  @if(!loading){
+  @if(this.user.aktivan==true && this.user.tip == 'vlasnik'){
+  <nav>
+    <ul class=" my-container xl:grid-cols-5 ">
+      <li><a routerLink="/owner/home">My Profile</a></li>
+      <li><a routerLink="/owner/reservations">Reservations</a></li>
+      <li><a routerLink="/owner/my-cottages">My Cottages</a></li>
+      <li><a routerLink="/owner/statistics">Statistics</a></li>
+
+      <li><a class="cursor-pointer " (click)="logout()">Logout</a></li>
+    </ul>
+
+  </nav>
+  <div class="my-container">
+
+    <router-outlet></router-outlet>
+
+  </div>
+  }@else{
+  <div>
+    <h1>Profile Pending Approval</h1>
+  </div>
+  }
+  }
+</main>
+
+<footer></footer>
