@@ -8,4 +8,5 @@ export class Cottage {
   telefon: string = '';
   slike: string[] = [];
   vlasnik: string = ''; // ObjectId korisnika kao string
+  ocena: number = 0.0;
 }

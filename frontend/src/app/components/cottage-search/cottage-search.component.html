@@ -1,0 +1,30 @@
+@if(!loading){
+<h1 class="page-title">Cottages</h1>
+
+<div class="flex gap-4 mb-4 xl:flex-row flex-col">
+  <input type="search" [(ngModel)]="name_query" name="search_by_name" id="search_by_name" placeholder="Name..."
+    (input)="queryChange() ">
+  <input type="search" [(ngModel)]="location_query" name="search_by_location" id="search_by_location"
+    placeholder="Location..." (input)="queryChange() ">
+</div>
+<div class="grid xl:grid-cols-3  md:grid-cols-2 gap-4">
+  @for(c of this.filteredCottages; track c._id){
+
+
+  <a (click)="navigate(c)" class="cursor-pointer ">
+    <app-cottage-listing [cottage]="c">
+      <div class="flex justify-between w-full flex-wrap">
+        @if(registered){
+        <div>zvezdice i ocena</div>
+        }
+        <!-- @if(isAdmin){
+        <div>
+          <button class="red">Disable</button>
+        </div>
+        } -->
+      </div>
+    </app-cottage-listing>
+  </a>
+  }
+</div>
+}

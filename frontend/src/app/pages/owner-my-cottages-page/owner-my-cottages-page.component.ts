@@ -34,13 +34,16 @@ export class OwnerMyCottagesPageComponent implements OnInit {
       this.ngOnInit();
     }
   }
+  loading = false;
   ngOnInit(): void {
+    this.loading = true;
     let x = this.userService.getUser();
     if (!x) return;
     this.user = x;
     this.cotService.getAllCottagesUsername(x.korisnicko_ime).subscribe((d) => {
       console.log(d);
       this.cottages = d;
+      this.loading = false;
     });
   }
   editing = false;

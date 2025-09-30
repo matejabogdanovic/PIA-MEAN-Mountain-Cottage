@@ -1,5 +1,6 @@
 import express from "express";
 import KorM from "../models/korisnik";
+import VikM from "../models/vikendica";
 
 import sharp from "sharp";
 
@@ -291,6 +292,29 @@ export class UserController {
       });
   };
 
+  unregisteredStatistics = async (req: any, res: express.Response) => {
+    try {
+      const [korisnici, vikendice] = await Promise.all([
+        KorM.find({}),
+        VikM.find({}),
+      ]);
+      const stats = {
+        ukupnoVlasnika: korisnici.filter(
+          (k) => k.tip == "vlasnik" && k.blokiran == false && k.aktivan == true
+        ).length,
+        ukupnoTurista: korisnici.filter(
+          (k) => k.tip == "turista" && k.blokiran == false && k.aktivan == true
+        ).length,
+        ukupnoVikendica: vikendice.length,
+      };
+
+      res.json(stats);
+    } catch (error) {
+      console.log(error);
+      res.json({});
+    }
+  };
+
   changeProfilePhoto = async (req: any, res: express.Response) => {
     const korisnicko_ime = req.body.korisnicko_ime;
 
@@ -330,7 +354,7 @@ export class UserController {
       const filename = `${korisnicko_ime}${Date.now().toString()}${ext}`;
       const filePath = path.join(__dirname, "../../uploads", filename);
 
-      // Ako postoji stari fajl, obriši ga
+      // Ako postoji stari fajl, obrisi ga
       if (user.profilna_slika && user.profilna_slika != "profile_photo.png") {
         const oldPath = path.join(
           __dirname,
@@ -340,7 +364,7 @@ export class UserController {
         if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
       }
 
-      // Sačuvaj fajl na disk
+      // sacuvaj na disk
       await sharp(req.file.buffer).toFile(filePath);
 
       // Upisi ime fajla u bazu

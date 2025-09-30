@@ -1,3 +1,4 @@
+@if(!loading){
 <h1 class="page-title">Add Cottage</h1>
 @if(!adding){
 <button (click)="adding=true">+</button>
@@ -8,7 +9,7 @@
 
 
 <h1 class="page-title">My Cottages</h1>
-<div class="flex flex-col gap-4">
+<div class="grid xl:grid-cols-3 md:grid-cols-2 gap-4">
   @for(c of this.cottages; track c._id){
 
 
@@ -20,10 +21,12 @@
   </app-cottage-listing>
 
 
-
   @if(editing && editing_cottage._id === c._id){
-  <app-cottage-form [user]="this.user" [isEditing]="true" (addingChange)="edited($event)"
-    [cottage]="c"></app-cottage-form>
+  <div class="xl:col-span-3 md:col-span-3">
+    <app-cottage-form [user]="this.user" [isEditing]="true" (addingChange)="edited($event)"
+      [cottage]="c"></app-cottage-form>
+  </div>
   }
   }
 </div>
+}

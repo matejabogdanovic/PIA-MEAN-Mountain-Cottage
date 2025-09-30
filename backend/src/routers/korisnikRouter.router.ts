@@ -4,7 +4,7 @@ import { UserController } from "../controllers/korisnik.controller";
 const korisnikRouter = express.Router();
 const multer = require("multer");
 
-const storage = multer.memoryStorage(); // чувамо у меморији прво
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
@@ -25,15 +25,18 @@ korisnikRouter
   .post((req, res) => new UserController().loginAdmin(req, res));
 
 korisnikRouter
+  .route("/unregisteredStatistics")
+  .get((req, res) => new UserController().unregisteredStatistics(req, res));
+
+korisnikRouter
   .route("/changeProfilePhoto")
   .post(upload.single("file"), (req, res) =>
     new UserController().changeProfilePhoto(req, res).then(() => {})
   );
 korisnikRouter
   .route("/deleteProfilePhoto")
-  .post(upload.single("file"), (req, res) =>
-    new UserController().deleteProfilePhoto(req, res)
-  );
+  .post((req, res) => new UserController().deleteProfilePhoto(req, res));
+
 korisnikRouter
   .route("/getOneUser/:korisnicko_ime")
   .get((req, res) => new UserController().getOneUser(req, res));

@@ -104,6 +104,13 @@ export class UserService {
     });
   }
 
+  unregisteredStatistics() {
+    return this.http.get<{
+      ukupnoVlasnika: number;
+      ukupnoTurista: number;
+      ukupnoVikendica: number;
+    }>(`${this.api}/unregisteredStatistics`);
+  }
   register(korisnik: User, file?: File) {
     const formData = new FormData();
     formData.append('user', JSON.stringify(korisnik));

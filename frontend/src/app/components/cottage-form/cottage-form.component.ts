@@ -38,19 +38,59 @@ export class CottageFormComponent {
     'November',
     'December',
   ];
-  seasons = [1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1];
+
   openAddCottage() {
     this.adding = true;
     this.addingChange.emit(this.adding);
   }
 
   selectedFiles: File[] = [];
+
+  allowedTypes = ['image/jpeg', 'image/png']; // dozvoljeni formati
   onFilesSelected(event: any) {
     this.selectedFiles = Array.from(event.target.files);
-  }
+    this.selectedFiles.forEach((file) => {
+      // provera tipa fajla
+      if (!this.allowedTypes.includes(file.type)) {
+        this.error = 'Allowed formats: JPG i PNG';
+        this.selectedFiles = [];
+        return;
+      }
 
+      this.error = '';
+    });
+  }
+  seasons = [1, 1, 0, 0, 2, 2, 2, 2, 0, 0, 0, 1];
   checkPrices() {
-    // todo
+    for (let i = 0; i < this.cottage.cenovnik.length; i++) {
+      if (this.cottage.cenovnik[i] < 0) {
+        return { ok: false, reason: "Prices can't be negative." };
+      }
+    }
+    let summer_season = this.cottage.cenovnik.slice(4, 8);
+    let winter_season = [
+      ...this.cottage.cenovnik.slice(0, 4),
+      ...this.cottage.cenovnik.slice(8, 12),
+    ];
+    const distinct_summer = [...new Set(summer_season)];
+    const distinct_winter = [...new Set(winter_season)];
+    if (distinct_summer.length > 1 && distinct_winter.length > 1) {
+      return {
+        ok: true,
+        reason: '',
+      };
+    }
+
+    return {
+      ok: false,
+      reason:
+        'Make sure that you enter at least two different prices for summer (May, June, July, August) and winter season (other).',
+    };
+  }
+  clearFile(input: HTMLInputElement) {
+    input.value = '';
+    this.selectedFiles = [];
+    this.error = '';
   }
 
   cancel() {
@@ -63,6 +103,16 @@ export class CottageFormComponent {
 
   submit(form: NgForm) {
     console.log(this.cottage);
+    if (!this.isEditing && this.selectedFiles.length == 0) {
+      this.error = 'Please, select at least one photo.  ';
+      return;
+    }
+
+    let prices = this.checkPrices();
+    if (!prices.ok) {
+      this.error = prices.reason;
+      return;
+    }
     if (
       !form.valid ||
       this.cottage.naziv.trim() === '' ||
@@ -74,8 +124,12 @@ export class CottageFormComponent {
     }
 
     (this.isEditing
-      ? this.cotService.editCottage(this.cottage)
-      : this.cotService.addCottage(this.cottage, this.user.korisnicko_ime)
+      ? this.cotService.editCottage(this.cottage, this.selectedFiles)
+      : this.cotService.addCottage(
+          this.cottage,
+          this.user.korisnicko_ime,
+          this.selectedFiles
+        )
     ).subscribe((d) => {
       if (d.ok) {
         this.cancel();

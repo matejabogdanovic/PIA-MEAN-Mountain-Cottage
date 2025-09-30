@@ -14,6 +14,7 @@ import { TouristHomePageComponent } from './pages/tourist-home-page/tourist-home
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
 import { OwnerMyCottagesPageComponent } from './pages/owner-my-cottages-page/owner-my-cottages-page.component';
+import { TouristCottagesPageComponent } from './pages/tourist-cottages-page/tourist-cottages-page.component';
 
 export const routes: Routes = [
   { path: '', component: UnregisteredPageComponent },
@@ -58,7 +59,10 @@ export const routes: Routes = [
   {
     path: 'tourist',
     component: TouristLayoutComponent,
-    children: [{ path: 'home', component: TouristHomePageComponent }],
+    children: [
+      { path: 'home', component: TouristHomePageComponent },
+      { path: 'cottages', component: TouristCottagesPageComponent },
+    ],
   },
   {
     path: 'admin',

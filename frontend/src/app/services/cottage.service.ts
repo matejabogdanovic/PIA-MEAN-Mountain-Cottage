@@ -19,16 +19,37 @@ export class CottageService {
       `${this.api}/getAllCottages/${korisnicko_ime}`
     );
   }
-  addCottage(vikendica: Cottage, korisnicko_ime: string) {
+  addCottage(vikendica: Cottage, korisnicko_ime: string, files: File[]) {
+    const formData = new FormData();
+
+    // objekat u string
+    formData.append('vikendica', JSON.stringify(vikendica));
+
+    // fajlovi jedan po jedan
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+      console.log(i);
+    }
+
     return this.http.post<{ ok: boolean; reason: string }>(
       `${this.api}/addCottage/${korisnicko_ime}`,
-      { vikendica }
+      formData
     );
   }
-  editCottage(vikendica: Cottage) {
+  editCottage(vikendica: Cottage, files: File[]) {
+    const formData = new FormData();
+
+    // objekat u string
+    formData.append('vikendica', JSON.stringify(vikendica));
+
+    // fajlovi jedan po jedan
+    for (let i = 0; i < files.length; i++) {
+      formData.append('files', files[i]);
+      console.log(i);
+    }
     return this.http.post<{ ok: boolean; reason: string }>(
       `${this.api}/editCottage`,
-      { vikendica }
+      formData
     );
   }
   deleteCottage(_id: string) {

@@ -5,11 +5,12 @@ import { AdminService } from '../../services/admin.service';
 import { User } from '../../models/User';
 import { UserListingComponent } from '../../components/user-listing/user-listing.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
+import { CottageSearchComponent } from '../../components/cottage-search/cottage-search.component';
 
 @Component({
   selector: 'app-admin-home-page',
   standalone: true,
-  imports: [UserListingComponent, ProfileComponent],
+  imports: [UserListingComponent, ProfileComponent, CottageSearchComponent],
   templateUrl: './admin-home-page.component.html',
   styleUrl: './admin-home-page.component.css',
 })

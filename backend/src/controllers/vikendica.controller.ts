@@ -1,7 +1,8 @@
 import express from "express";
 import VikM from "../models/vikendica";
 import KorM from "../models/korisnik";
-
+import path from "path";
+import fs from "fs";
 export class CottageController {
   getAllCottages = (req: express.Request, res: express.Response) => {
     VikM.find({})
@@ -39,9 +40,9 @@ export class CottageController {
     }
   };
 
-  addCottage = async (req: express.Request, res: express.Response) => {
+  addCottage = async (req: any, res: express.Response) => {
     let korisnicko_ime = req.params["korisnicko_ime"];
-    let vikendica = req.body.vikendica;
+    let vikendica = JSON.parse(req.body.vikendica);
     try {
       const vlasnik = await KorM.findOne({ korisnicko_ime });
       if (!vlasnik) {
@@ -52,6 +53,11 @@ export class CottageController {
       // ukloni _id ako postoji, Mongoose ce generistai sam
       if ("_id" in vikendica) delete vikendica._id;
 
+      const imena = req.files.map((f: any) => f.filename);
+      console.log(imena);
+      if (imena.length > 0) {
+        vikendica.slike = imena;
+      }
       VikM.create(vikendica)
         .then((d) => {
           res.json({ ok: true, reason: "" });
@@ -69,35 +75,53 @@ export class CottageController {
     }
   };
 
-  editCottage = (req: express.Request, res: express.Response) => {
-    let vikendica = req.body.vikendica;
+  editCottage = (req: any, res: express.Response) => {
+    let vikendica = JSON.parse(req.body.vikendica);
     // delete slike isto todo
-    if (!vikendica) {
+    if (!vikendica || !req.files) {
       res.json({ ok: false, reason: "Invalid query." });
       console.log("editCottage: korisnik null");
       return;
     }
-    VikM.updateOne(
-      {
-        _id: vikendica._id,
-      },
-      {
-        $set: {
+    let imena = req.files.map((f: any) => f.filename);
+
+    VikM.findById(vikendica._id)
+      .then((d) => {
+        if (!d) {
+          res.json({ ok: false, reason: "Cottage doesn't exist." });
+          return;
+        }
+        let set: any = {
           naziv: vikendica.naziv,
           mesto: vikendica.mesto,
           koordinate: vikendica.koordinate,
           usluge: vikendica.usluge,
           cenovnik: vikendica.cenovnik,
           telefon: vikendica.telefon,
-        },
-      }
-    )
-      .then((d) => {
-        // if (d.modifiedCount == 0) {
-        //   res.json({ ok: false, reason: "Cottage doesn't exist." });
-        //   return;
-        // }
-        res.json({ ok: true, reason: "" });
+        };
+
+        if (imena.length > 0) {
+          set.slike = imena;
+          d.slike.forEach((fileName: string) => {
+            const filePath = path.join(__dirname, "../../uploads", fileName);
+            fs.unlink(filePath, (err) => {
+              if (err) {
+                console.error("Greska pri brisanju fajla:", filePath, err);
+              } else {
+                console.log("Obrisan fajl:", filePath);
+              }
+            });
+          });
+        }
+
+        VikM.updateOne({ _id: vikendica._id }, { $set: set })
+          .then((d) => {
+            res.json({ ok: true, reason: "" });
+          })
+          .catch((err) => {
+            res.json({ ok: false, reason: "Internal error." });
+            console.log(err);
+          });
       })
       .catch((e) => {
         res.json({ ok: false, reason: "Internal error." });
@@ -106,7 +130,23 @@ export class CottageController {
   };
   deleteCottage = (req: express.Request, res: express.Response) => {
     let _id = req.params["_id"];
-    // delete slike isto todo
+    VikM.findById(_id).then((d) => {
+      if (!d) {
+        res.json({ ok: false, reason: "Cottage doesn't exist." });
+        return;
+      }
+      d.slike.forEach((fileName: string) => {
+        const filePath = path.join(__dirname, "../../uploads", fileName);
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("Greska pri brisanju fajla:", filePath, err);
+          } else {
+            console.log("Obrisan fajl:", filePath);
+          }
+        });
+      });
+    });
+
     VikM.deleteOne({ _id })
       .then((d) => {
         res.json({ ok: true, reason: "" });

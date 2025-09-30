@@ -47,8 +47,18 @@
       <input type="tel" name="phone" id="phone" pattern="^\+?[0-9]{7,15}$" [(ngModel)]="cottage.telefon" required>
     </div>
     <div class="form-field">
+      @if(!isEditing){
+      <div>Photos*:</div>
+      }@else{
       <div>Photos:</div>
-      <input type="file" (change)="onFilesSelected($event)" class="cursor-pointer" multiple />
+      }
+
+      <div class="flex relative w-full">
+        <input type="file" class=" block text-neutral-400" #fileInput (change)="onFilesSelected($event)"
+          class="cursor-pointer" accept=".jpg, .png" multiple [required]="!isEditing" />
+        <button type="button" (click)="clearFile(fileInput)"
+          class="!bg-transparent !border-transparent !p-0 absolute right-0">Clear</button>
+      </div>
     </div>
     <div class="text-red-500 self-center">
       {{this.error}}

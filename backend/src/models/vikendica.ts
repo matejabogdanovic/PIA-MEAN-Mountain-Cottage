@@ -29,5 +29,8 @@ const VikendicaSchema = new mongoose.Schema({
     ref: "korisnici", // ime kolekcije korisnika
     required: true,
   },
+  ocene: {
+    type: Number,
+  },
 });
 export default mongoose.model("Vikendica", VikendicaSchema, "vikendice");
