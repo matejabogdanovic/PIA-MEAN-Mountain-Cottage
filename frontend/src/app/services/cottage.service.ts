@@ -57,4 +57,7 @@ export class CottageService {
       `${this.api}/deleteCottage/${_id}`
     );
   }
+  getCottage(_id: string) {
+    return this.http.get<Cottage | null>(`${this.api}/getCottage/${_id}`);
+  }
 }

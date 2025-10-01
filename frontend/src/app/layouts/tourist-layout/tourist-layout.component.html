@@ -1,11 +1,5 @@
 <header>
 
-
-</header>
-
-<main>
-  @if(!loading){
-  @if(this.user.aktivan==true && this.user.tip == 'turista'){
   <nav>
     <ul class=" my-container xl:grid-cols-4 ">
       <li><a routerLink="/tourist/home">My Profile</a></li>
@@ -17,11 +11,17 @@
     </ul>
 
   </nav>
-  <div class="my-container">
+</header>
 
-    <router-outlet></router-outlet>
+<main>
+  @if(!loading){
+  @if(this.user.aktivan==true && this.user.tip == 'turista'){
 
-  </div>
+
+
+  <ng-content></ng-content>
+
+
   }@else{
   <div>
     <h1>Profile Pending Approval</h1>

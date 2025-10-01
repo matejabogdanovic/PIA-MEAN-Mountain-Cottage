@@ -6,17 +6,24 @@ import { User } from '../../models/User';
 import { Cottage } from '../../models/Cottage';
 import { CottageFormComponent } from '../../components/cottage-form/cottage-form.component';
 import { CottageListingComponent } from '../../components/cottage-listing/cottage-listing.component';
+import { OwnerLayoutComponent } from '../../layouts/owner-layout/owner-layout.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-owner-my-cottages-page',
   standalone: true,
-  imports: [CottageFormComponent, CottageListingComponent],
+  imports: [
+    CottageFormComponent,
+    CottageListingComponent,
+    OwnerLayoutComponent,
+  ],
   templateUrl: './owner-my-cottages-page.component.html',
   styleUrl: './owner-my-cottages-page.component.css',
 })
 export class OwnerMyCottagesPageComponent implements OnInit {
   private cotService = inject(CottageService);
   private userService = inject(UserService);
+  private router = inject(Router);
   user: User = new User();
   cottages: Cottage[] = [];
   error = '';
@@ -62,5 +69,9 @@ export class OwnerMyCottagesPageComponent implements OnInit {
         this.error = d.reason;
       }
     });
+  }
+
+  navigate(c: Cottage) {
+    this.router.navigate([`cottage/${c._id}`]);
   }
 }

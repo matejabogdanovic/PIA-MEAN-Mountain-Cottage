@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { User } from '../../models/User';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../../components/profile/profile.component';
+import { TouristLayoutComponent } from '../../layouts/tourist-layout/tourist-layout.component';
 
 @Component({
   selector: 'app-tourist-home-page',
   standalone: true,
-  imports: [ProfileComponent],
+  imports: [ProfileComponent, TouristLayoutComponent],
   templateUrl: './tourist-home-page.component.html',
   styleUrl: './tourist-home-page.component.css',
 })

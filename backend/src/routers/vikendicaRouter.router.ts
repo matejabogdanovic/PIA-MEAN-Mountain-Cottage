@@ -52,5 +52,8 @@ vikendicaRouter
 vikendicaRouter
   .route("/deleteCottage/:_id")
   .delete((req, res) => new CottageController().deleteCottage(req, res));
+vikendicaRouter
+  .route("/getCottage/:_id")
+  .get((req, res) => new CottageController().getCottage(req, res));
 
 export default vikendicaRouter;

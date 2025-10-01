@@ -4,11 +4,12 @@ import { UserService } from '../../services/user.service';
 import { CottageService } from '../../services/cottage.service';
 import { Cottage } from '../../models/Cottage';
 import { CottageSearchComponent } from '../../components/cottage-search/cottage-search.component';
+import { UnregisteredLayoutComponent } from '../../layouts/unregistered-layout/unregistered-layout.component';
 
 @Component({
   selector: 'app-unregistered-page',
   standalone: true,
-  imports: [RouterModule, CottageSearchComponent],
+  imports: [RouterModule, CottageSearchComponent, UnregisteredLayoutComponent],
   templateUrl: './unregistered-page.component.html',
   styleUrl: './unregistered-page.component.css',
 })

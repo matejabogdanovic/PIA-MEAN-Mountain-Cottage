@@ -1,0 +1,49 @@
+@if(!loading){
+@if(tip==='neregistrovan'){
+<app-unregistered-layout>
+  <div class="my-container grid xl:grid-cols-2 grid-cols-1 gap-4 mt-4">
+    <div>
+      <app-cottage [cottage]="cottage"></app-cottage>
+    </div>
+
+  </div>
+</app-unregistered-layout>
+}
+
+@if(tip==='admin'){
+<app-admin-layout>
+  <div class="my-container grid xl:grid-cols-2 grid-cols-1 gap-4 mt-4">
+    <div>
+      <app-cottage [cottage]="cottage"></app-cottage>
+    </div>
+
+  </div>
+</app-admin-layout>
+}
+
+@if(tip==='turista'){
+<app-tourist-layout>
+  <div class="my-container grid xl:grid-cols-2 grid-cols-1 gap-4 mt-4">
+    <div>
+      <app-cottage [cottage]="cottage"></app-cottage>
+    </div>
+    <div class="w-full h-full">
+
+      <app-book-steps [cottage]="cottage"></app-book-steps>
+    </div>
+  </div>
+
+</app-tourist-layout>
+}
+
+@if(tip==='vlasnik'){
+<app-owner-layout>
+  <div class="my-container grid xl:grid-cols-2 grid-cols-1 gap-4 mt-4">
+    <div>
+      <app-cottage [cottage]="cottage"></app-cottage>
+    </div>
+
+  </div>
+</app-owner-layout>
+}
+}

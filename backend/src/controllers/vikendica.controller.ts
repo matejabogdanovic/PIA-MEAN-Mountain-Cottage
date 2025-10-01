@@ -156,7 +156,17 @@ export class CottageController {
         res.json({ ok: false, reason: "Internal error." });
       });
   };
-
+  getCottage = (req: express.Request, res: express.Response) => {
+    let _id = req.params["_id"];
+    VikM.findById(_id)
+      .then((d) => {
+        res.json(d);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(null);
+      });
+  };
   // updateBook = (req: express.Request, res: express.Response) => {
   //   BookM.updateOne({ name: req.body.name }, { pages: req.body.pages })
   //     .then((books) => {

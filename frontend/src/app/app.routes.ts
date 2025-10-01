@@ -15,6 +15,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { AdminHomePageComponent } from './pages/admin-home-page/admin-home-page.component';
 import { OwnerMyCottagesPageComponent } from './pages/owner-my-cottages-page/owner-my-cottages-page.component';
 import { TouristCottagesPageComponent } from './pages/tourist-cottages-page/tourist-cottages-page.component';
+import { CottagePageComponent } from './pages/cottage-page/cottage-page.component';
 
 export const routes: Routes = [
   { path: '', component: UnregisteredPageComponent },
@@ -44,29 +45,15 @@ export const routes: Routes = [
     data: { pageTitle: 'Password Change' },
     children: [{ path: '', component: PasswordChangeComponent }],
   },
-  // { path: 'home', component: HomePageComponent },
+
+  { path: 'owner/home', component: OwnerHomePageComponent },
   {
-    path: 'owner',
-    component: OwnerLayoutComponent,
-    children: [
-      { path: 'home', component: OwnerHomePageComponent },
-      {
-        path: 'my-cottages',
-        component: OwnerMyCottagesPageComponent,
-      },
-    ],
+    path: 'owner/my-cottages',
+    component: OwnerMyCottagesPageComponent,
   },
-  {
-    path: 'tourist',
-    component: TouristLayoutComponent,
-    children: [
-      { path: 'home', component: TouristHomePageComponent },
-      { path: 'cottages', component: TouristCottagesPageComponent },
-    ],
-  },
-  {
-    path: 'admin',
-    component: AdminLayoutComponent,
-    children: [{ path: 'home', component: AdminHomePageComponent }],
-  },
+  { path: 'tourist/home', component: TouristHomePageComponent },
+  { path: 'tourist/cottages', component: TouristCottagesPageComponent },
+  { path: 'admin/home', component: AdminHomePageComponent },
+
+  { path: 'cottage/:_id', component: CottagePageComponent },
 ];

@@ -1,3 +1,10 @@
-@if(!loading){
-<app-profile [user]="this.user"></app-profile>
-}
+<app-owner-layout>
+  @if(!loading){
+
+  <div class="my-container">
+    <h1 class="page-title">My Profile</h1>
+    <app-profile [user]="this.user"></app-profile>
+  </div>
+
+  }
+</app-owner-layout>

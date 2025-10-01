@@ -1,11 +1,6 @@
+@if( this.user.tip == 'admin'){
 <header>
 
-
-</header>
-
-<main>
-
-  @if( this.user.tip == 'admin'){
   <nav>
     <ul class=" my-container xl:grid-cols-1 ">
 
@@ -13,12 +8,16 @@
     </ul>
 
   </nav>
-  <div class="my-container">
+</header>
 
-    <router-outlet></router-outlet>
+<main>
 
-  </div>
-  }
+
+  <ng-content></ng-content>
+
+
+
 </main>
 
 <footer></footer>
+}

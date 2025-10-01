@@ -3,11 +3,12 @@ import { User } from '../../models/User';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ProfileComponent } from '../../components/profile/profile.component';
+import { OwnerLayoutComponent } from '../../layouts/owner-layout/owner-layout.component';
 
 @Component({
   selector: 'app-owner-home-page',
   standalone: true,
-  imports: [ProfileComponent],
+  imports: [ProfileComponent, OwnerLayoutComponent],
   templateUrl: './owner-home-page.component.html',
   styleUrl: './owner-home-page.component.css',
 })

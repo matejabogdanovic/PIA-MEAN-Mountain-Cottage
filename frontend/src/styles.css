@@ -5,7 +5,8 @@
   @apply container !max-w-[1000px] mx-auto;
 }
 
-input {
+input,
+textarea {
   @apply border-[1px] mb-1 border-emerald-800 rounded-bl-sm p-1 block w-full placeholder-neutral-400 border-t-transparent border-r-transparent;
 }
 
@@ -13,18 +14,18 @@ input:disabled {
   @apply border-transparent;
 }
 
-button {
+
+.red input {
+  @apply border-red-800 border-[1px] mb-1 rounded-bl-sm p-1 block w-full placeholder-neutral-400 border-t-transparent border-r-transparent;
+}
+
+/* button {
   @apply cursor-pointer border-[1px] border-emerald-800 bg-emerald-100 px-3 rounded-md;
 }
 
 button:disabled {
   @apply cursor-auto opacity-50;
 }
-
-.red input {
-  @apply border-red-800 border-[1px] mb-1 rounded-bl-sm p-1 block w-full placeholder-neutral-400 border-t-transparent border-r-transparent;
-}
-
 
 .red button {
   @apply border-red-800 bg-red-100;
@@ -36,7 +37,62 @@ button.orange {
 
 button.red {
   @apply border-red-800 bg-red-100;
+} */
+
+/* Osnovni stil za dugme */
+button {
+  @apply cursor-pointer border-[1px] px-4 py-2 rounded-md font-medium transition-colors duration-200;
+  @apply bg-emerald-100 border-emerald-800 text-emerald-900;
 }
+
+/* Hover i active efekti */
+button:hover {
+  @apply bg-emerald-200;
+}
+
+button:active {
+  @apply bg-emerald-300;
+}
+
+/* Disabled stanje */
+button:disabled {
+  @apply cursor-not-allowed opacity-50 bg-emerald-100 border-emerald-800 text-emerald-400;
+}
+
+/* Crveno dugme */
+button.red {
+  @apply bg-red-100 border-red-800 text-red-900;
+}
+
+button.red:hover {
+  @apply bg-red-200;
+}
+
+button.red:active {
+  @apply bg-red-300;
+}
+
+button.red:disabled {
+  @apply bg-red-100 border-red-800 text-red-400 cursor-not-allowed opacity-50;
+}
+
+/* Narandžasto dugme */
+button.orange {
+  @apply bg-orange-100 border-orange-800 text-orange-900;
+}
+
+button.orange:hover {
+  @apply bg-orange-200;
+}
+
+button.orange:active {
+  @apply bg-orange-300;
+}
+
+button.orange:disabled {
+  @apply bg-orange-100 border-orange-800 text-orange-400 cursor-not-allowed opacity-50;
+}
+
 
 .form-field {
   @apply xl:flex;
@@ -52,7 +108,7 @@ button.red {
 }
 
 nav {
-  @apply border-b-[1px] mb-10 border-green-900;
+  @apply border-b-[1px] border-green-900;
 }
 
 nav ul {
@@ -65,4 +121,8 @@ nav ul li a {
 
 .page-title {
   @apply font-bold text-4xl my-4 text-green-900
+}
+
+.page-subtitle {
+  @apply font-bold text-2xl my-4 text-green-900
 }

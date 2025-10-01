@@ -6,11 +6,17 @@ import { User } from '../../models/User';
 import { UserListingComponent } from '../../components/user-listing/user-listing.component';
 import { ProfileComponent } from '../../components/profile/profile.component';
 import { CottageSearchComponent } from '../../components/cottage-search/cottage-search.component';
+import { AdminLayoutComponent } from '../../layouts/admin-layout/admin-layout.component';
 
 @Component({
   selector: 'app-admin-home-page',
   standalone: true,
-  imports: [UserListingComponent, ProfileComponent, CottageSearchComponent],
+  imports: [
+    UserListingComponent,
+    ProfileComponent,
+    CottageSearchComponent,
+    AdminLayoutComponent,
+  ],
   templateUrl: './admin-home-page.component.html',
   styleUrl: './admin-home-page.component.css',
 })

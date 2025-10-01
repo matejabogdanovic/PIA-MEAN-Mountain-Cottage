@@ -1,0 +1,76 @@
+<div class="">
+  <h1 class="page-title !mt-0">Book Cottage</h1>
+
+  @if(step==1){
+  <form class="flex flex-col items-start  gap-2  ">
+    <div class="form-field w-full !flex-col">
+      <div>Check In:</div><input type="datetime-local" name="" id="">
+    </div>
+    <div class="form-field w-full !flex-col">
+      <div>Check Out:</div><input type="datetime-local" name="" id="">
+    </div>
+    <div class="form-field w-full !flex-col">
+      <div>Persons: </div><input type="text">
+    </div>
+    <div class="form-field w-full !flex-col">
+      <div>Children: </div> <input type="text">
+    </div>
+
+
+
+  </form>
+  }@else{
+  <form class="flex flex-col items-start  gap-2  ">
+    <div class="p-3 bg-neutral-50 rounded-md shadow-md w-full">
+      <div class="form-field w-full !flex-col">
+        <div>Cottage: </div>
+        <div>{{cottage.naziv}}</div>
+        <hr class="border-neutral-500">
+      </div>
+      <div class="grid grid-cols-2">
+        <div class="form-field w-full !flex-col">
+          <div>Check In:</div>
+          <div>16.10.2026. 15:30</div>
+        </div>
+        <div class="form-field w-full !flex-col">
+          <div>Check Out:</div>
+          <div>16.15.2026. 15:30</div>
+        </div>
+        <div class="form-field w-full !flex-col">
+          <div>Persons: </div>
+          <div>1</div>
+        </div>
+        <div class="form-field w-full !flex-col">
+          <div>Children: </div>
+          <div>2</div>
+
+        </div>
+      </div>
+    </div>
+    <div class="form-field w-full !flex-col">
+      <div>Credit Card*: </div> <input type="text">
+    </div>
+    <div class="form-field w-full !flex-col">
+      <div>Note (500 chr. max): </div> <textarea placeholder="" maxlength="500"></textarea>
+    </div>
+    <div class="ml-auto">
+      <div class="text-neutral-900">
+        <span class="text-3xl font-bold">€{{ cottage.cenovnik[10] }}</span> <span class="font-semibold ">
+          total</span>
+      </div>
+    </div>
+  </form>
+  }
+
+  <div class="mt-3 flex justify-end gap-2">
+    @if(step==1){
+    <button (click)="next()">Next</button>
+    }
+    @if(step==2){
+    <button (click)="back()" class="red">Back</button>
+    <button (click)="finish()">Finish</button>
+
+    }
+  </div>
+
+</div>

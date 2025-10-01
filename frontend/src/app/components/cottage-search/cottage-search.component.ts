@@ -40,11 +40,7 @@ export class CottageSearchComponent implements OnInit {
   }
 
   navigate(c: Cottage) {
-    if (this.registered) {
-      this.router.navigate([`/cottage/${c._id}`]);
-    } else {
-      this.router.navigate([`/login`]); // temporary
-    }
+    this.router.navigate([`/cottage/${c._id}`]);
   }
 
   name_query = '';

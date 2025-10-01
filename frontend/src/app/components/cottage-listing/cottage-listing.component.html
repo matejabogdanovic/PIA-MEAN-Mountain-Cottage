@@ -1,6 +1,6 @@
-<div class="p-3 border border-green-900 rounded-md shadow-sm grid xl:grid-cols-1 h-full">
+<div class="p-3  rounded-md shadow-sm grid xl:grid-cols-1 h-full">
   <div class="flex flex-col">
-    @if(!loading){<div class="w-full h-[180px]"
+    @if(!loading){<div class="w-full h-[180px] rounded-md"
       [style.background]="'url(' + this.profilna_slika + ') no-repeat center/cover'">
 
       <!-- <img [src]="this.profilna_slika" class="block self-center md:self-auto max-w-[150px] max-h-[150px]"> -->
@@ -15,7 +15,11 @@
       <div class="text-neutral-500">{{cottage.usluge.slice(0,30)}}...</div>
       <hr class="border-neutral-500" />
       <div class="flex justify-between flex-wrap">
-        <span class="text-neutral-900 font-bold">${{cottage.cenovnik[this.month]}} per night </span>
+        <div class="text-neutral-900">
+          <span class="text-xl font-bold">€{{ cottage.cenovnik[this.month] }}</span> <span class="font-semibold "> /
+            night</span>
+        </div>
+
         <div class="text-neutral-500 text-right">
 
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
