@@ -21,13 +21,13 @@ export class RegisterComponent {
   private router = inject(Router);
 
   profilna_slika =
-    'http://localhost:4000/uploads/db456e9f5c052f23662e691ba4d4ed32';
+    'http://192.168.0.31:4000/uploads/db456e9f5c052f23662e691ba4d4ed32';
 
   validatePassword() {
     let { ok, reason } = this.userService.validatePassword(this.user.lozinka);
     this.error = reason;
   }
-  //  enctype="multipart/form-data" method="POST" action="http://localhost:4000/korisnici/register"
+  //  enctype="multipart/form-data" method="POST" action="http://192.168.0.31:4000/korisnici/register"
 
   selectedFile: File | null = null;
 

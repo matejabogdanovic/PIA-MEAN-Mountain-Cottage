@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   private adminService = inject(AdminService);
 
   private router = inject(Router);
-  slikaApi = 'http://localhost:4000/uploads';
+  slikaApi = 'http://192.168.0.31:4000/uploads';
   error: string = ' ';
 
   @Input() edit = false;
@@ -64,7 +64,7 @@ export class ProfileComponent implements OnInit {
       this.user.kreditna_kartica
     );
   }
-  //  enctype="multipart/form-data" method="POST" action="http://localhost:4000/korisnici/register"
+  //  enctype="multipart/form-data" method="POST" action="http://192.168.0.31:4000/korisnici/register"
 
   selectedFile: File | null = null;
 

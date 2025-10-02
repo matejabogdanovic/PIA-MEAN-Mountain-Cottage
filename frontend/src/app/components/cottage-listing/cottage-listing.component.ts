@@ -11,7 +11,7 @@ import { CottageService } from '../../services/cottage.service';
   styleUrl: './cottage-listing.component.css',
 })
 export class CottageListingComponent implements OnInit {
-  slikaApi = 'http://localhost:4000/uploads';
+  slikaApi = 'http://192.168.0.31:4000/uploads';
   @Input() cottage!: Cottage;
   @Input() isAdmin: boolean = false;
   profilna_slika = '';
@@ -32,7 +32,8 @@ export class CottageListingComponent implements OnInit {
       let x = rev.slice(0, 3);
       x = x.filter((d) => d.komentar_i_ocena.ocena >= 2);
       console.log(x);
-      if (rev.length >= 3 && x.length === 0) {
+
+      if (rev.length >= 3 && x.length === 0 && this.isAdmin) {
         this.stil = 'bg-red-300';
       }
 

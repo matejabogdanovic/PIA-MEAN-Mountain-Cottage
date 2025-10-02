@@ -153,6 +153,8 @@ export class UserController {
     }
     korisnik.lozinka = await hashPassword(korisnik.lozinka);
     console.log(korisnik.lozinka);
+    if ("_id" in korisnik) delete korisnik._id;
+
     if (!req.file) {
       new KorM(korisnik)
         .save()

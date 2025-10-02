@@ -10,7 +10,7 @@ export class ReservationService {
   constructor() {}
 
   private http = inject(HttpClient);
-  private api = 'http://localhost:4000/rezervacije';
+  private api = 'http://192.168.0.31:4000/rezervacije';
 
   book(
     from: Date,
