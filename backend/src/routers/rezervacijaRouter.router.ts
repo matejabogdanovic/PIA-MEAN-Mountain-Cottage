@@ -24,4 +24,8 @@ rezervacijaRouter
 rezervacijaRouter
   .route("/acceptReservation")
   .post((req, res) => new ReservationController().acceptReservation(req, res));
+
+rezervacijaRouter
+  .route("/getTakenDates")
+  .post((req, res) => new ReservationController().getTakenDates(req, res));
 export default rezervacijaRouter;

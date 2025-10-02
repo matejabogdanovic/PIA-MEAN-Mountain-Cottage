@@ -63,61 +63,63 @@ export class BookStepsComponent implements OnInit {
   private resService = inject(ReservationService);
 
   ngOnInit(): void {
+    this.step = 1;
+    this.error = '';
+    this.checkin = null;
+    this.checkout = null;
+    this.total = 0;
+    this.children = 0;
+    this.persons = 0;
+    this.note = '';
     let x = this.userService.getUser();
     if (!x) return;
     this.user = x;
     this.cc_type = this.userService.validateCreditCard(
       this.user.kreditna_kartica
     );
-
-    this.resService.getAllReservations().subscribe((d) => {
-      console.log(d);
-    });
-  }
-  reservedRanges: { start: Date; end: Date }[] = [];
-
-  // todo
-  constructor() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(0, 0, 0, 0);
-
-    const dayAfterTomorrow = new Date(tomorrow);
-    dayAfterTomorrow.setDate(tomorrow.getDate() + 1);
-
-    const threeDaysLater = new Date(tomorrow);
-    threeDaysLater.setDate(tomorrow.getDate() + 2);
-
-    const fourDaysLater = new Date(tomorrow);
-    fourDaysLater.setDate(tomorrow.getDate() + 3);
-
     // 2 range-a
-    this.reservedRanges = [
-      { start: today, end: today }, // sutra i prekosutra
-      { start: threeDaysLater, end: fourDaysLater }, // +2 i +3 dana
-    ];
+    this.reservedRanges = [{ od: today, do: today }];
+    this.resService.getTakenDates(this.cottage._id).subscribe((d) => {
+      let taken = d.map((dat) => ({
+        od: new Date(dat.od),
+        do: new Date(dat.do),
+      }));
+      this.reservedRanges = this.reservedRanges.concat(taken);
+      console.log(this.reservedRanges);
+    });
+  }
+  reservedRanges: { od: Date; do: Date }[] = [];
+  normalizeDate(d: Date): Date {
+    const date = new Date(d);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  isInReservedRange(date: Date): boolean {
+    const normalizedDate = this.normalizeDate(date);
+
+    return this.reservedRanges.some((range) => {
+      const start = this.normalizeDate(new Date(range.od));
+      const end = this.normalizeDate(new Date(range.do));
+
+      // interval [start, end) => end je slobodan
+      return (
+        normalizedDate.getTime() >= start.getTime() &&
+        normalizedDate.getTime() < end.getTime()
+      );
+    });
   }
   myDateFilter = (d: Date | null): boolean => {
     if (!d) return false;
 
-    const date = new Date(d);
-    date.setHours(0, 0, 0, 0);
+    const date = this.normalizeDate(d);
 
-    const minDate = new Date();
+    const minDate = this.normalizeDate(new Date());
     minDate.setDate(minDate.getDate() + 1);
-    minDate.setHours(0, 0, 0, 0);
 
-    // datum je dozvoljen samo ako je >= sutra i ne upada u rezervisane range-ove
-    const isInReservedRange = this.reservedRanges.some(
-      (range) =>
-        date.getTime() >= range.start.getTime() &&
-        date.getTime() <= range.end.getTime()
-    );
-
-    return date.getTime() >= minDate.getTime() && !isInReservedRange;
+    return date.getTime() >= minDate.getTime() && !this.isInReservedRange(date);
   };
   images: string[] = [
     'cards/diners.png',
@@ -158,7 +160,20 @@ export class BookStepsComponent implements OnInit {
 
     return total;
   }
+  doesRangeOverlap(start: Date, end: Date): boolean {
+    const startNorm = this.normalizeDate(start);
+    const endNorm = this.normalizeDate(end);
+
+    return this.reservedRanges.some((range) => {
+      const rStart = this.normalizeDate(range.od);
+      const rEnd = this.normalizeDate(range.do);
+
+      // Ako postoji preklapanje raspona
+      return startNorm < rEnd && endNorm > rStart;
+    });
+  }
   next() {
+    this.success = false;
     this.error = '';
     if (this.persons == 0) {
       this.error = 'At least one person needed.';
@@ -172,7 +187,10 @@ export class BookStepsComponent implements OnInit {
       this.error = 'Select check in and check out date.';
       return;
     }
-
+    if (this.doesRangeOverlap(this.checkin, this.checkout)) {
+      this.error = 'Please select available dates only.';
+      return;
+    }
     this.total = this.calculateTotalPrice(
       this.checkin,
       this.checkout,
@@ -209,6 +227,7 @@ export class BookStepsComponent implements OnInit {
         console.log(d);
         if (d.ok) {
           this.success = true;
+          this.ngOnInit();
         } else {
           this.error = d.reason;
         }

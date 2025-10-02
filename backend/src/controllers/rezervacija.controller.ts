@@ -150,4 +150,21 @@ export class ReservationController {
         res.json({ ok: false, reason: "Internal error." });
       });
   };
+
+  getTakenDates = (req: express.Request, res: express.Response) => {
+    let cottage_id = req.body._id;
+    RezM.find({ cottage_id: cottage_id, odbijenica: "" })
+      .then((d) => {
+        let result: { od: string; do: string }[] = [];
+        result = d.map((rez) => ({
+          od: rez.od.toISOString(),
+          do: rez.do.toISOString(),
+        }));
+        res.json(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json([]);
+      });
+  };
 }

@@ -69,4 +69,13 @@ export class ReservationService {
       }
     );
   }
+
+  getTakenDates(_id: string) {
+    return this.http.post<{ od: string; do: string }[]>(
+      `${this.api}/getTakenDates`,
+      {
+        _id,
+      }
+    );
+  }
 }
