@@ -3,6 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import userRouter from "./routers/korisnikRouter.router";
 import cottageRouter from "./routers/vikendicaRouter.router";
+import reservationRouter from "./routers/rezervacijaRouter.router";
 import path from "path";
 
 const app = express();
@@ -19,6 +20,7 @@ const router = express.Router();
 
 router.use("/korisnici", userRouter);
 router.use("/vikendice", cottageRouter);
+router.use("/rezervacije", reservationRouter);
 app.use("/", router);
 // slike dostupne kao link
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));

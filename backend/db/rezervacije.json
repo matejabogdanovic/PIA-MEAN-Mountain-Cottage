@@ -1,0 +1,82 @@
+[
+  {
+    "_id": { "$oid": "651234abcd1234abcd567890" },
+    "cottage_id": { "$oid": "68db88489396138269edb275" },
+    "user_id": { "$oid": "68d7a1e91d0122c5ac70ab54" },
+    "od": "2025-10-03T14:00:00.000Z",
+    "do": "2025-10-05T10:00:00.000Z",
+    "total": 100,
+    "napomena": "Rezervacija za vikend",
+    "createdAt": "2025-09-30T10:00:00.000Z",
+    "prihvacena": true,
+    "odbijenica": "",
+    "komentar_i_ocena": {
+      "komentar": "Sve super!",
+      "ocena": 5
+    }
+  },
+  {
+    "_id": { "$oid": "651234abcd1234abcd567891" },
+    "cottage_id": { "$oid": "68db897e9396138269edb2c1" },
+    "user_id": { "$oid": "68d7cdd34286e1dc21e11739" },
+    "od": "2025-11-01T14:00:00.000Z",
+    "do": "2025-11-03T10:00:00.000Z",
+    "total": 200,
+    "napomena": "",
+    "createdAt": "2025-09-30T10:15:00.000Z",
+    "prihvacena": false,
+    "odbijenica": "Neodgovaraju datumi",
+    "komentar_i_ocena": {
+      "komentar": "",
+      "ocena": 0
+    }
+  },
+  {
+    "_id": { "$oid": "651234abcd1234abcd567892" },
+    "cottage_id": { "$oid": "68db8cff9396138269edb350" },
+    "user_id": { "$oid": "68d7a1e91d0122c5ac70ab54" },
+    "od": "2025-12-15T14:00:00.000Z",
+    "do": "2025-12-20T10:00:00.000Z",
+    "total": 300,
+    "napomena": "Božićna rezervacija",
+    "createdAt": "2025-09-30T10:30:00.000Z",
+    "prihvacena": true,
+    "odbijenica": "",
+    "komentar_i_ocena": {
+      "komentar": "Prelepo provedeno vreme",
+      "ocena": 4
+    }
+  },
+  {
+    "_id": { "$oid": "651234abcd1234abcd567893" },
+    "cottage_id": { "$oid": "68dba98fcec2d6a93128d8eb" },
+    "user_id": { "$oid": "68da5dc847f0849b959b6963" },
+    "od": "2025-10-10T14:00:00.000Z",
+    "do": "2025-10-12T10:00:00.000Z",
+    "total": 120,
+    "napomena": "",
+    "createdAt": "2025-09-30T10:45:00.000Z",
+    "prihvacena": true,
+    "odbijenica": "",
+    "komentar_i_ocena": {
+      "komentar": "",
+      "ocena": 0
+    }
+  },
+  {
+    "_id": { "$oid": "651234abcd1234abcd567894" },
+    "cottage_id": { "$oid": "68dd628e21c244e94e80eaa4" },
+    "user_id": { "$oid": "68d45f697f0c9ef1f8562ede" },
+    "od": "2025-11-05T14:00:00.000Z",
+    "do": "2025-11-10T10:00:00.000Z",
+    "total": 600,
+    "napomena": "Porodična rezervacija",
+    "createdAt": "2025-09-30T11:00:00.000Z",
+    "prihvacena": false,
+    "odbijenica": "Vikendica zauzeta",
+    "komentar_i_ocena": {
+      "komentar": "",
+      "ocena": 0
+    }
+  }
+]

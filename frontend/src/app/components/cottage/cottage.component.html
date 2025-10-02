@@ -3,7 +3,7 @@
     @if(showGalleryOverlay){
     <div class="fixed  inset-0  flex items-center justify-center flex-col bg-black/50">
 
-      <button (click)="hidePhoto()" class="w-full !p-1 !bg-transparent !border-0 flex justify-center text-white">
+      <button (click)="hidePhoto()" class="w-full !p-1 !bg-transparent !border-0 flex justify-center !text-white">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="size-10">
           <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
@@ -11,7 +11,7 @@
       </button>
       <div class="flex items-center justify-center ">
         <button
-          class="h-full flex items-center justify-end w-full !bg-transparent   !rounded-none !p-1   !border-0 text-white "
+          class="h-full flex items-center justify-end w-full !bg-transparent   !rounded-none !p-1   !border-0 !text-white "
           (click)="gallery(-1)">
           @if(cottage.slike.length>1){ <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.5" stroke="currentColor" class="size-10">
@@ -19,9 +19,9 @@
           </svg>}
         </button>
 
-        <img [src]="slikaApi+ '/'+cottage.slike[currentPhoto] " class="max-w-[80%] max-h-[80dvh] " alt="">
+        <img [src]="currentPhotoSrc" class="max-w-[80%] max-h-[80dvh] " alt="">
         <button
-          class="h-full w-full flex items-center justify-start !bg-transparent  !rounded-none  !p-1   !border-0 text-white"
+          class="h-full w-full flex items-center justify-start !bg-transparent  !rounded-none  !p-1   !border-0 !text-white"
           (click)="gallery(1)">
           @if(cottage.slike.length>1){<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
             stroke-width="1.5" stroke="currentColor" class="size-10">
@@ -31,7 +31,7 @@
       </div>
     </div>}
     <div class="w-full h-[40dvh] rounded-md"
-      [style.background]="'url(' +slikaApi+ '/'+cottage.slike[currentPhoto] + ') no-repeat center/cover'">
+      [ngStyle]="{'background':'url('+currentPhotoSrc+') no-repeat center/cover'}">
       <div class="flex w-full h-full justify-between items-center px-2">
         @if(cottage.slike.length>1){<button class="!bg-white  !rounded-full !p-1   !border-0" (click)="gallery(-1)">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

@@ -6,11 +6,16 @@ import { CottageService } from '../../services/cottage.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { StarsComponent } from '../stars/stars.component';
 @Component({
   selector: 'app-cottage-search',
   standalone: true,
-  imports: [CottageListingComponent, CottageListingComponent, FormsModule],
+  imports: [
+    CottageListingComponent,
+    CottageListingComponent,
+    FormsModule,
+    StarsComponent,
+  ],
   templateUrl: './cottage-search.component.html',
   styleUrl: './cottage-search.component.css',
 })

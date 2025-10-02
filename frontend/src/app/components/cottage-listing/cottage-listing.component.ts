@@ -20,7 +20,7 @@ export class CottageListingComponent implements OnInit {
     const timestamp = danas.getTime();
 
     this.month = danas.getMonth();
-    this.profilna_slika = `${this.slikaApi}/${this.cottage.slike[0]}?t=${timestamp}`;
+    this.profilna_slika = `${this.slikaApi}/${this.cottage.slike[0]}`;
     this.loading = false;
   }
 }

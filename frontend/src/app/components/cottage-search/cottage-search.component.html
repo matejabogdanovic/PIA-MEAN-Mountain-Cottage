@@ -13,9 +13,12 @@
 
   <a (click)="navigate(c)" class="cursor-pointer ">
     <app-cottage-listing [cottage]="c">
-      <div class="flex justify-between w-full flex-wrap">
+      <div class="flex justify-end w-full flex-wrap">
         @if(registered){
-        <div>zvezdice i ocena</div>
+
+        <app-stars [ocena]="c.ocena"></app-stars>
+
+
         }
         <!-- @if(isAdmin){
         <div>

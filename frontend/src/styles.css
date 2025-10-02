@@ -1,5 +1,6 @@
-/* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+
 
 .my-container {
   @apply container !max-w-[1000px] mx-auto;
@@ -38,6 +39,39 @@ button.orange {
 button.red {
   @apply border-red-800 bg-red-100;
 } */
+/* .cdk-overlay-container {
+  @apply fixed xl:right-[20%] right-0 xl:top-0 top-[20%] bg-white rounded-md
+}
+
+
+.mat-calendar-body-cell-content.mat-focus-indicator.mat-calendar-body-selected:active {
+  @apply outline-1
+}
+
+.mat-calendar .cdk-visually-hidden {
+  @apply hidden
+}
+
+.mat-calendar-body-cell-content {
+  @apply bg-amber-400
+} */
+
+/* .mat-calendar-body-cell-content {
+  @apply bg-green-100
+} */
+
+.mat-calendar-body-cell-content.mat-calendar-body-selected {
+  @apply bg-green-900
+}
+
+.mat-datepicker-toggle-default-icon {
+  @apply text-green-900
+}
+
+.mat-calendar-body-in-range {
+  @apply bg-neutral-300
+}
+
 
 /* Osnovni stil za dugme */
 button {

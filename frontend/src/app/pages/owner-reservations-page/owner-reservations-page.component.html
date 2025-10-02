@@ -1,0 +1,41 @@
+<app-owner-layout>
+  <div class="my-container">
+    <h1 class="page-title">Active Reservations</h1>
+    <div class="flex flex-col gap-4">
+      @for(r of rezervacijeAktivne; track r._id){
+      <app-reservation-listing [rezervacija]="r"></app-reservation-listing>
+      }
+    </div>
+
+    <h1 class="page-title">Pending Reservations</h1>
+    <div class="flex flex-col gap-4">
+      @for(r of rezervacijeNepotvrdjene; track r._id){
+      <app-reservation-listing [rezervacija]="r"></app-reservation-listing>
+      }
+    </div>
+    <h1 class="page-title">Finished Reservations</h1>
+    <div class="flex flex-col gap-4">
+      @for(r of rezervacijeIstekle; track r._id){
+      <app-reservation-listing [rezervacija]="r">
+        @if(r.prihvacena){
+
+        <div class=" mt-3">
+          @if(r.komentar_i_ocena.komentar !== ''){
+          <div class="form-field items-center ">
+
+            <div><app-stars [ocena]="r.komentar_i_ocena.ocena"></app-stars></div>
+            <div>{{r.komentar_i_ocena.komentar}}</div>
+          </div>
+
+          }@else{
+
+          }
+        </div>
+
+
+        }
+      </app-reservation-listing>
+      }
+    </div>
+  </div>
+</app-owner-layout>

@@ -1,5 +1,6 @@
 export class User {
   korisnicko_ime: string = '';
+  _id: string = '';
   lozinka: string = '';
   ime: string = '';
   prezime: string = '';

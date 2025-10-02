@@ -26,11 +26,11 @@ const VikendicaSchema = new mongoose.Schema({
   ],
   vlasnik: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "korisnici", // ime kolekcije korisnika
+    ref: "KorisnikModel", // ime kolekcije korisnika
     required: true,
   },
-  ocene: {
+  ocena: {
     type: Number,
   },
 });
-export default mongoose.model("Vikendica", VikendicaSchema, "vikendice");
+export default mongoose.model("VikendicaModel", VikendicaSchema, "vikendice");

@@ -1,26 +1,39 @@
 <div class="">
   <h1 class="page-title !mt-0">Book Cottage</h1>
 
-  @if(step==1){
-  <form class="flex flex-col items-start  gap-2  ">
+
+
+  <form class="flex flex-col items-start  gap-2  " [ngClass]="step==2?'hidden':''">
     <div class="form-field w-full !flex-col">
-      <div>Check In:</div><input type="datetime-local" name="" id="">
+      <div>Persons: </div><input type="number" [(ngModel)]="persons" name="persons">
     </div>
     <div class="form-field w-full !flex-col">
-      <div>Check Out:</div><input type="datetime-local" name="" id="">
+      <div>Children: </div> <input type="number" [(ngModel)]="children" name="children">
     </div>
+
     <div class="form-field w-full !flex-col">
-      <div>Persons: </div><input type="text">
-    </div>
-    <div class="form-field w-full !flex-col">
-      <div>Children: </div> <input type="text">
+      <div>Check In - Check Out</div>
+
+      <div class=" !relative ">
+
+        <mat-form-field>
+
+          <mat-date-range-input [rangePicker]="picker" name="daterange" [dateFilter]="myDateFilter">
+            <input matStartDate placeholder=" From" #dateRangeStart>
+            <input matEndDate placeholder="To" #dateRangeEnd
+              (dateChange)="dateRangeChange(dateRangeStart, dateRangeEnd)">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+      </div>
     </div>
 
 
 
   </form>
-  }@else{
-  <form class="flex flex-col items-start  gap-2  ">
+
+  <form class="flex flex-col items-start  gap-2  " [ngClass]="step==1?'hidden':''">
     <div class="p-3 bg-neutral-50 rounded-md shadow-md w-full">
       <div class="form-field w-full !flex-col">
         <div>Cottage: </div>
@@ -30,11 +43,11 @@
       <div class="grid grid-cols-2">
         <div class="form-field w-full !flex-col">
           <div>Check In:</div>
-          <div>16.10.2026. 15:30</div>
+          <div>{{ checkin | date:'dd-MM-yy HH:mm' }}</div>
         </div>
         <div class="form-field w-full !flex-col">
           <div>Check Out:</div>
-          <div>16.15.2026. 15:30</div>
+          <div>{{ checkout | date:'dd-MM-yy HH:mm' }}</div>
         </div>
         <div class="form-field w-full !flex-col">
           <div>Persons: </div>
@@ -48,21 +61,28 @@
       </div>
     </div>
     <div class="form-field w-full !flex-col">
-      <div>Credit Card*: </div> <input type="text">
+      <div>Credit Card*: </div> <input type="text" name="credit_card" id="credit_card" placeholder=""
+        [(ngModel)]="user.kreditna_kartica" (input)="validateCreditCard()" required>
+      @if(cc_type>=0){<img [src]="images[cc_type]" alt="" width="60px">}
     </div>
     <div class="form-field w-full !flex-col">
-      <div>Note (500 chr. max): </div> <textarea placeholder="" maxlength="500"></textarea>
+      <div>Note (500 chr. max): </div> <textarea placeholder="" name="note" [(ngModel)]="note"
+        maxlength="500"></textarea>
     </div>
     <div class="ml-auto">
       <div class="text-neutral-900">
-        <span class="text-3xl font-bold">€{{ cottage.cenovnik[10] }}</span> <span class="font-semibold ">
+        <span class="text-3xl font-bold">€{{ total }}</span> <span class="font-semibold ">
           total</span>
       </div>
     </div>
   </form>
-  }
+
+  <div class="text-red-500">
+    {{this.error}}
+  </div>
 
   <div class="mt-3 flex justify-end gap-2">
+
     @if(step==1){
     <button (click)="next()">Next</button>
     }
@@ -72,5 +92,11 @@
 
     }
   </div>
+  @if(success){
 
+
+  <div class="page-title text-center">
+    Successfully booked!
+  </div>
+  }
 </div>
