@@ -49,4 +49,24 @@ export class ReservationService {
       }
     );
   }
+  submitReview(_id: string, ocena: number, komentar: string) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/submitReview`,
+      {
+        _id,
+        ocena,
+        komentar,
+      }
+    );
+  }
+  acceptReservation(_id: string, prihvacena: boolean, odbijenica: string) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/acceptReservation`,
+      {
+        _id,
+        prihvacena,
+        odbijenica,
+      }
+    );
+  }
 }

@@ -7,6 +7,8 @@ import { ReservationService } from '../../services/reservation.service';
 import { Reservation, ReservationPopulated } from '../../models/Reservation';
 import { ReservationListingComponent } from '../../components/reservation-listing/reservation-listing.component';
 import { StarsComponent } from '../../components/stars/stars.component';
+import { RatingStarsComponent } from '../../components/rating-stars/rating-stars.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-tourist-my-reservations-page',
@@ -15,6 +17,8 @@ import { StarsComponent } from '../../components/stars/stars.component';
     TouristLayoutComponent,
     ReservationListingComponent,
     StarsComponent,
+    RatingStarsComponent,
+    FormsModule,
   ],
   templateUrl: './tourist-my-reservations-page.component.html',
   styleUrl: './tourist-my-reservations-page.component.css',
@@ -30,6 +34,7 @@ export class TouristMyReservationsPageComponent implements OnInit {
   rezervacijeAktivne: ReservationPopulated[] = [];
   rezervacijeNepotvrdjene: ReservationPopulated[] = [];
   rezervacijeIstekle: ReservationPopulated[] = [];
+
   ngOnInit(): void {
     this.loading = true;
     let x = this.userService.getUser();
@@ -44,8 +49,12 @@ export class TouristMyReservationsPageComponent implements OnInit {
       this.resService.getMyReservations(this.user._id).subscribe((d) => {
         console.log(d);
         this.rezervacije = d;
+        for (let i = 0; i < d.length; i++) {
+          this.rezervacije[i].nov_komentar = '';
+          this.rezervacije[i].nova_ocena = 0;
+        }
         this.rezervacije.sort(
-          (a, b) => new Date(a.od).getTime() - new Date(b.od).getTime()
+          (a, b) => new Date(b.od).getTime() - new Date(a.od).getTime()
         );
         this.rezervacijeAktivne = this.rezervacije.filter(
           (r) => new Date(r.do) >= new Date() && r.prihvacena == true
@@ -61,5 +70,29 @@ export class TouristMyReservationsPageComponent implements OnInit {
       });
       this.loading = false;
     });
+  }
+
+  error = '';
+
+  submitReview(event: Event, r: ReservationPopulated) {
+    event.preventDefault();
+    if (r.nova_ocena == 0) {
+      this.error = 'Please, leave a rating.';
+      return;
+    }
+    if (r.nov_komentar.trim() == '') {
+      this.error = 'Please, leave a review.';
+      return;
+    }
+    this.resService
+      .submitReview(r._id, r.nova_ocena, r.nov_komentar)
+      .subscribe((d) => {
+        console.log(d);
+        if (d.ok) {
+          this.ngOnInit();
+        } else {
+          this.error = d.reason;
+        }
+      });
   }
 }

@@ -1,12 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Cottage } from '../../models/Cottage';
 import { FormsModule } from '@angular/forms';
-import { NgClass, NgStyle } from '@angular/common';
+import { CommonModule, NgClass, NgStyle } from '@angular/common';
+import { StarsComponent } from '../stars/stars.component';
+import { CottageService } from '../../services/cottage.service';
 
 @Component({
   selector: 'app-cottage',
   standalone: true,
-  imports: [FormsModule, NgClass, NgStyle],
+  imports: [FormsModule, NgClass, NgStyle, StarsComponent, CommonModule],
   templateUrl: './cottage.component.html',
   styleUrl: './cottage.component.css',
 })
@@ -28,12 +30,28 @@ export class CottageComponent implements OnInit {
     'Nov',
     'Dec',
   ];
+  private cotService = inject(CottageService);
+  komentari: {
+    komentar_i_ocena: { komentar: string; ocena: number };
+    updatedAtDate: Date;
+  }[] = [];
   ngOnInit(): void {
     const danas = new Date();
     this.currentPhotoSrc = `${this.slikaApi}/${
       this.cottage.slike[this.currentPhoto]
     }`;
     this.month = danas.getMonth();
+
+    this.cotService.getReviews(this.cottage._id).subscribe((d) => {
+      console.log(d);
+
+      this.komentari = d.map((kom) => {
+        return {
+          ...kom,
+          updatedAtDate: new Date(kom.updatedAt),
+        };
+      });
+    });
     console.log(this.cottage);
   }
   currentPhoto = 0;

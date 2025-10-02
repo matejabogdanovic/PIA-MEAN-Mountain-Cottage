@@ -1,71 +1,72 @@
 <div class="p-3 rounded-md shadow-sm grid xl:grid-cols-1  h-full"
   [ngClass]="rezervacija.prihvacena == false&& rezervacija.odbijenica !== '' ? 'border-2 border-red-900':''">
-  <div class="xl:grid xl:grid-cols-3 flex flex-col gap-4">
-    <div class="w-full h-[180px] rounded-md"
-      [style.background]="'url('+ slikeApi + rezervacija.cottage_id.slike[0] + ') no-repeat center/cover'">
-      <!-- Ако нема слике, може placeholder -->
-    </div>
-    <div class="col-span-2 flex">
+  <a [routerLink]="['/cottage', rezervacija.cottage_id._id]">
+    <div class="xl:grid xl:grid-cols-3 flex flex-col gap-4">
+      <div class="w-full h-[180px] rounded-md"
+        [style.background]="'url('+ slikeApi + rezervacija.cottage_id.slike[0] + ') no-repeat center/cover'">
+        <!-- Ако нема слике, може placeholder -->
+      </div>
+      <div class="col-span-2 flex">
 
 
-      <div class="w-full flex flex-col justify-between mt-1 ">
-        <div>
-          <span class="font-bold text-green-900 text-xl">{{ rezervacija.cottage_id?.naziv }}</span>
-        </div>
-        <div>
-          <hr class="border-neutral-500 my-1" />
-          <div class="text-neutral-500 text-right flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-              stroke="currentColor" class="w-5 h-5 inline-block">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-            </svg>
-            <span>{{ rezervacija.cottage_id?.mesto }}</span>
+        <div class="w-full flex flex-col justify-between mt-1 ">
+          <div>
+            <span class="font-bold text-green-900 text-xl">{{ rezervacija.cottage_id?.naziv }}</span>
+          </div>
+          <div>
+            <hr class="border-neutral-500 my-1" />
+            <div class="text-neutral-500 text-right flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-5 h-5 inline-block">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+              </svg>
+              <span>{{ rezervacija.cottage_id?.mesto }}</span>
+            </div>
+
+            <div class="text-neutral-900 flex justify-around">
+              <div class=" flex flex-col">
+                <span class="text-green-700 font-semibold">Check in:</span>
+                <span>{{ rezervacija.od | date:'dd-MM-yyyy HH:mm' }}</span>
+              </div>
+              <div class=" flex flex-col">
+                <span class="text-red-700 font-semibold">Check out:</span>
+                <span>{{ rezervacija.do | date:'dd-MM-yyyy HH:mm' }}</span>
+              </div>
+            </div>
           </div>
 
-          <div class="text-neutral-900 flex justify-around">
-            <div class=" flex flex-col">
-              <span class="text-green-700 font-semibold">Check in:</span>
-              <span>{{ rezervacija.od | date:'dd-MM-yyyy HH:mm' }}</span>
-            </div>
-            <div class=" flex flex-col">
-              <span class="text-red-700 font-semibold">Check out:</span>
-              <span>{{ rezervacija.do | date:'dd-MM-yyyy HH:mm' }}</span>
-            </div>
+          <div class="">
+
+            @if(rezervacija.napomena !== ''){
+
+
+            <span class="font-semibold">Note:</span>
+            <div>{{rezervacija.napomena}}</div>
+            }
+            @if(rezervacija.prihvacena == false){
+
+            @if(rezervacija.odbijenica !== ''){
+            <span class="font-semibold">Rejected:</span>
+            <div>{{rezervacija.odbijenica}}</div>
+            }@else{
+
+            }
+
+            }
+
           </div>
-        </div>
-
-        <div class="">
-
-          @if(rezervacija.napomena !== ''){
-
-
-          <span class="font-semibold">Note:</span>
-          <div>{{rezervacija.napomena}}</div>
-          }
-          @if(rezervacija.prihvacena == false){
-
-          @if(rezervacija.odbijenica !== ''){
-          <span class="font-semibold">Rejected:</span>
-          <div>{{rezervacija.odbijenica}}</div>
-          }@else{
-
-          }
-
-          }
-
-        </div>
-        <div class="ml-auto ">
-          <div class="text-neutral-900">
-            <span class="text-3xl font-bold">€{{ rezervacija.total }}</span> <span class="font-semibold ">
-              total</span>
+          <div class="ml-auto ">
+            <div class="text-neutral-900">
+              <span class="text-3xl font-bold">€{{ rezervacija.total }}</span> <span class="font-semibold ">
+                total</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-
+  </a>
   <div>
 
     <ng-content></ng-content>

@@ -17,5 +17,11 @@ rezervacijaRouter
   .post((req, res) =>
     new ReservationController().getMyReservationsOwner(req, res)
   );
+rezervacijaRouter
+  .route("/submitReview")
+  .post((req, res) => new ReservationController().submitReview(req, res));
 
+rezervacijaRouter
+  .route("/acceptReservation")
+  .post((req, res) => new ReservationController().acceptReservation(req, res));
 export default rezervacijaRouter;

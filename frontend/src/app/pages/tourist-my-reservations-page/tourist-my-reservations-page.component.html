@@ -28,13 +28,20 @@
           </div>
 
           }@else{
-          <form class="flex justify-between gap-2 xl:flex-row flex-col">
-            <div class="form-field flex-1 ">
+          <form class="flex justify-between gap-2 xl:flex-row flex-col" (submit)="submitReview($event, r)">
+            <div class="form-field flex-1 items-center">
               <div>Your review:</div>
-              <input type="text" />
+              <input type="text" [(ngModel)]="r.nov_komentar" name="komentar" />
+              <app-rating-stars [(rating)]="r.nova_ocena"></app-rating-stars>
+
             </div>
+
             <button type="submit" class="inline-block">Submit</button>
           </form>
+          <div class="text-red-500">
+            {{this.error}}
+
+          </div>
           }
         </div>
 

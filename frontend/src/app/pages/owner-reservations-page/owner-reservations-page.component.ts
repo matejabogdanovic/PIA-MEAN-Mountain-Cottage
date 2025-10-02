@@ -7,11 +7,17 @@ import { UserService } from '../../services/user.service';
 import { OwnerLayoutComponent } from '../../layouts/owner-layout/owner-layout.component';
 import { ReservationListingComponent } from '../../components/reservation-listing/reservation-listing.component';
 import { StarsComponent } from '../../components/stars/stars.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-owner-reservations-page',
   standalone: true,
-  imports: [OwnerLayoutComponent, ReservationListingComponent, StarsComponent],
+  imports: [
+    OwnerLayoutComponent,
+    ReservationListingComponent,
+    StarsComponent,
+    FormsModule,
+  ],
   templateUrl: './owner-reservations-page.component.html',
   styleUrl: './owner-reservations-page.component.css',
 })
@@ -26,6 +32,7 @@ export class OwnerReservationsPageComponent {
   rezervacijeAktivne: ReservationPopulated[] = [];
   rezervacijeNepotvrdjene: ReservationPopulated[] = [];
   rezervacijeIstekle: ReservationPopulated[] = [];
+
   ngOnInit(): void {
     this.loading = true;
     let x = this.userService.getUser();
@@ -41,7 +48,7 @@ export class OwnerReservationsPageComponent {
         console.log(d);
         this.rezervacije = d;
         this.rezervacije.sort(
-          (a, b) => new Date(a.od).getTime() - new Date(b.od).getTime()
+          (a, b) => new Date(b.od).getTime() - new Date(a.od).getTime()
         );
         this.rezervacijeAktivne = this.rezervacije.filter(
           (r) => new Date(r.do) >= new Date() && r.prihvacena == true
@@ -56,6 +63,29 @@ export class OwnerReservationsPageComponent {
         );
       });
       this.loading = false;
+    });
+  }
+  error = '';
+  acceptReservation(
+    inputOdbijenica: HTMLInputElement,
+    accept: boolean,
+    r: ReservationPopulated
+  ) {
+    console.log(inputOdbijenica);
+    let text = inputOdbijenica.value;
+    if (accept == false && text.trim() === '') {
+      this.error = 'Please, enter reason for denial.';
+      return;
+    }
+    if (accept == true) {
+      text = '';
+    }
+    this.resService.acceptReservation(r._id, accept, text).subscribe((d) => {
+      if (d.ok) {
+        this.ngOnInit();
+      } else {
+        this.error = d.reason;
+      }
     });
   }
 }

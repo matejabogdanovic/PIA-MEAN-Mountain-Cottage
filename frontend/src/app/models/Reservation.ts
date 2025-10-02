@@ -20,7 +20,13 @@ export class Reservation {
 
 export class ReservationPopulated {
   _id: string = '';
-  cottage_id: { naziv: string; mesto: string; slike: string[] } = {
+  cottage_id: {
+    _id: string;
+    naziv: string;
+    mesto: string;
+    slike: string[];
+  } = {
+    _id: '',
     naziv: '',
     mesto: '',
     slike: [],
@@ -40,4 +46,6 @@ export class ReservationPopulated {
     komentar: '',
     ocena: 0,
   };
+  nov_komentar = '';
+  nova_ocena = 0;
 }

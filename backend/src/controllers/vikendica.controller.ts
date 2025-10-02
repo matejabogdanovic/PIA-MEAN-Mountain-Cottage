@@ -1,6 +1,7 @@
 import express from "express";
 import VikM from "../models/vikendica";
 import KorM from "../models/korisnik";
+import RezM from "../models/rezervacija";
 import path from "path";
 import fs from "fs";
 export class CottageController {
@@ -167,14 +168,30 @@ export class CottageController {
         res.json(null);
       });
   };
-  // updateBook = (req: express.Request, res: express.Response) => {
-  //   BookM.updateOne({ name: req.body.name }, { pages: req.body.pages })
-  //     .then((books) => {
-  //       res.json({ message: "Book updated" });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       res.json({ message: "Fail" });
-  //     });
-  // };
+  getReviews = (req: express.Request, res: express.Response) => {
+    let _id = req.params["_id"];
+
+    RezM.find({
+      cottage_id: _id,
+      prihvacena: true,
+      "komentar_i_ocena.ocena": { $ne: 0 },
+    })
+      .select("komentar_i_ocena updatedAt")
+      .sort({ updatedAt: -1 })
+      .then((komentar_i_ocena) => {
+        if (!komentar_i_ocena) {
+          console.log("Greska komentar i ocene ");
+          res.json({ ok: false, reason: "Internal error 2." });
+          return;
+        }
+        console.log(komentar_i_ocena);
+
+        console.log(komentar_i_ocena);
+        res.json(komentar_i_ocena);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json(null);
+      });
+  };
 }

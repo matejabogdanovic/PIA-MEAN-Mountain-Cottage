@@ -60,4 +60,13 @@ export class CottageService {
   getCottage(_id: string) {
     return this.http.get<Cottage | null>(`${this.api}/getCottage/${_id}`);
   }
+  getReviews(_id: string) {
+    return this.http.get<
+      {
+        komentar_i_ocena: { komentar: string; ocena: number };
+
+        updatedAt: string;
+      }[]
+    >(`${this.api}/getReviews/${_id}`);
+  }
 }

@@ -2,6 +2,7 @@ import express from "express";
 import RezM from "../models/rezervacija";
 import VikM from "../models/vikendica";
 import mongoose from "mongoose";
+import { read } from "fs";
 
 export class ReservationController {
   getAllReservations = (req: express.Request, res: express.Response) => {
@@ -29,6 +30,7 @@ export class ReservationController {
         res.status(500).json([]);
       });
   };
+
   getMyReservationsOwner = (req: express.Request, res: express.Response) => {
     let user_id = req.body.user_id; // string
 
@@ -74,6 +76,74 @@ export class ReservationController {
     })
       .then((d) => {
         res.json({ ok: true, reason: "" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({ ok: false, reason: "Internal error." });
+      });
+  };
+
+  acceptReservation = (req: express.Request, res: express.Response) => {
+    RezM.findByIdAndUpdate(req.body._id, {
+      prihvacena: Boolean(req.body.prihvacena),
+      odbijenica: req.body.odbijenica,
+    })
+      .then((d) => {
+        res.json({ ok: true, reason: "" });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.json({ ok: false, reason: "Internal error." });
+      });
+  };
+  submitReview = (req: express.Request, res: express.Response) => {
+    RezM.findByIdAndUpdate(
+      req.body._id,
+      {
+        $set: {
+          komentar_i_ocena: {
+            komentar: req.body.komentar,
+            ocena: Number(req.body.ocena),
+          },
+        },
+      },
+      { new: true }
+    )
+      .then((d) => {
+        if (!d) {
+          res.json({ ok: false, reason: "Reservation doesn't exist." });
+          return;
+        }
+        RezM.find({
+          cottage_id: d.cottage_id,
+          prihvacena: true,
+          "komentar_i_ocena.ocena": { $ne: 0 },
+        })
+          .select("komentar_i_ocena.ocena -_id")
+          .then((komentar_i_ocena) => {
+            if (!komentar_i_ocena) {
+              console.log("Greska komentar i ocene ");
+              res.json({ ok: false, reason: "Internal error 2." });
+              return;
+            }
+            console.log(komentar_i_ocena);
+            const samoOcene = komentar_i_ocena.map(
+              (o) => o.komentar_i_ocena?.ocena
+            );
+
+            const suma = samoOcene.reduce((acc: any, val: any) => acc + val, 0);
+            const prosek = suma / samoOcene.length;
+
+            VikM.findByIdAndUpdate(d.cottage_id, { $set: { ocena: prosek } })
+              .then((result) => {
+                res.json({ ok: true, reason: "" });
+              })
+              .catch((err) => {
+                res.json({ ok: true, reason: "Internal error 3." });
+                console.log(err);
+              });
+          });
+        // update vikendicu
       })
       .catch((err) => {
         console.log(err);
