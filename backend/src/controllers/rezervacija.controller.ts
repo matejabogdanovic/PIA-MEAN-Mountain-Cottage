@@ -216,6 +216,34 @@ export class ReservationController {
       });
   };
 
+  cancelReservation = (req: express.Request, res: express.Response) => {
+    let _id = req.body._id;
+    let cottage_id = req.body.cottage_id;
+    let od: Date = new Date(req.body.od);
+
+    let sada: Date = new Date();
+
+    let razlikaMS = od.getTime() - sada.getTime();
+    let razlikaDana = razlikaMS / (1000 * 60 * 60 * 24);
+
+    if (razlikaDana >= 1) {
+      RezM.deleteOne({ _id, cottage_id, od })
+        .then((d) => {
+          if (d.deletedCount == 0) {
+            res.json({ ok: false, reason: "Cottage doesn't exist." });
+            return;
+          }
+          res.json({ ok: true, reason: "" });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.json({ ok: false, reason: "Internal error." });
+        });
+    } else {
+      res.json({ ok: false, reason: "Can't cancel now." });
+    }
+  };
+
   reservationStatistics = async (
     req: express.Request,
     res: express.Response

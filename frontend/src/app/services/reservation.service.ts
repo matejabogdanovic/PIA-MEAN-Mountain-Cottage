@@ -83,4 +83,14 @@ export class ReservationService {
       `${this.api}/reservationStatistics`
     );
   }
+  cancelReservation(_id: string, cottage_id: string, od: string) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/cancelReservation`,
+      {
+        _id,
+        cottage_id,
+        od,
+      }
+    );
+  }
 }

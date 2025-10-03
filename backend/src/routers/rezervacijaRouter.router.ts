@@ -34,4 +34,7 @@ rezervacijaRouter
   .get((req, res) =>
     new ReservationController().reservationStatistics(req, res)
   );
+rezervacijaRouter
+  .route("/cancelReservation")
+  .post((req, res) => new ReservationController().cancelReservation(req, res));
 export default rezervacijaRouter;

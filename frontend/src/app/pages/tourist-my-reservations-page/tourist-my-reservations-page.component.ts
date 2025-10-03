@@ -73,7 +73,17 @@ export class TouristMyReservationsPageComponent implements OnInit {
   }
 
   error = '';
-
+  cancel(r: ReservationPopulated) {
+    this.resService
+      .cancelReservation(r._id, r.cottage_id._id, r.od)
+      .subscribe((d) => {
+        if (d.ok) {
+          this.ngOnInit();
+          return;
+        }
+        this.error = d.reason;
+      });
+  }
   submitReview(event: Event, r: ReservationPopulated) {
     event.preventDefault();
     if (r.nova_ocena == 0) {
