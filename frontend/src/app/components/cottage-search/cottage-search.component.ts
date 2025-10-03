@@ -50,7 +50,7 @@ export class CottageSearchComponent implements OnInit {
 
   name_query = '';
   location_query = '';
-
+  po_nazivu = '';
   queryChange() {
     if (this.name_query.trim() === '' && this.location_query.trim() === '') {
       this.filteredCottages = this.cottages;
@@ -67,5 +67,67 @@ export class CottageSearchComponent implements OnInit {
 
       return matchName || matchLocation;
     });
+
+    this.order();
+  }
+  mestodir = 0;
+  nazivdir = 0;
+  changed = 0;
+  clearFilters() {
+    this.changed = 0;
+
+    this.mestodir = 0;
+    this.nazivdir = 0;
+    this.filteredCottages = this.cottages;
+  }
+  order() {
+    this.filteredCottages.sort((d1, d2) => {
+      if (this.changed == 1) {
+        // poredi po mestu
+        if (this.mestodir !== 0) {
+          const cmpMesto =
+            d1.mesto.toLowerCase().localeCompare(d2.mesto.toLowerCase()) *
+            this.mestodir;
+          if (cmpMesto !== 0) return cmpMesto;
+        }
+        // poredi po nazivu
+        if (this.nazivdir !== 0) {
+          const cmpNaziv =
+            d1.naziv.toLowerCase().localeCompare(d2.naziv.toLowerCase()) *
+            this.nazivdir;
+          if (cmpNaziv !== 0) return cmpNaziv;
+        }
+
+        return 0;
+      } else {
+        // poredi po nazivu
+        if (this.nazivdir !== 0) {
+          const cmpNaziv =
+            d1.naziv.toLowerCase().localeCompare(d2.naziv.toLowerCase()) *
+            this.nazivdir;
+          if (cmpNaziv !== 0) return cmpNaziv;
+        }
+        // poredi po mestu
+        if (this.mestodir !== 0) {
+          const cmpMesto =
+            d1.mesto.toLowerCase().localeCompare(d2.mesto.toLowerCase()) *
+            this.mestodir;
+          if (cmpMesto !== 0) return cmpMesto;
+        }
+        return 0; // ako su i naziv i mesto isti
+      }
+    });
+  }
+  orderPoMestu(dir: number) {
+    this.changed = 1;
+    console.log(dir);
+    this.mestodir = dir;
+    this.order();
+  }
+  orderPoNazivu(dir: number) {
+    this.changed = 2;
+    console.log(dir);
+    this.nazivdir = dir;
+    this.order();
   }
 }
