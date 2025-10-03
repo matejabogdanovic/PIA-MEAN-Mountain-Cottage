@@ -63,23 +63,71 @@ export class ReservationController {
         res.status(500).json([]);
       });
   };
+  normalizeDate(d: Date): Date {
+    const date = new Date(d);
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
+  doesRangeOverlap(
+    start: Date,
+    end: Date,
+    reservedRanges: { od: Date; do: Date }[]
+  ): boolean {
+    const startNorm = this.normalizeDate(start);
+    const endNorm = this.normalizeDate(end);
+
+    return reservedRanges.some((range) => {
+      const rStart = this.normalizeDate(range.od);
+      const rEnd = this.normalizeDate(range.do);
+
+      // Ako postoji preklapanje raspona
+      return startNorm < rEnd && endNorm > rStart;
+    });
+  }
   book = (req: express.Request, res: express.Response) => {
     console.log(req.body);
-    RezM.create({
-      ...req.body,
-      prihvacena: false,
-      odbijenica: "",
-      komentar_i_ocena: {
-        komentar: "",
-        ocena: 0,
-      },
-    })
+    let cottage_id = req.body.cottage_id;
+    RezM.find({ cottage_id: cottage_id, odbijenica: "" })
       .then((d) => {
-        res.json({ ok: true, reason: "" });
+        let takenDates: { od: Date; do: Date }[] = [];
+        takenDates = d.map((rez) => ({
+          od: new Date(rez.od),
+          do: new Date(rez.do),
+        }));
+
+        if (
+          this.doesRangeOverlap(
+            new Date(req.body.od),
+            new Date(req.body.do),
+            takenDates
+          )
+        ) {
+          res.json({
+            ok: false,
+            reason: "Please select available dates only. Refresh the page.",
+          });
+          return;
+        }
+        RezM.create({
+          ...req.body,
+          prihvacena: false,
+          odbijenica: "",
+          komentar_i_ocena: {
+            komentar: "",
+            ocena: 0,
+          },
+        })
+          .then((d) => {
+            res.json({ ok: true, reason: "" });
+          })
+          .catch((err) => {
+            console.log(err);
+            res.json({ ok: false, reason: "Internal error." });
+          });
       })
       .catch((err) => {
         console.log(err);
-        res.json({ ok: false, reason: "Internal error." });
+        res.json([]);
       });
   };
 
@@ -166,5 +214,33 @@ export class ReservationController {
         console.log(err);
         res.json([]);
       });
+  };
+
+  reservationStatistics = async (
+    req: express.Request,
+    res: express.Response
+  ) => {
+    const sada = new Date();
+
+    const granice = {
+      "24h": new Date(sada.getTime() - 24 * 60 * 60 * 1000),
+      "7d": new Date(sada.getTime() - 7 * 24 * 60 * 60 * 1000),
+      "30d": new Date(sada.getTime() - 30 * 24 * 60 * 60 * 1000),
+    };
+
+    const rezultati: any = {};
+
+    Promise.all(
+      Object.entries(granice).map(([period, granica]) =>
+        RezM.countDocuments({
+          createdAt: { $gte: granica },
+          prihvacena: true,
+        }).then((broj) => {
+          rezultati[period] = broj;
+        })
+      )
+    ).then(() => {
+      res.json(rezultati);
+    });
   };
 }

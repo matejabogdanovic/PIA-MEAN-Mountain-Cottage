@@ -9,7 +9,7 @@ export class UserService {
   constructor() {}
 
   private http = inject(HttpClient);
-  private api = 'http://192.168.0.31:4000/korisnici';
+  private api = 'http://localhost:4000/korisnici';
 
   startSession(korisnik: User) {
     localStorage.setItem('korisnik', JSON.stringify(korisnik));

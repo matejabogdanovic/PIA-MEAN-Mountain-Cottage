@@ -1,5 +1,5 @@
 <app-unregistered-layout>
-  <div class=" bg-green-900 text-white mb-10 ">
+  <div class=" bg-gradient-to-r from-emerald-700 to-green-700  text-white mb-10 ">
     <div
       class=" my-container min-h-[50dvh] flex xl:justify-between justify-center items-center xl:flex-row flex-col font-semibold text-5xl py-15 gap-10 [&>div]:flex [&>div]:flex-col [&>div]:items-center">
 
@@ -12,6 +12,18 @@
         </svg>
 
         <div>{{statistics.ukupnoVikendica}} cottages</div>
+        <div class="mt-4 text-lg font-normal flex flex-col gap-1 text-center">
+          <div class="opacity-80">Booked:</div>
+          <div class="bg-white/10 rounded-lg px-3 py-1">
+            {{reservationStatistics["24h"]}} <span class="text-sm opacity-80">in last 24h</span>
+          </div>
+          <div class="bg-white/10 rounded-lg px-3 py-1">
+            {{reservationStatistics["7d"]}} <span class="text-sm opacity-80">in last 7d</span>
+          </div>
+          <div class="bg-white/10 rounded-lg px-3 py-1">
+            {{reservationStatistics["30d"]}} <span class="text-sm opacity-80">in last 30d</span>
+          </div>
+        </div>
       </div>
       <div><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-13">
           <path fill-rule="evenodd"

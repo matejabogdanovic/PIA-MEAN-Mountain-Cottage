@@ -28,4 +28,10 @@ rezervacijaRouter
 rezervacijaRouter
   .route("/getTakenDates")
   .post((req, res) => new ReservationController().getTakenDates(req, res));
+
+rezervacijaRouter
+  .route("/reservationStatistics")
+  .get((req, res) =>
+    new ReservationController().reservationStatistics(req, res)
+  );
 export default rezervacijaRouter;

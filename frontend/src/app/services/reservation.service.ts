@@ -10,7 +10,7 @@ export class ReservationService {
   constructor() {}
 
   private http = inject(HttpClient);
-  private api = 'http://192.168.0.31:4000/rezervacije';
+  private api = 'http://localhost:4000/rezervacije';
 
   book(
     from: Date,
@@ -76,6 +76,11 @@ export class ReservationService {
       {
         _id,
       }
+    );
+  }
+  getReservationStatistics() {
+    return this.http.get<{ '24h': number; '7d': number; '30d': number }>(
+      `${this.api}/reservationStatistics`
     );
   }
 }

@@ -9,7 +9,7 @@ export class CottageService {
   constructor() {}
 
   private http = inject(HttpClient);
-  private api = 'http://192.168.0.31:4000/vikendice';
+  private api = 'http://localhost:4000/vikendice';
 
   getAllCottages() {
     return this.http.get<Cottage[]>(`${this.api}/getAllCottages`);

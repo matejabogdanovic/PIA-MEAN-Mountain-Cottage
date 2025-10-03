@@ -11,7 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './reservation-listing.component.css',
 })
 export class ReservationListingComponent {
-  slikeApi = 'http://192.168.0.31:4000/uploads/';
+  slikeApi = 'http://localhost:4000/uploads/';
   @Input() rezervacija!: ReservationPopulated;
   @Input() isOwner: boolean = false;
 }

@@ -11,7 +11,7 @@ import { CottageService } from '../../services/cottage.service';
   styleUrl: './cottage-listing.component.css',
 })
 export class CottageListingComponent implements OnInit {
-  slikaApi = 'http://192.168.0.31:4000/uploads';
+  slikaApi = 'http://localhost:4000/uploads';
   @Input() cottage!: Cottage;
   @Input() isAdmin: boolean = false;
   profilna_slika = '';

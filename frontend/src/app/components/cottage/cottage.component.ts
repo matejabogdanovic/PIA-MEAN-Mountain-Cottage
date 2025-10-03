@@ -15,7 +15,7 @@ import { CottageService } from '../../services/cottage.service';
 export class CottageComponent implements OnInit {
   @Input() cottage!: Cottage;
   month = 0;
-  slikaApi = 'http://192.168.0.31:4000/uploads';
+  slikaApi = 'http://localhost:4000/uploads';
   monthNames: string[] = [
     'Jan',
     'Feb',
