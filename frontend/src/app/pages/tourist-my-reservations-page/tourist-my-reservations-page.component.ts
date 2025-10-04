@@ -72,7 +72,6 @@ export class TouristMyReservationsPageComponent implements OnInit {
     });
   }
 
-  error = '';
   cancel(r: ReservationPopulated) {
     this.resService
       .cancelReservation(r._id, r.cottage_id._id, r.od)
@@ -81,17 +80,17 @@ export class TouristMyReservationsPageComponent implements OnInit {
           this.ngOnInit();
           return;
         }
-        this.error = d.reason;
+        r.error = d.reason;
       });
   }
   submitReview(event: Event, r: ReservationPopulated) {
     event.preventDefault();
     if (r.nova_ocena == 0) {
-      this.error = 'Please, leave a rating.';
+      r.error = 'Please, leave a rating.';
       return;
     }
     if (r.nov_komentar.trim() == '') {
-      this.error = 'Please, leave a review.';
+      r.error = 'Please, leave a review.';
       return;
     }
     this.resService
@@ -101,7 +100,8 @@ export class TouristMyReservationsPageComponent implements OnInit {
         if (d.ok) {
           this.ngOnInit();
         } else {
-          this.error = d.reason;
+          // this.error = d.reason;
+          r.error = d.reason;
         }
       });
   }

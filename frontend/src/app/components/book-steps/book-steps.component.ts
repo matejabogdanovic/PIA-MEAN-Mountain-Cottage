@@ -226,8 +226,9 @@ export class BookStepsComponent implements OnInit {
       .subscribe((d) => {
         console.log(d);
         if (d.ok) {
-          this.success = true;
-          this.ngOnInit();
+          // this.success = true;
+          // this.ngOnInit();
+          this.router.navigate(['/tourist/my-reservations']);
         } else {
           this.error = d.reason;
         }

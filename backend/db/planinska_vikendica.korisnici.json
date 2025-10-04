@@ -1,0 +1,146 @@
+[{
+  "_id": {
+    "$oid": "68d45f697f0c9ef1f8562ede"
+  },
+  "korisnicko_ime": "admin",
+  "lozinka": "$2b$10$yDQ4GhgWnfqjOSvyP3Y.1O5BePtVKtlYVoNrL7z5t8ydXUZ5YikYK",
+  "ime": "m",
+  "prezime": "mateja2",
+  "pol": "m",
+  "adresa": "Ulica Broj 1",
+  "kontakt_telefon": "+3816912345678",
+  "email": "mateja@gmail.com",
+  "profilna_slika": "profile_photo.png",
+  "kreditna_kartica": "5112345678901224",
+  "aktivan": true,
+  "tip": "admin",
+  "updatedAt": {
+    "$date": "2025-10-04T12:51:04.831Z"
+  },
+  "blokiran": false
+},
+{
+  "_id": {
+    "$oid": "68e102fb67f2597f2d06dc65"
+  },
+  "korisnicko_ime": "Vlasnik",
+  "lozinka": "$2b$10$V3VDq3D6QcmB3UyflxO8tO5G.sopBi9eHTPCgl60dNd1bpg.8AB6C",
+  "ime": "Vlasnik",
+  "prezime": "Vlasnik",
+  "pol": "m",
+  "adresa": "Adresa 1",
+  "kontakt_telefon": "+3816912345678",
+  "email": "vlasnik123@gmail.com",
+  "profilna_slika": "Vlasnik1759576827004.jpg",
+  "kreditna_kartica": "300123456789123",
+  "aktivan": true,
+  "blokiran": false,
+  "tip": "vlasnik",
+  "createdAt": {
+    "$date": "2025-10-04T11:20:27.010Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:50:32.596Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "korisnicko_ime": "Turista",
+  "lozinka": "$2b$10$1o1LvU3MhzQMzVT3d.OQzORzxHD0JVWYksxdqWwdr0YIveLdV3QBi",
+  "ime": "Turista",
+  "prezime": "Turistic",
+  "pol": "z",
+  "adresa": "Adresa 123",
+  "kontakt_telefon": "+381690000000",
+  "email": "turista@gmail.com",
+  "profilna_slika": "profile_photo.png",
+  "kreditna_kartica": "5112345678901224",
+  "aktivan": true,
+  "blokiran": false,
+  "tip": "turista",
+  "createdAt": {
+    "$date": "2025-10-04T11:21:57.215Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:49:38.996Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1064019073a1e9f1f1471"
+  },
+  "korisnicko_ime": "Turista2",
+  "lozinka": "$2b$10$ARlCSNlu0Z8VxZveqaOjheN/EOUEkJNAv8sr3drvwr0VVWW3Ia8sa",
+  "ime": "Turista ",
+  "prezime": "Kopija",
+  "pol": "z",
+  "adresa": "Adresa neka",
+  "kontakt_telefon": "+3816912345678",
+  "email": "turista2@gmail.com",
+  "profilna_slika": "profile_photo.png",
+  "kreditna_kartica": "4539123456789011",
+  "aktivan": false,
+  "blokiran": true,
+  "tip": "vlasnik",
+  "createdAt": {
+    "$date": "2025-10-04T11:34:24.257Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T11:34:33.486Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e106a719073a1e9f1f1486"
+  },
+  "korisnicko_ime": "ivana",
+  "lozinka": "$2b$10$26DVxpHxfIDBFtBTVImf4Oq4yuvtc.//mrNHl2Q0GQ3k2kSfZH1Ee",
+  "ime": "Ivana",
+  "prezime": "Ivanovic",
+  "pol": "z",
+  "adresa": "Beogradska 5",
+  "kontakt_telefon": "+3812212345678",
+  "email": "ivana@gmail.com",
+  "profilna_slika": "ivana1759577767515.jpg",
+  "kreditna_kartica": "4539123456789011",
+  "aktivan": true,
+  "blokiran": false,
+  "tip": "turista",
+  "createdAt": {
+    "$date": "2025-10-04T11:36:07.515Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T11:36:07.515Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1072419073a1e9f1f148e"
+  },
+  "korisnicko_ime": "petra",
+  "lozinka": "$2b$10$tEmMHvHX3vyYjP7BVborVOJ/taYHOazbcA2uKDvKa3ylXZnais60G",
+  "ime": "Sifr@123",
+  "prezime": "Sifr@123 Losa sifra",
+  "pol": "z",
+  "adresa": "Kuca 123",
+  "kontakt_telefon": "011234567",
+  "email": "petra@gmail.com",
+  "profilna_slika": "petra1759581389800.png",
+  "kreditna_kartica": "300123456781226",
+  "aktivan": true,
+  "blokiran": false,
+  "tip": "vlasnik",
+  "createdAt": {
+    "$date": "2025-10-04T11:38:12.611Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:36:29.810Z"
+  },
+  "__v": 0
+}]

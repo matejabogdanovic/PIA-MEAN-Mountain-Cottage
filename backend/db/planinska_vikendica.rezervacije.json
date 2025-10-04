@@ -1,0 +1,224 @@
+[{
+  "_id": {
+    "$oid": "68e10e7219073a1e9f1f1600"
+  },
+  "od": {
+    "$date": "2025-10-19T12:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-10-21T08:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e104a719073a1e9f1f140c"
+  },
+  "user_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "total": 2400,
+  "napomena": "Samo da soba bude cista!",
+  "prihvacena": false,
+  "odbijenica": "Mnogo trazis!",
+  "komentar_i_ocena": {
+    "komentar": "",
+    "ocena": 0
+  },
+  "createdAt": {
+    "$date": "2025-10-04T12:09:22.986Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:13:15.038Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e10fb419073a1e9f1f1695"
+  },
+  "od": {
+    "$date": "2025-10-19T12:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-10-21T08:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e104a719073a1e9f1f140c"
+  },
+  "user_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "total": 2400,
+  "napomena": "Okej ne treba nista sad.",
+  "prihvacena": true,
+  "odbijenica": "",
+  "komentar_i_ocena": {
+    "komentar": "",
+    "ocena": 0
+  },
+  "createdAt": {
+    "$date": "2025-10-04T12:14:44.455Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:14:54.860Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1101d19073a1e9f1f16de"
+  },
+  "od": {
+    "$date": "2025-01-05T12:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-03-07T08:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e105a619073a1e9f1f143f"
+  },
+  "user_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "total": 10000,
+  "napomena": "",
+  "prihvacena": true,
+  "odbijenica": "",
+  "komentar_i_ocena": {
+    "komentar": "Bilo je odlicno. Cena je takodje super. Jedino sto je bilo malo hladno zato 4 ocena.",
+    "ocena": 4
+  },
+  "createdAt": {
+    "$date": "2025-01-02T12:16:29.632Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:18:37.936Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1120019073a1e9f1f176a"
+  },
+  "od": {
+    "$date": "2025-09-19T12:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-09-20T08:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e108ed19073a1e9f1f14cb"
+  },
+  "user_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "total": 200,
+  "napomena": "",
+  "prihvacena": true,
+  "odbijenica": "",
+  "komentar_i_ocena": {
+    "komentar": "Nikako",
+    "ocena": 1
+  },
+  "createdAt": {
+    "$date": "2025-09-04T12:24:32.654Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-04T12:34:47.522Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1120919073a1e9f1f1775"
+  },
+  "od": {
+    "$date": "2025-09-01T12:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-09-02T08:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e108ed19073a1e9f1f14cb"
+  },
+  "user_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "total": 200,
+  "napomena": "",
+  "prihvacena": true,
+  "odbijenica": "",
+  "komentar_i_ocena": {
+    "komentar": "Uzas",
+    "ocena": 1
+  },
+  "createdAt": {
+    "$date": "2025-10-04T12:24:41.456Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:34:51.411Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1121219073a1e9f1f1780"
+  },
+  "od": {
+    "$date": "2025-10-01T12:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-10-02T08:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e108ed19073a1e9f1f14cb"
+  },
+  "user_id": {
+    "$oid": "68e1035567f2597f2d06dc7d"
+  },
+  "total": 200,
+  "napomena": "",
+  "prihvacena": true,
+  "odbijenica": "",
+  "komentar_i_ocena": {
+    "komentar": "Bezveze",
+    "ocena": 1
+  },
+  "createdAt": {
+    "$date": "2025-09-30T12:24:50.634Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:28:08.129Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1192019073a1e9f1f1a6a"
+  },
+  "od": {
+    "$date": "2025-10-30T13:00:00.000Z"
+  },
+  "do": {
+    "$date": "2025-11-02T09:00:00.000Z"
+  },
+  "cottage_id": {
+    "$oid": "68e1168119073a1e9f1f18e2"
+  },
+  "user_id": {
+    "$oid": "68e106a719073a1e9f1f1486"
+  },
+  "total": 3100,
+  "napomena": "Zagrejte malo mesto.",
+  "prihvacena": false,
+  "odbijenica": "",
+  "komentar_i_ocena": {
+    "komentar": "",
+    "ocena": 0
+  },
+  "createdAt": {
+    "$date": "2025-10-04T12:54:56.153Z"
+  },
+  "updatedAt": {
+    "$date": "2025-10-04T12:54:56.153Z"
+  },
+  "__v": 0
+}]

@@ -1,0 +1,181 @@
+[{
+  "_id": {
+    "$oid": "68e104a719073a1e9f1f140c"
+  },
+  "naziv": "Luksuzna Kuca",
+  "mesto": "Dedinje 22",
+  "koordinate": {
+    "lat": "44.7773049",
+    "lng": "20.4570793"
+  },
+  "usluge": "5 toaleta. 5 spavaćih soba.  ",
+  "cenovnik": [
+    2000,
+    1200,
+    1200,
+    1200,
+    1500,
+    1500,
+    1500,
+    1300,
+    1200,
+    1200,
+    1200,
+    2000
+  ],
+  "telefon": "+3816912345678",
+  "slike": [
+    "1.jpg1759577331590.jpg",
+    "2.jpg1759577331591.jpg",
+    "3.jpg1759577331592.jpg"
+  ],
+  "vlasnik": {
+    "$oid": "68e102fb67f2597f2d06dc65"
+  },
+  "ocena": 0,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e105a619073a1e9f1f143f"
+  },
+  "naziv": "Zimska Idila ",
+  "mesto": "Juzni Pol 1",
+  "koordinate": {
+    "lat": "-78.976776",
+    "lng": "57.3861271"
+  },
+  "usluge": "Eskimi služe doručak. Riba svaki dan.",
+  "cenovnik": [
+    6000,
+    4000,
+    3000,
+    100,
+    100,
+    100,
+    100,
+    110,
+    1000,
+    5000,
+    5000,
+    6000
+  ],
+  "telefon": "061123456",
+  "slike": [
+    "zima1.jpg1759577510836.jpg",
+    "zima2.jpg1759577510837.jpg"
+  ],
+  "vlasnik": {
+    "$oid": "68e102fb67f2597f2d06dc65"
+  },
+  "ocena": 4,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e108ed19073a1e9f1f14cb"
+  },
+  "naziv": "U Centru Bg",
+  "mesto": "Bulevar 123",
+  "koordinate": {
+    "lat": "44.8054469",
+    "lng": "20.4754293"
+  },
+  "usluge": "",
+  "cenovnik": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    300,
+    200,
+    200,
+    200,
+    600,
+    200,
+    222
+  ],
+  "telefon": "0641111111",
+  "slike": [
+    "1.jpg1759578349319.jpg",
+    "2.jpg1759578349320.jpg"
+  ],
+  "vlasnik": {
+    "$oid": "68e102fb67f2597f2d06dc65"
+  },
+  "ocena": 1,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e1168119073a1e9f1f18e2"
+  },
+  "naziv": "Planinska Vikendica",
+  "mesto": "Ulica Brdjanska",
+  "koordinate": {
+    "lat": "27.9883474",
+    "lng": "86.6671186"
+  },
+  "usluge": "Nema.",
+  "cenovnik": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    600,
+    700,
+    800,
+    900,
+    1000,
+    1100,
+    1233
+  ],
+  "telefon": "06412344444",
+  "slike": [
+    "brdo1.jpg1759581825129.jpg",
+    "brdo2.jpg1759581825130.jpg"
+  ],
+  "vlasnik": {
+    "$oid": "68e1072419073a1e9f1f148e"
+  },
+  "ocena": 0,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68e11a2519073a1e9f1f1b06"
+  },
+  "naziv": "Alpska Noc",
+  "mesto": "Alpi 123",
+  "koordinate": {
+    "lat": "46.5575406",
+    "lng": "10.4910851"
+  },
+  "usluge": "Medved svira trubu uvece.",
+  "cenovnik": [
+    1200,
+    1500,
+    1200,
+    1200,
+    1200,
+    1200,
+    1400,
+    1200,
+    1200,
+    1200,
+    1200,
+    1200
+  ],
+  "telefon": "0641234567",
+  "slike": [
+    "1mountain.jpg1759582757239.jpg",
+    "2living.jpg1759582757246.jpg"
+  ],
+  "vlasnik": {
+    "$oid": "68e1072419073a1e9f1f148e"
+  },
+  "ocena": 0,
+  "__v": 0
+}]

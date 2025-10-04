@@ -48,4 +48,5 @@ export class ReservationPopulated {
   };
   nov_komentar = '';
   nova_ocena = 0;
+  error = '';
 }
