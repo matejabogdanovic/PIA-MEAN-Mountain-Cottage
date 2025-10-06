@@ -72,6 +72,19 @@ button.red {
   @apply bg-neutral-300
 }
 
+.fc-toolbar-title {
+  @apply !text-green-900 font-bold
+}
+
+.fc-event-time {
+  @apply hidden
+}
+
+.fc-today-button,
+.fc-next-button,
+.fc-prev-button {
+  @apply !bg-green-900 !border-green-900 !text-white;
+}
 
 /* Osnovni stil za dugme */
 button {

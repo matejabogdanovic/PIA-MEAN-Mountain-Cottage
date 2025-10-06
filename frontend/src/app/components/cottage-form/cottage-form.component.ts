@@ -138,4 +138,40 @@ export class CottageFormComponent {
       }
     });
   }
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+
+    if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
+      alert('Molimo izaberite validan JSON fajl.');
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const json = JSON.parse(reader.result as string);
+        console.log('Parsed JSON object:', json);
+        let cot = json as Cottage;
+        this.cottage.naziv = cot.naziv;
+        this.cottage.mesto = cot.mesto;
+        this.cottage.koordinate = cot.koordinate;
+        this.cottage.usluge = cot.usluge;
+        this.cottage.cenovnik = cot.cenovnik;
+        this.cottage.telefon = cot.telefon;
+      } catch (e) {
+        console.error('Nevalidan JSON', e);
+      }
+    };
+
+    reader.onerror = () => {
+      console.error('Reading Error');
+    };
+
+    reader.readAsText(file);
+  }
 }

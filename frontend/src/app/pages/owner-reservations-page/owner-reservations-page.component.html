@@ -1,5 +1,12 @@
 <app-owner-layout>
   <div class="my-container">
+
+
+
+    <div class="mt-4">
+      <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+
     <h1 class="page-title">Active Reservations</h1>
     <div class="flex flex-col gap-4">
       @for(r of rezervacijeAktivne; track r._id){
@@ -11,6 +18,28 @@
     <div class="flex flex-col gap-4">
       @for(r of rezervacijeNepotvrdjene; track r._id){
       <app-reservation-listing [rezervacija]="r">
+        <!-- overlay -->
+        @if(r.modalShown){
+        <div class="fixed  inset-0  flex items-center justify-center flex-col bg-black/50 z-20">
+          <div class="bg-white p-3 rounded-md w-[60%]">
+            <div class="flex justify-between gap-2 xl:flex-row flex-col">
+              <div class="form-field flex-1 items-center">
+                <div>Denial reason:</div>
+                <input type="text" #inputOdbijenica name="odbijenica" />
+
+
+              </div>
+
+              <button (click)="acceptReservation(inputOdbijenica, true, r)" class="inline-block">Accept</button>
+              <button (click)="acceptReservation(inputOdbijenica, false, r)" class="inline-block red">Deny</button>
+              <button (click)="r.modalShown = false" class="inline-block red">Exit</button>
+            </div>
+            <div class="text-red-500">
+              {{r.error}}
+
+            </div>
+          </div>
+        </div>}
         <div class="mt-3">
           <div class="flex justify-between gap-2 xl:flex-row flex-col">
             <div class="form-field flex-1 items-center">
@@ -24,7 +53,7 @@
             <button (click)="acceptReservation(inputOdbijenica, false, r)" class="inline-block red">Deny</button>
           </div>
           <div class="text-red-500">
-            {{this.error}}
+            {{r.error}}
 
           </div>
         </div>

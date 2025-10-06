@@ -60,6 +60,10 @@
           class="!bg-transparent !border-transparent !p-0 absolute right-0">Clear</button>
       </div>
     </div>
+    <div class="form-field">
+      <div>Add as JSON: </div>
+      <input type="file" (change)="onFileSelected($event)" accept=".json" />
+    </div>
     <div class="text-red-500 self-center">
       {{this.error}}
     </div>

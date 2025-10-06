@@ -8,7 +8,11 @@ import { OwnerLayoutComponent } from '../../layouts/owner-layout/owner-layout.co
 import { ReservationListingComponent } from '../../components/reservation-listing/reservation-listing.component';
 import { StarsComponent } from '../../components/stars/stars.component';
 import { FormsModule } from '@angular/forms';
-
+// kalendar
+import { CalendarOptions } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { FullCalendarModule } from '@fullcalendar/angular';
 @Component({
   selector: 'app-owner-reservations-page',
   standalone: true,
@@ -17,6 +21,7 @@ import { FormsModule } from '@angular/forms';
     ReservationListingComponent,
     StarsComponent,
     FormsModule,
+    FullCalendarModule,
   ],
   templateUrl: './owner-reservations-page.component.html',
   styleUrl: './owner-reservations-page.component.css',
@@ -33,6 +38,59 @@ export class OwnerReservationsPageComponent {
   rezervacijeNepotvrdjene: ReservationPopulated[] = [];
   rezervacijeIstekle: ReservationPopulated[] = [];
 
+  calendarOptions: CalendarOptions = {
+    plugins: [dayGridPlugin, interactionPlugin],
+    initialView: 'dayGridMonth',
+    height: '80dvh',
+
+    events: [],
+    eventClick: (info) => {
+      if (info.event.extendedProps['prihvacena'] === false) {
+        console.log(info.event.extendedProps);
+        let _id = info.event.extendedProps['_id'];
+        let el = this.rezervacijeNepotvrdjene.find((d) => d._id == _id);
+        if (el) {
+          el.modalShown = true;
+        }
+      }
+    },
+    eventDidMount: (info) => {
+      if (info.event.extendedProps['prihvacena'] === false) {
+        info.el.style.cursor = 'pointer';
+      } else {
+        info.el.style.cursor = 'default';
+      }
+    },
+  };
+
+  loadReservations() {
+    let lista = this.rezervacije.filter((a) => a.odbijenica === '');
+    const events = lista.map((r) => ({
+      title: `${r.cottage_id.naziv}`,
+      start: r.od,
+      end: r.do,
+      extendedProps: r,
+
+      backgroundColor:
+        r.prihvacena === false
+          ? '#32b778'
+          : new Date(r.do) > new Date()
+          ? '#f6bf26'
+          : '#a1a1a1',
+      borderColor:
+        r.prihvacena === false
+          ? '#32b778'
+          : new Date(r.do) > new Date()
+          ? '#f6bf26'
+          : '#a1a1a1',
+    }));
+
+    // ažuriraj kalendar
+    this.calendarOptions = {
+      ...this.calendarOptions,
+      events,
+    };
+  }
   ngOnInit(): void {
     this.loading = true;
     let x = this.userService.getUser();
@@ -43,10 +101,12 @@ export class OwnerReservationsPageComponent {
     this.userService.getOneUser(x.korisnicko_ime).subscribe((d) => {
       if (!d) return;
       this.user = d;
-      console.log(this.user._id);
+
       this.resService.getMyReservationsOwner(this.user._id).subscribe((d) => {
         console.log(d);
         this.rezervacije = d;
+
+        this.loadReservations();
         this.rezervacije.sort(
           (a, b) => new Date(b.od).getTime() - new Date(a.od).getTime()
         );
@@ -61,8 +121,8 @@ export class OwnerReservationsPageComponent {
         this.rezervacijeNepotvrdjene = this.rezervacije.filter(
           (r) => r.prihvacena == false && r.odbijenica == ''
         );
+        this.loading = false;
       });
-      this.loading = false;
     });
   }
   error = '';
@@ -74,7 +134,7 @@ export class OwnerReservationsPageComponent {
     console.log(inputOdbijenica);
     let text = inputOdbijenica.value;
     if (accept == false && text.trim() === '') {
-      this.error = 'Please, enter reason for denial.';
+      r.error = 'Please, enter reason for denial.';
       return;
     }
     if (accept == true) {
@@ -84,7 +144,7 @@ export class OwnerReservationsPageComponent {
       if (d.ok) {
         this.ngOnInit();
       } else {
-        this.error = d.reason;
+        r.error = d.reason;
       }
     });
   }
