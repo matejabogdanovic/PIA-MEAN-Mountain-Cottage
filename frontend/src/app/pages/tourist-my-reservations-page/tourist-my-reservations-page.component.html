@@ -2,6 +2,7 @@
   <div class="my-container">
     <h1 class="page-title">Active Reservations</h1>
     <div class="flex flex-col gap-4">
+
       @for(r of rezervacijeAktivne; track r._id){
       <app-reservation-listing [rezervacija]="r">
         <div class=" mt-3 flex flex-col xl:items-end  ">
@@ -11,6 +12,9 @@
           </div><button class="red" (click)="cancel(r)">Cancel</button>
         </div>
       </app-reservation-listing>
+      }
+      @if(rezervacijeAktivne.length==0){
+      <span>There are no active reservations.</span>
       }
     </div>
 
@@ -26,6 +30,9 @@
           <button class="red w-full xl:w-auto" (click)="cancel(r)">Cancel</button>
         </div>
       </app-reservation-listing>
+      }
+      @if(rezervacijeNepotvrdjene.length==0){
+      <span>There are no pending reservations.</span>
       }
     </div>
     <h1 class="page-title">Finished Reservations</h1>
@@ -63,6 +70,8 @@
 
         }
       </app-reservation-listing>
+      }@if(rezervacijeIstekle.length==0){
+      <span>There are no finished reservations.</span>
       }
     </div>
   </div>

@@ -1,0 +1,11 @@
+{
+  "naziv": "Spust",
+  "mesto": "Kopaonik",
+  "koordinate": {
+    "lat": 43.2179,
+    "lng": 20.6890
+  },
+  "usluge": "WiFi, Parking, Bazen, Kamin",
+  "cenovnik": [80, 80, 85, 90, 95, 100, 120, 110, 100, 90, 85, 80],
+  "telefon": "+381655432109"
+}

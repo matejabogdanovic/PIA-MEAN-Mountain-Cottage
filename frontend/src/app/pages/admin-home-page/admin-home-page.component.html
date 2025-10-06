@@ -24,6 +24,8 @@
         }
 
       </div>
+      }@if(vlasnici.length==0){
+      <span>There are no owners.</span>
       }
     </div>
 
@@ -49,6 +51,8 @@
         }
 
       </div>
+      }@if(turisti.length==0){
+      <span>There are no tourists.</span>
       }
     </div>
 
@@ -62,6 +66,8 @@
           <button (click)="changeActiveStatus(u.korisnicko_ime, false)" class="red">Deny</button></app-user-listing>
 
       </div>
+      }@if(zahtevi.length==0){
+      <span>There are no requests.</span>
       }
     </div>
 
@@ -71,6 +77,8 @@
       <div><app-user-listing [user]="u" [showtype]="true"></app-user-listing>
 
       </div>
+      }@if(zahtevi.length==0){
+      <span>There are no denied or deactivated users.</span>
       }
     </div>
 

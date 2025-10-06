@@ -1,0 +1,11 @@
+{
+  "naziv": "Bor",
+  "mesto": "Zlatibor",
+  "koordinate": {
+    "lat": 43.7200,
+    "lng": 19.6983
+  },
+  "usluge": "WiFi, Parking, Kamin, TV",
+  "cenovnik": [50, 50, 50, 60, 60, 70, 70, 60, 50, 50, 50, 50],
+  "telefon": "+381641234567"
+}

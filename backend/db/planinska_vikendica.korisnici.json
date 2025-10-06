@@ -4,8 +4,8 @@
   },
   "korisnicko_ime": "admin",
   "lozinka": "$2b$10$yDQ4GhgWnfqjOSvyP3Y.1O5BePtVKtlYVoNrL7z5t8ydXUZ5YikYK",
-  "ime": "m",
-  "prezime": "mateja2",
+  "ime": "Mateja",
+  "prezime": "Admin@1234",
   "pol": "m",
   "adresa": "Ulica Broj 1",
   "kontakt_telefon": "+3816912345678",
@@ -26,7 +26,7 @@
   "korisnicko_ime": "Vlasnik",
   "lozinka": "$2b$10$V3VDq3D6QcmB3UyflxO8tO5G.sopBi9eHTPCgl60dNd1bpg.8AB6C",
   "ime": "Vlasnik",
-  "prezime": "Vlasnik",
+  "prezime": "Vlas@123",
   "pol": "m",
   "adresa": "Adresa 1",
   "kontakt_telefon": "+3816912345678",
@@ -40,7 +40,7 @@
     "$date": "2025-10-04T11:20:27.010Z"
   },
   "updatedAt": {
-    "$date": "2025-10-04T12:50:32.596Z"
+    "$date": "2025-10-06T11:31:16.855Z"
   },
   "__v": 0
 },
@@ -51,7 +51,7 @@
   "korisnicko_ime": "Turista",
   "lozinka": "$2b$10$1o1LvU3MhzQMzVT3d.OQzORzxHD0JVWYksxdqWwdr0YIveLdV3QBi",
   "ime": "Turista",
-  "prezime": "Turistic",
+  "prezime": "Turi@123",
   "pol": "z",
   "adresa": "Adresa 123",
   "kontakt_telefon": "+381690000000",
@@ -65,7 +65,7 @@
     "$date": "2025-10-04T11:21:57.215Z"
   },
   "updatedAt": {
-    "$date": "2025-10-04T12:49:38.996Z"
+    "$date": "2025-10-06T11:31:31.064Z"
   },
   "__v": 0
 },
@@ -101,7 +101,7 @@
   "korisnicko_ime": "ivana",
   "lozinka": "$2b$10$26DVxpHxfIDBFtBTVImf4Oq4yuvtc.//mrNHl2Q0GQ3k2kSfZH1Ee",
   "ime": "Ivana",
-  "prezime": "Ivanovic",
+  "prezime": "Turi@123",
   "pol": "z",
   "adresa": "Beogradska 5",
   "kontakt_telefon": "+3812212345678",
@@ -115,7 +115,7 @@
     "$date": "2025-10-04T11:36:07.515Z"
   },
   "updatedAt": {
-    "$date": "2025-10-04T11:36:07.515Z"
+    "$date": "2025-10-06T11:31:55.760Z"
   },
   "__v": 0
 },
