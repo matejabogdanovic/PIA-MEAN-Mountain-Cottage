@@ -1,0 +1,25 @@
+<app-owner-layout>
+  <div class="my-container">
+
+
+
+
+    @for(c of cottages; track c._id){
+    <h3 class="page-title ">{{c.naziv}}</h3>
+    <div class="grid grid-cols-2 place-items-center">
+      <div>
+        <h3 class="mb-2 text-center ">Monthly Reservations</h3>
+        <app-bar-chart [cottage]="c" [rezervacijeOstvarene]="filterOstvarene(c)"></app-bar-chart>
+      </div>
+      <div>
+        <h3 class="mb-2 text-center ">Weekend vs. Weekday Reservation Ratio</h3>
+        <app-pie-chart [cottage]="c" [rezervacijeOstvarene]="filterOstvarene(c)"></app-pie-chart>
+      </div>
+    </div>
+    }
+
+
+
+  </div>
+
+</app-owner-layout>

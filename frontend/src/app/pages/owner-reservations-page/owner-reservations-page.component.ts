@@ -73,15 +73,15 @@ export class OwnerReservationsPageComponent {
 
       backgroundColor:
         r.prihvacena === false
-          ? '#32b778'
-          : new Date(r.do) > new Date()
           ? '#f6bf26'
+          : new Date(r.do) > new Date()
+          ? '#32b778'
           : '#a1a1a1',
       borderColor:
         r.prihvacena === false
-          ? '#32b778'
-          : new Date(r.do) > new Date()
           ? '#f6bf26'
+          : new Date(r.do) > new Date()
+          ? '#32b778'
           : '#a1a1a1',
     }));
 

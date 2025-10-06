@@ -18,6 +18,7 @@ import { TouristCottagesPageComponent } from './pages/tourist-cottages-page/tour
 import { CottagePageComponent } from './pages/cottage-page/cottage-page.component';
 import { TouristMyReservationsPageComponent } from './pages/tourist-my-reservations-page/tourist-my-reservations-page.component';
 import { OwnerReservationsPageComponent } from './pages/owner-reservations-page/owner-reservations-page.component';
+import { OwnerStatisticsPageComponent } from './pages/owner-statistics-page/owner-statistics-page.component';
 
 export const routes: Routes = [
   { path: '', component: UnregisteredPageComponent },
@@ -56,6 +57,10 @@ export const routes: Routes = [
   {
     path: 'owner/reservations',
     component: OwnerReservationsPageComponent,
+  },
+  {
+    path: 'owner/statistics',
+    component: OwnerStatisticsPageComponent,
   },
   { path: 'tourist/home', component: TouristHomePageComponent },
   { path: 'tourist/cottages', component: TouristCottagesPageComponent },
