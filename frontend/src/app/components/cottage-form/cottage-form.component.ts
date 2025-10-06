@@ -102,7 +102,7 @@ export class CottageFormComponent {
   }
 
   submit(form: NgForm) {
-    console.log(this.cottage);
+    // debug console.log(this.cottage);
     if (!this.isEditing && this.selectedFiles.length == 0) {
       this.error = 'Please, select at least one photo.  ';
       return;
@@ -155,7 +155,7 @@ export class CottageFormComponent {
     reader.onload = () => {
       try {
         const json = JSON.parse(reader.result as string);
-        console.log('Parsed JSON object:', json);
+        // debug console.log('Parsed JSON object:', json);
         let cot = json as Cottage;
         this.cottage.naziv = cot.naziv;
         this.cottage.mesto = cot.mesto;

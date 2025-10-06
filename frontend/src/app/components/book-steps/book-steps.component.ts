@@ -46,8 +46,8 @@ export class BookStepsComponent implements OnInit {
     if (this.checkout) {
       this.checkout.setHours(10, 0, 0, 0);
     }
-    console.log(this.checkin);
-    console.log(this.checkout);
+    // debug console.log(this.checkin);
+    // debug console.log(this.checkout);
   }
 
   checkin: Date | null = null;
@@ -88,7 +88,7 @@ export class BookStepsComponent implements OnInit {
         do: new Date(dat.do),
       }));
       this.reservedRanges = this.reservedRanges.concat(taken);
-      console.log(this.reservedRanges);
+      // debug console.log(this.reservedRanges);
     });
   }
   reservedRanges: { od: Date; do: Date }[] = [];
@@ -224,7 +224,7 @@ export class BookStepsComponent implements OnInit {
         this.note
       )
       .subscribe((d) => {
-        console.log(d);
+        // debug console.log(d);
         if (d.ok) {
           // this.success = true;
           // this.ngOnInit();

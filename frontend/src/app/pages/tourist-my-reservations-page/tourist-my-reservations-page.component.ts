@@ -45,9 +45,9 @@ export class TouristMyReservationsPageComponent implements OnInit {
     this.userService.getOneUser(x.korisnicko_ime).subscribe((d) => {
       if (!d) return;
       this.user = d;
-      console.log(this.user._id);
+      // debug console.log(this.user._id);
       this.resService.getMyReservations(this.user._id).subscribe((d) => {
-        console.log(d);
+        // debug console.log(d);
         this.rezervacije = d;
         for (let i = 0; i < d.length; i++) {
           this.rezervacije[i].nov_komentar = '';
@@ -96,7 +96,7 @@ export class TouristMyReservationsPageComponent implements OnInit {
     this.resService
       .submitReview(r._id, r.nova_ocena, r.nov_komentar)
       .subscribe((d) => {
-        console.log(d);
+        // debug console.log(d);
         if (d.ok) {
           this.ngOnInit();
         } else {

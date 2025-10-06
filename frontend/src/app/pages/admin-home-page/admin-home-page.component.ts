@@ -39,7 +39,7 @@ export class AdminHomePageComponent implements OnInit {
         this.error = 'Internal error.';
       }
       this.korisnici = d;
-      console.log(this.korisnici);
+      // debug console.log(this.korisnici);
       this.vlasnici = this.korisnici.filter(
         (u) => u.tip == 'vlasnik' && u.aktivan == true
       );

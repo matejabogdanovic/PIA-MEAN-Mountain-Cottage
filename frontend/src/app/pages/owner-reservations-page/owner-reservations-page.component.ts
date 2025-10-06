@@ -46,7 +46,7 @@ export class OwnerReservationsPageComponent {
     events: [],
     eventClick: (info) => {
       if (info.event.extendedProps['prihvacena'] === false) {
-        console.log(info.event.extendedProps);
+        // debug console.log(info.event.extendedProps);
         let _id = info.event.extendedProps['_id'];
         let el = this.rezervacijeNepotvrdjene.find((d) => d._id == _id);
         if (el) {
@@ -103,7 +103,7 @@ export class OwnerReservationsPageComponent {
       this.user = d;
 
       this.resService.getMyReservationsOwner(this.user._id).subscribe((d) => {
-        console.log(d);
+        // debug console.log(d);
         this.rezervacije = d;
 
         this.loadReservations();
@@ -131,7 +131,7 @@ export class OwnerReservationsPageComponent {
     accept: boolean,
     r: ReservationPopulated
   ) {
-    console.log(inputOdbijenica);
+    // debug console.log(inputOdbijenica);
     let text = inputOdbijenica.value;
     if (accept == false && text.trim() === '') {
       r.error = 'Please, enter reason for denial.';

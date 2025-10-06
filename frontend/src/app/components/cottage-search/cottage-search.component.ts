@@ -38,7 +38,7 @@ export class CottageSearchComponent implements OnInit {
     // this.user = x;
 
     this.cotService.getAllCottages().subscribe((d) => {
-      console.log(d);
+      // debug console.log(d);
       this.cottages = d;
       this.filteredCottages = d;
       this.loading = false;
@@ -121,13 +121,13 @@ export class CottageSearchComponent implements OnInit {
   }
   orderPoMestu(dir: number) {
     this.changed = 1;
-    console.log(dir);
+    // debug console.log(dir);
     this.mestodir = dir;
     this.order();
   }
   orderPoNazivu(dir: number) {
     this.changed = 2;
-    console.log(dir);
+    // debug console.log(dir);
     this.nazivdir = dir;
     this.order();
   }

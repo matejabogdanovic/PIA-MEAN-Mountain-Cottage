@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
   profilna_slika = '';
   ngOnInit(): void {
     this.loading = true;
-    console.log('refresh');
+    // debug console.log('refresh');
     // let x = this.userService.getUser();
 
     // if (x == null) return;
@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
       if (!d) return;
 
       this.user = d;
-      console.log(this.user);
+      // debug console.log(this.user);
 
       const timestamp = new Date().getTime();
       this.profilna_slika = `${this.slikaApi}/${d.profilna_slika}?t=${timestamp}`;
@@ -116,7 +116,7 @@ export class ProfileComponent implements OnInit {
   }
 
   submit(form: NgForm) {
-    console.log(this.user);
+    // debug console.log(this.user);
     if (!form.valid && !this.isAdmin) {
       this.error =
         'Fields are not in required format or required fields are empty.';

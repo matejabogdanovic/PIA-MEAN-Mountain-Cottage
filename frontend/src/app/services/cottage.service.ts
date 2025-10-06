@@ -28,7 +28,7 @@ export class CottageService {
     // fajlovi jedan po jedan
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
-      console.log(i);
+      // debug console.log(i);
     }
 
     return this.http.post<{ ok: boolean; reason: string }>(
@@ -45,7 +45,7 @@ export class CottageService {
     // fajlovi jedan po jedan
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
-      console.log(i);
+      // debug console.log(i);
     }
     return this.http.post<{ ok: boolean; reason: string }>(
       `${this.api}/editCottage`,

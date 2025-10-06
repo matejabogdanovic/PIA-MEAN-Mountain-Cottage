@@ -64,7 +64,7 @@ export class RegisterComponent {
     this.error = '';
   }
   register(form: NgForm) {
-    console.log(this.user);
+    // debug console.log(this.user);
     this.error = '';
     if (
       this.user.korisnicko_ime.trim() == '' ||
@@ -104,7 +104,7 @@ export class RegisterComponent {
         //       this.router.navigate(['/home']);
         //     });
         // } else {
-        console.log('res', korisnik);
+        // debug console.log('res', korisnik);
 
         this.router.navigate(['/login']);
       });

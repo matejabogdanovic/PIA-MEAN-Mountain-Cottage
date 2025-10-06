@@ -48,7 +48,7 @@ export class OwnerMyCottagesPageComponent implements OnInit {
     if (!x) return;
     this.user = x;
     this.cotService.getAllCottagesUsername(x.korisnicko_ime).subscribe((d) => {
-      console.log(d);
+      // debug console.log(d);
       this.cottages = d;
       this.loading = false;
     });

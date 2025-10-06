@@ -35,7 +35,7 @@ export class CottageListingComponent implements OnInit {
     this.cotService.getReviews(this.cottage._id).subscribe((rev) => {
       let x = rev.slice(0, 3);
       x = x.filter((d) => d.komentar_i_ocena.ocena >= 2);
-      console.log(x);
+      // debug console.log(x);
 
       if (rev.length >= 3 && x.length === 0 && this.isAdmin) {
         this.stil = 'bg-red-300';

@@ -52,7 +52,7 @@ export class CottageComponent implements OnInit {
     this.api = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
     this.cotService.getReviews(this.cottage._id).subscribe((d) => {
-      console.log(d);
+      // debug console.log(d);
 
       this.komentari = d.map((kom) => {
         return {
@@ -61,7 +61,7 @@ export class CottageComponent implements OnInit {
         };
       });
     });
-    console.log(this.cottage);
+    // debug console.log(this.cottage);
   }
   currentPhoto = 0;
   currentPhotoSrc = '';

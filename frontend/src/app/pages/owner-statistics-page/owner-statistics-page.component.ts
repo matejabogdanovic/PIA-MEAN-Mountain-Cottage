@@ -43,7 +43,7 @@ export class OwnerStatisticsPageComponent implements OnInit {
       this.user = d;
 
       this.resService.getMyReservationsOwner(this.user._id).subscribe((d) => {
-        console.log(d);
+        // debug console.log(d);
         this.rezervacije = d;
 
         this.rezervacije.sort(
@@ -57,7 +57,7 @@ export class OwnerStatisticsPageComponent implements OnInit {
         this.cotService
           .getAllCottagesUsername(x.korisnicko_ime)
           .subscribe((d) => {
-            console.log(d);
+            // debug console.log(d);
             this.cottages = d;
 
             this.loading = false;

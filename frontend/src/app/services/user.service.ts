@@ -77,7 +77,7 @@ export class UserService {
     const master = /^(5[1-5][0-9]{14})$/;
     const viza = /^(4539|4556|4916|4532|4929|4485|4716)[0-9]{12}$/;
     if (diners.test(cc)) {
-      console.log('diners');
+      // debug console.log('diners');
       return 0;
     }
     if (master.test(cc)) {
