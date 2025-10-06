@@ -53,9 +53,15 @@ export class TouristMyReservationsPageComponent implements OnInit {
           this.rezervacije[i].nov_komentar = '';
           this.rezervacije[i].nova_ocena = 0;
         }
-        this.rezervacije.sort(
-          (a, b) => new Date(b.od).getTime() - new Date(a.od).getTime()
-        );
+        const danas = new Date();
+        this.rezervacije.sort((a, b) => {
+          const diffA = Math.abs(new Date(a.od).getTime() - danas.getTime());
+          const diffB = Math.abs(new Date(b.od).getTime() - danas.getTime());
+          return diffA - diffB;
+        });
+        // this.rezervacije.sort(
+        //   (a, b) => new Date(b.od).getTime() - new Date(a.od).getTime()
+        // );
         this.rezervacijeAktivne = this.rezervacije.filter(
           (r) => new Date(r.do) >= new Date() && r.prihvacena == true
         );
