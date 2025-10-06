@@ -104,7 +104,7 @@ export class ReservationController {
         });
         return;
       }
-      RezM.find({ cottage_id: cottage_id, odbijenica: "" })
+      RezM.find({ cottage_id: cottage_id, odbijenica: "", prihvacena: true })
         .then((d) => {
           let takenDates: { od: Date; do: Date }[] = [];
           takenDates = d.map((rez) => ({
@@ -222,7 +222,7 @@ export class ReservationController {
 
   getTakenDates = (req: express.Request, res: express.Response) => {
     let cottage_id = req.body._id;
-    RezM.find({ cottage_id: cottage_id, odbijenica: "" })
+    RezM.find({ cottage_id: cottage_id, odbijenica: "", prihvacena: true })
       .then((d) => {
         let result: { od: string; do: string }[] = [];
         result = d.map((rez) => ({
