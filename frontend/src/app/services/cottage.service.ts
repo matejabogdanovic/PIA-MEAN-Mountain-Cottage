@@ -69,4 +69,11 @@ export class CottageService {
       }[]
     >(`${this.api}/getReviews/${_id}`);
   }
+
+  blockFor48hrs(_id: string) {
+    return this.http.post<{ ok: boolean; reason: string }>(
+      `${this.api}/blockFor48hrs`,
+      { _id }
+    );
+  }
 }

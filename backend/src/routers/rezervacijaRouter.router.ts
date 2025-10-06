@@ -37,4 +37,5 @@ rezervacijaRouter
 rezervacijaRouter
   .route("/cancelReservation")
   .post((req, res) => new ReservationController().cancelReservation(req, res));
+
 export default rezervacijaRouter;

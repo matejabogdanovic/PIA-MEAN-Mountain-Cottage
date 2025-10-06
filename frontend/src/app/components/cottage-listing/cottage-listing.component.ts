@@ -18,13 +18,17 @@ export class CottageListingComponent implements OnInit {
   loading = true;
   month = 0;
   private cotService = inject(CottageService);
-
   stil = '';
+  blokirana = false;
   ngOnInit(): void {
     this.loading = true;
     const danas = new Date();
     const timestamp = danas.getTime();
-
+    if (danas < new Date(this.cottage.blokirana_do)) {
+      this.blokirana = true;
+    } else {
+      this.blokirana = false;
+    }
     this.month = danas.getMonth();
     this.profilna_slika = `${this.slikaApi}/${this.cottage.slike[0]}`;
 
@@ -38,6 +42,19 @@ export class CottageListingComponent implements OnInit {
       }
 
       this.loading = false;
+    });
+  }
+
+  disable(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.cotService.blockFor48hrs(this.cottage._id).subscribe((d) => {
+      if (d.ok) {
+        this.cottage.blokirana_do = new Date(
+          new Date().getTime() + 48 * 60 * 60 * 1000
+        ).toISOString();
+        this.ngOnInit();
+      }
     });
   }
 }

@@ -1,12 +1,13 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { CottageListingComponent } from '../cottage-listing/cottage-listing.component';
 import { Cottage } from '../../models/Cottage';
-import { User } from '../../models/User';
+
 import { CottageService } from '../../services/cottage.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { StarsComponent } from '../stars/stars.component';
+
 @Component({
   selector: 'app-cottage-search',
   standalone: true,

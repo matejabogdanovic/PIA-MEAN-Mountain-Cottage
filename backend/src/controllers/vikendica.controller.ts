@@ -194,4 +194,19 @@ export class CottageController {
         res.json(null);
       });
   };
+  // admin
+  blockFor48hrs = (req: express.Request, res: express.Response) => {
+    let _id = req.body._id;
+    VikM.findByIdAndUpdate(_id, {
+      $set: {
+        blokirana_do: new Date(new Date().getTime() + 48 * 60 * 60 * 1000),
+      },
+    })
+      .then((d) => {
+        res.json({ ok: true, reason: "" });
+      })
+      .catch((err) => {
+        res.json({ ok: false, reason: "Cottage doesn't exist." });
+      });
+  };
 }

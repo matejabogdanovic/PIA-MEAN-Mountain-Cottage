@@ -39,6 +39,7 @@ export class CottagePageComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   error = '';
+  blokirana: boolean = false;
   ngOnInit(): void {
     this.loading = true;
     this.error = '';
@@ -60,7 +61,12 @@ export class CottagePageComponent implements OnInit {
         return;
       }
       this.cottage = cot;
-
+      let blokirana_do = new Date(cot.blokirana_do);
+      if (new Date() < blokirana_do) {
+        this.blokirana = true;
+      } else {
+        this.blokirana = false;
+      }
       this.loading = false;
     });
   }

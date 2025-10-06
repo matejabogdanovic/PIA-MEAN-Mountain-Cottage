@@ -32,5 +32,8 @@ const VikendicaSchema = new mongoose.Schema({
   ocena: {
     type: Number,
   },
+  blokirana_do: {
+    type: Date,
+  },
 });
 export default mongoose.model("VikendicaModel", VikendicaSchema, "vikendice");

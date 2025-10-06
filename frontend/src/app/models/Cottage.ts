@@ -9,4 +9,6 @@ export class Cottage {
   slike: string[] = [];
   vlasnik: string = ''; // ObjectId korisnika kao string
   ocena: number = 0.0;
+
+  blokirana_do: string = '';
 }

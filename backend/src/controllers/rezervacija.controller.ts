@@ -87,48 +87,69 @@ export class ReservationController {
   book = (req: express.Request, res: express.Response) => {
     console.log(req.body);
     let cottage_id = req.body.cottage_id;
-    RezM.find({ cottage_id: cottage_id, odbijenica: "" })
-      .then((d) => {
-        let takenDates: { od: Date; do: Date }[] = [];
-        takenDates = d.map((rez) => ({
-          od: new Date(rez.od),
-          do: new Date(rez.do),
-        }));
+    VikM.findById(cottage_id).then((cot) => {
+      if (!cot) {
+        console.log("Vikendica ne postoji.");
+        res.json({
+          ok: false,
+          reason: "Cottage doesn't exist.",
+        });
+        return;
+      }
+      if (new Date() < new Date(cot.blokirana_do ?? 0)) {
+        console.log("Vikendica je blokirana.");
+        res.json({
+          ok: false,
+          reason: "Cottage not available for booking.",
+        });
+        return;
+      }
+      RezM.find({ cottage_id: cottage_id, odbijenica: "" })
+        .then((d) => {
+          let takenDates: { od: Date; do: Date }[] = [];
+          takenDates = d.map((rez) => ({
+            od: new Date(rez.od),
+            do: new Date(rez.do),
+          }));
 
-        if (
-          this.doesRangeOverlap(
-            new Date(req.body.od),
-            new Date(req.body.do),
-            takenDates
-          )
-        ) {
+          if (
+            this.doesRangeOverlap(
+              new Date(req.body.od),
+              new Date(req.body.do),
+              takenDates
+            )
+          ) {
+            res.json({
+              ok: false,
+              reason: "Please select available dates only. Refresh the page.",
+            });
+            return;
+          }
+          RezM.create({
+            ...req.body,
+            prihvacena: false,
+            odbijenica: "",
+            komentar_i_ocena: {
+              komentar: "",
+              ocena: 0,
+            },
+          })
+            .then((d) => {
+              res.json({ ok: true, reason: "" });
+            })
+            .catch((err) => {
+              console.log(err);
+              res.json({ ok: false, reason: "Internal error." });
+            });
+        })
+        .catch((err) => {
+          console.log(err);
           res.json({
             ok: false,
-            reason: "Please select available dates only. Refresh the page.",
+            reason: "Internal error.",
           });
-          return;
-        }
-        RezM.create({
-          ...req.body,
-          prihvacena: false,
-          odbijenica: "",
-          komentar_i_ocena: {
-            komentar: "",
-            ocena: 0,
-          },
-        })
-          .then((d) => {
-            res.json({ ok: true, reason: "" });
-          })
-          .catch((err) => {
-            console.log(err);
-            res.json({ ok: false, reason: "Internal error." });
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.json([]);
-      });
+        });
+    });
   };
 
   acceptReservation = (req: express.Request, res: express.Response) => {

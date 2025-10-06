@@ -62,17 +62,15 @@
   <a (click)="navigate(c)" class="cursor-pointer ">
     <app-cottage-listing [cottage]="c" [isAdmin]="isAdmin">
       <div class="flex justify-end w-full flex-wrap">
+
         @if(registered){
 
         <app-stars [ocena]="c.ocena"></app-stars>
 
 
         }
-        <!-- @if(isAdmin){
-        <div>
-          <button class="red">Disable</button>
-        </div>
-        } -->
+
+
       </div>
     </app-cottage-listing>
   </a>

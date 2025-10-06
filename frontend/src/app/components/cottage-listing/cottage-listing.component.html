@@ -36,6 +36,13 @@
   </div>
 
   <div class="flex items-end xl:justify-end  flex-wrap gap-2 mt-2">
+
     <ng-content></ng-content>
+
+    @if(isAdmin && stil !== '' && !blokirana){
+    <div class="ml-auto">
+      <button class="red z-10" (click)="disable($event)">Disable</button>
+    </div>
+    }
   </div>
 </div>

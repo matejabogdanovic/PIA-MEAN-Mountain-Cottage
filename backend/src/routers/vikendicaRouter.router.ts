@@ -60,4 +60,8 @@ vikendicaRouter
 vikendicaRouter
   .route("/getReviews/:_id")
   .get((req, res) => new CottageController().getReviews(req, res));
+
+vikendicaRouter
+  .route("/blockFor48hrs")
+  .post((req, res) => new CottageController().blockFor48hrs(req, res));
 export default vikendicaRouter;

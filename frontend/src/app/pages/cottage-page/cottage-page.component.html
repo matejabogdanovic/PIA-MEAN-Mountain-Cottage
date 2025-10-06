@@ -31,8 +31,10 @@
       <app-cottage [cottage]="cottage"></app-cottage>
     </div>
     <div class="w-full h-full">
-
+      @if(!blokirana){
       <app-book-steps [cottage]="cottage"></app-book-steps>
+      }
+
     </div>
   </div>
 
