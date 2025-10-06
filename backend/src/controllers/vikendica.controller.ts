@@ -51,7 +51,7 @@ export class CottageController {
         return;
       }
       vikendica.vlasnik = vlasnik._id;
-      // ukloni _id ako postoji, Mongoose ce generistai sam
+      // ukloni _id ako postoji, Mongoose ce generisati sam
       if ("_id" in vikendica) delete vikendica._id;
       vikendica.blokirana_do = new Date(0);
       const imena = req.files.map((f: any) => f.filename);

@@ -3,7 +3,7 @@
 
 
 .my-container {
-  @apply container !max-w-[1000px] mx-auto;
+  @apply container !max-w-[1000px] mx-auto xl:px-0 px-2;
 }
 
 input,
