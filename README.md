@@ -47,11 +47,6 @@ The interface is shown from the perspectives of an **Unregistered User**, **Tour
 
 ## 🧑‍💼 Cottage Owner
 
-### 👤 Profile
-<p align="center">
-  <img src="images/owner-profile.png" alt="Owner Profile" width="400"/>
-</p>
-
 ### 📋 Cottages
 <p align="center">
   <img src="images/owner-cottages.png" alt="Owner Cottages" width="600"/>
@@ -75,11 +70,6 @@ The interface is shown from the perspectives of an **Unregistered User**, **Tour
 ---
 
 ## 🧳 Tourist
-
-### 👤 Profile
-<p align="center">
-  <img src="images/tourist-profile.png" alt="Owner Profile" width="400"/>
-</p>
 
 ### 🏡 Cottage Overview
 <p align="center">
