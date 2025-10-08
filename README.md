@@ -4,8 +4,6 @@ This document presents an overview of the **Cottage Booking App** through screen
 The interface is shown from the perspectives of an **Unregistered User**, **Tourist**, **Cottage Owner**, and **Administrator**.
 
 
----
-
 ## 🧰 Technologies Used
 
 | Layer | Technology |
@@ -14,6 +12,7 @@ The interface is shown from the perspectives of an **Unregistered User**, **Tour
 | Backend | **Node.js**, **Express.js**, **Mongoose**, **Multer**, **bcrypt** |
 | Database | **MongoDB** |
 
+---
 ## 🔓 Unregistered User
 
 <p align="center">
