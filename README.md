@@ -104,7 +104,7 @@ The interface is shown from the perspectives of an **Unregistered User**, **Tour
 ## 🛠️ Administrator
 
 <p align="center">
-  <img src="images/admin-home-1.png" alt="Admin Home 1" width="600"/>
+  <img src="images/admin-home-01.png" alt="Admin Home 1" width="600"/>
 </p>
 
 <p align="center">
