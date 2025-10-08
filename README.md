@@ -3,7 +3,16 @@
 This document presents an overview of the **Cottage Booking App** through screenshots.  
 The interface is shown from the perspectives of an **Unregistered User**, **Tourist**, **Cottage Owner**, and **Administrator**.
 
+
 ---
+
+## 🧰 Technologies Used
+
+| Layer | Technology |
+|--------|-------------|
+| Frontend | **Angular**, **TypeScript**, **Tailwind CSS**, **ng2-charts**, **FullCalendar** |
+| Backend | **Node.js**, **Express.js**, **Mongoose**, **Multer**, **bcrypt** |
+| Database | **MongoDB** |
 
 ## 🔓 Unregistered User
 
