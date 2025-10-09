@@ -28,19 +28,19 @@ The interface is shown from the perspectives of an **Unregistered User**, **Tour
 ## 🔐 Authentication
 
 <p align="center">
-  <img src="images/login.png" alt="Login" width="400"/>
+  <img src="images/login.png" alt="Login" width="600"/>
 </p>
 
 <p align="center">
-  <img src="images/login-admin.png" alt="Login Admin" width="400"/>
+  <img src="images/login-admin.png" alt="Login Admin" width="600"/>
 </p>
 
 <p align="center">
-  <img src="images/register.png" alt="Register" width="400"/>
+  <img src="images/register.png" alt="Register" width="600"/>
 </p>
 
 <p align="center">
-  <img src="images/password-change.png" alt="Password Change" width="400"/>
+  <img src="images/password-change.png" alt="Password Change" width="600"/>
 </p>
 
 ---
